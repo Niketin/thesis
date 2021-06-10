@@ -5,3 +5,9 @@
 **/*.pdf
 **/*.synctex.gz
 **/*.fls
+**/*blx.bib
+**/*.bcf
+**/*.blg
+**/*.run.xml
+**/*.bbl
+**/*_temp.tex
