@@ -14,8 +14,10 @@
 \usepackage{upgreek}
 \usepackage{soul}
 \usepackage{xcolor}
+\usepackage[normalem]{ulem}
 \newcommand\todo[1]{\textcolor{red}{TODO: #1}}
 
+\sethlcolor{green}
 
 % Bibliography
 \usepackage[
@@ -41,12 +43,12 @@ Distributed computing is any kind of computing that is performed on a spatially 
 Distributed algorithms are designed to solve distributed computing problems.
 There are many different problems in distributed computing.
 These problems are either possible or impossible to solve.
-Problem can be solvable in one distributed computation model and non-solvable in others.
+A problem can be solvable in one distributed computation model and non-solvable in others.
 To show that a problem is possible or impossible to solve we need to have a proof.
 It can be really tiresome to find proofs manually, therefore it is desirable to develope tools to automate proving (if possible).
 
 If a problem is solvable, then there must exist an algorithm that solves the problem in any distributed network.
-On the other hand if the problem is impossible to solve, then there must be a distributed network in which no algorithm can solve the problem.
+On the other hand if the problem is impossible to solve, then there exists no algorithm that solves the problem in all distributed networks.
 In this work we are interested in the latter case, proving impossibility.
 
 A distributed network is modelled as an undirected graph where each node represents a computer and each edge represents a connection between two computers.
@@ -54,13 +56,18 @@ Nodes are always connected to a fixed number of other nodes and the connections 
 A node that executes for constant time $t$ has to base its output solely on the information it has gathered from $t$-radius of other nodes.
 \cite{DBLP:journals/siamcomp/NaorS95}
 
-In locally checkable labeling (LCL) problems, a distributed algorithm produces labellings (a set of labels) for each node and edge.
-Every node has a label for each of their incident edges, and similarly each edge has a label for each incident node
-\cite{DBLP:journals/corr/abs-2105-05574}.
-These labellings are used for locally checking the correctness of the solution.
-A node's label for its incident edge needs to match with the corresponding label from the incident edge.
-This must match for each label pair in order for the solution to be correct.
-If there is one or more label pairs where the labels are different from each other, the whole solution becomes incorrect.
+Locally checkable labelling (LCL) problems are a family of graph problems for which the validity of a solution can be verified by checking the solution of each node's $\mathcal{O}(1)$-radius neighbourhood (local neighbourhood).
+In case all local neighbourhoods are valid, then the whole solution is globally valid.
+\cite{DBLP:conf/podc/BrandtHKLOPRSU17}
+\footnote{This paragraph does not contain the formal definition of LCL problems.}
+
+Graph coloring is an example of an LCL problem.
+In a vertex coloring problem each vertex $v \in V$ of graph $G = (V, E)$ has a label $l(v): V \rightarrow \mathbb{N}$.
+The problem itself is that for each $(v, w) \in E$ it must hold that $l(v) \neq l(w)$ i.e. labels must be assigned so that no two adjacent vertices have the same label.
+What makes this an LCL problem?
+The solution is locally verifiable.
+Let the graph represent a distributed network.
+Now each node can verify the solution by checking their local neighbourhood of radius 1 and simply check that it does not share a label with any of its neighbors.
 
 Researchers are interested in automating the detection of LCL-problem's constant time solvability in LOCAL model.
 There already exists a tool called \emph{round eliminator} \cite{DBLP:conf/podc/Olivetti20} which uses a \emph{round elimination} \cite{DBLP:conf/podc/Brandt19} technique to automatically find lower bounds of LCL problems.
