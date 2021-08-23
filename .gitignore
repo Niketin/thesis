@@ -2,7 +2,6 @@
 **/*.fdb_latexmk
 **/*.log
 **/*.out
-**/*.pdf
 **/*.synctex.gz
 **/*.fls
 **/*blx.bib
@@ -11,3 +10,12 @@
 **/*.run.xml
 **/*.bbl
 **/*_temp.tex
+**/*.toc
+**/*.xmpdata
+**/*.xmpi
+
+/*.pdf
+/plan/*.pdf
+/papers/*.pdf
+/thesis/*.pdf
+/thesis template
