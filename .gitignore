@@ -19,3 +19,5 @@
 /papers/*.pdf
 /thesis/*.pdf
 /thesis template
+
+/.vscode
