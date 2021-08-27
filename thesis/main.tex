@@ -264,6 +264,14 @@ text must be identical to the text on the abstract page.
 %% directly into the file thesistemplate.xmpdata.
 %\setboolean{writexmpdatafile}{false}
 
+% Bibliography
+\usepackage[
+    backend=bibtex, % TODO change backend
+    style=numeric,
+    sorting=ynt
+]{biblatex}
+\addbibresource{refs.bib}
+
 %% All that is printed on paper starts here
 %%
 \begin{document}
@@ -347,6 +355,8 @@ text must be identical to the text on the abstract page.
 \clearpage
 
 \thesisbibliography
+\printbibliography
+
 
 \clearpage
 

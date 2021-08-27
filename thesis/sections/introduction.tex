@@ -1,2 +1,55 @@
 \section{Introduction}
 
+Distributed computing is any kind of computing that is performed on a spatially distributed system
+\cite{DBLP:books/el/leeuwen90/LamportL90}.
+Distributed algorithms are designed to solve distributed computing problems.
+There are many different problems in distributed computing.
+These problems are either possible or impossible to solve.
+A problem can be solvable in one distributed computation model and non-solvable in others.
+To show that a problem is possible or impossible to solve we need to have a proof.
+It can be really tiresome to find proofs manually, therefore it is desirable to develope tools to automate proving (if possible).
+
+If a problem is solvable, then there must exist an algorithm that solves the problem in any distributed network.
+On the other hand if the problem is impossible to solve, then there exists no algorithm that solves the problem in all distributed networks.
+In this work we are interested in the latter case, proving impossibility.
+
+A distributed network is modelled as an undirected graph where each node represents a computer and each edge represents a connection between two computers.
+Nodes are always connected to a fixed number of other nodes and the connections do not change.
+A node that executes for constant time $t$ has to base its output solely on the information it has gathered from $t$-radius of other nodes.
+\cite{DBLP:journals/siamcomp/NaorS95}
+
+Locally checkable labelling (LCL) problems are a family of graph problems for which the validity of a solution can be verified by checking the solution of each node's $\mathcal{O}(1)$-radius neighbourhood (local neighbourhood).
+In case all local neighbourhoods are valid, then the whole solution is globally valid.
+\cite{DBLP:conf/podc/BrandtHKLOPRSU17}
+\footnote{This paragraph does not contain the formal definition of LCL problems.}
+
+Graph coloring is an example of an LCL problem.
+In a vertex coloring problem each vertex $v \in V$ of graph $G = (V, E)$ has a label $l(v): V \rightarrow \mathbb{N}$.
+The problem itself is that for each $(v, w) \in E$ it must hold that $l(v) \neq l(w)$ i.e. labels must be assigned so that no two adjacent vertices have the same label.
+What makes this an LCL problem?
+The solution is locally verifiable.
+Let the graph represent a distributed network.
+Now each node can verify the solution by checking their local neighbourhood of radius 1 and simply check that it does not share a label with any of its neighbors.
+
+Researchers are interested in automating the detection of LCL-problem's constant time solvability in LOCAL model.
+There already exists a tool called \emph{round eliminator} \cite{DBLP:conf/podc/Olivetti20} which uses a \emph{round elimination} \cite{DBLP:conf/podc/Brandt19} technique to automatically find lower bounds of LCL problems.
+Round eliminator can tell if an LCL problem is solvable in constant time and this can be done fairly fast if the constant is small (as far as I know).
+There can be multiple reasons for a LCL problem to not be solvable in constant time.
+One such reason is that the problem is not solvable in PN (port number) model
+\footnote{Some how there is a connection between constant time solvability in LOCAL model and solvability in PN model.}.
+We would like to detect this particular case.
+
+
+\subsection*{Objective}
+The objective is to develope a tool (computer program) which tells if an LCL (locally checkable labelling) problem is not solvable in PN (port number) model.
+The idea is to find a network where there exists no valid labellings implying that the problem is impossible to solve.
+The tool should work fast, therefore optimizations are one of the main focuses of the work.
+
+At first the tool will have a command line interface.
+Later on the tool is planned to have a browser user interface.
+
+The input should be given in the same format as the Round eliminator uses to represent LCL problems.
+This is important because we can use the same input format in both tools.
+
+Preferably the proof of non-solvability of the problem should be visualized.
+This can be done for example by rendering the network that cannot have any viable configurations.
