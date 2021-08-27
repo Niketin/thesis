@@ -10,8 +10,8 @@ jobs:
         uses: dante-ev/latex-action@latest
         with:
           working_directory: thesis/
-          root_file: thesis.tex
+          root_file: main.tex
       - uses: actions/upload-artifact@v2
         with:
           name: pdf
-          path: thesis/thesis.pdf
+          path: thesis/main.pdf
