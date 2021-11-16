@@ -42,7 +42,7 @@
 %%                                                                            %%
 %%                                                                            %%
 %% An example for writting your thesis using LaTeX                            %%
-%% Original version and development work by Luis Costa, changes to the text   %% 
+%% Original version and development work by Luis Costa, changes to the text   %%
 %% in the Finnish template by Perttu Puska.                                   %%
 %% Support for Swedish added 15092014                                         %%
 %% PDF/A-b support added on 15092017                                          %%
@@ -150,7 +150,7 @@
 %%
 \code{SCI3042}
 %%
- 
+
 %% Choose one of the three below
 %%
 %\univdegree{BSc}
@@ -172,7 +172,7 @@
 %% A possible "and" in the title should not be the last word in the line, it
 %% begins the next line.
 %% Specify the title again without the linebreak characters in the optional
-%% argument in box brackets. This is done because the title is part of the 
+%% argument in box brackets. This is done because the title is part of the
 %% metadata in the pdf/a file, and the metadata cannot contain linebreaks.
 %%
 \thesistitle{Title of the thesis}
@@ -225,14 +225,14 @@
 %% as the abstract page.
 %%
 \thesisabstract{
-Your abstract in English. Keep the abstract short. The abstract explains your 
-research topic, the methods you have used, and the results you obtained. In the 
-PDF/A format of this thesis, in addition to the abstract page, the abstract text is 
-written into the pdf file's metadata. Write here the text that goes into the 
-metadata. The metadata cannot contain special characters, linebreak or paragraph 
-break characters, so these must not be used here. If your abstract does not contain 
-special characters and it does not require paragraphs, you may take advantage of 
-the abstracttext macro (see the comment below). Otherwise, the metadata abstract 
+Your abstract in English. Keep the abstract short. The abstract explains your
+research topic, the methods you have used, and the results you obtained. In the
+PDF/A format of this thesis, in addition to the abstract page, the abstract text is
+written into the pdf file's metadata. Write here the text that goes into the
+metadata. The metadata cannot contain special characters, linebreak or paragraph
+break characters, so these must not be used here. If your abstract does not contain
+special characters and it does not require paragraphs, you may take advantage of
+the abstracttext macro (see the comment below). Otherwise, the metadata abstract
 text must be identical to the text on the abstract page.
 }
 
@@ -244,7 +244,7 @@ text must be identical to the text on the abstract page.
 %% of the pdf file as well.
 %% Syntax:
 %% \copyrigthtext{metadata text}{text visible on the page}
-%% 
+%%
 %% In the macro below, the text written in the metadata must have a \noexpand
 %% macro before the \copyright special character, and macros (\copyright and
 %% \year here) must be separated by the \ character (space chacter) from the
@@ -258,7 +258,7 @@ text must be identical to the text on the abstract page.
 \copyrighttext{Copyright \noexpand\copyright\ \number\year\ \ThesisAuthor}
 {Copyright \copyright{} \number\year{} \ThesisAuthor}
 
-%% You can prevent LaTeX from writing into the xmpdata file (it contains all the 
+%% You can prevent LaTeX from writing into the xmpdata file (it contains all the
 %% metadata to be written into the pdf file) by setting the writexmpdata switch
 %% to 'false'. This allows you to write the metadata in the correct format
 %% directly into the file thesistemplate.xmpdata.
@@ -317,7 +317,7 @@ text must be identical to the text on the abstract page.
 \newpage
 
 
-%% Table of contents. 
+%% Table of contents.
 %%
 \thesistableofcontents
 
@@ -333,7 +333,7 @@ text must be identical to the text on the abstract page.
 \include{sections/introduction}
 
 %% Leave page number of the first page empty
-%% 
+%%
 \thispagestyle{empty}
 
 \clearpage
