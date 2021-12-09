@@ -272,6 +272,10 @@ text must be identical to the text on the abstract page.
 ]{biblatex}
 \addbibresource{refs.bib}
 
+% My extra plugins
+\usepackage[textwidth=1in, textsize=footnotesize]{todonotes}
+\usepackage[]{tikz}
+\usetikzlibrary{arrows.meta}
 %% All that is printed on paper starts here
 %%
 \begin{document}
@@ -337,20 +341,26 @@ text must be identical to the text on the abstract page.
 \thispagestyle{empty}
 
 \clearpage
-
-\section{Background}
-
-\clearpage
+\include{sections/background}
 
 \section{Research material and methods}
+\todo{Under the methods, I can write about software development methods used. Remember that }
+\clearpage
+
+\section{Solution} \label{sec:solution}
+\subsection{Generating LCL-problems}
+\subsection{Generating graphs}
+\subsection{SAT encoding and solving}
+\subsection{Software optimizations}
 
 \clearpage
 
-\section{Results}
+\section{Results} \label{sec:results}
+\todo{Show all results that have been found while doing the research, like different problems that have now new lower bounds.}
 
 \clearpage
 
-\section{Summary}
+\section{Summary} \label{sec:summary}
 
 \clearpage
 
