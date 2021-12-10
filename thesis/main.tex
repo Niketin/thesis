@@ -275,9 +275,14 @@ text must be identical to the text on the abstract page.
 % My extra plugins
 \usepackage[textwidth=1in, textsize=footnotesize]{todonotes}
 \usepackage[]{tikz}
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta,arrows}
+
+\tikzset{main node/.style={circle,fill=blue!20,draw,minimum size=1cm,inner sep=0pt}}
 %% All that is printed on paper starts here
 %%
+\usepackage{caption}
+\usepackage{subcaption}
 \begin{document}
 
 %% Create the coverpage
@@ -347,7 +352,8 @@ text must be identical to the text on the abstract page.
 \todo{Under the methods, I can write about software development methods used. Remember that }
 \clearpage
 
-\section{Solution} \label{sec:solution}
+\section{Automatically proving lower bounds for LCL problems} \label{sec:solution}
+\todo{TODO should this title be just "Implementation"? Probably.}
 \subsection{Generating LCL-problems}
 \subsection{Generating graphs}
 \subsection{SAT encoding and solving}
