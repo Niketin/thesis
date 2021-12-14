@@ -2,7 +2,7 @@
 %% Background
 %%
 \section{Background}
-\todo{Could also be named as "Theoretical background"}.
+\todo{Could also be named as "Theoretical background"}
 To understand the implementation chapter \ref{sec:solution}, in this section we introduce relevant terminology and concepts.
 
 \todo{Add info about section \ref{sec:graphs}}
@@ -19,7 +19,8 @@ The fourth section (\ref{sec:lcl_problems}) is dedicated to LCL-problems.
 Finally, in the last section (\ref{sec:previous_research}), we talk about previous research in the field and research that are more related to this thesis.
 
 \subsection{Graphs} \label{sec:graphs}
-In the real world, there are many objects that are somehow related to each other can be visualized by a diagrams that consists of points and lines that connect a pair of points.
+In the real world, there are many objects that are somehow related to each other.
+Such things can often be visualized by a diagrams that consists of points, and lines that connect a pair of points.
 A graph is a mathematical concept that abstracts the relations of these objects.
 In the literature, the points are called vertices and lines are called edges.
 \cite{DBLP:books/others/BondyM76}
@@ -27,19 +28,19 @@ In the literature, the points are called vertices and lines are called edges.
 Mathematically, graph can be defined as a tuple $$G = (V, E)$$ where $V$ is the set of vertices and $E$ is the set of edges.
 %Each vertex $v \in V$
 Each edge $e \in E$ can also be thought as a tuple $e=(v, w), v, w \in V$, where vertices $v$ and $w$ are the endpoints of the edge $e$.
+For example, $G=(\{1, 2, 3\}, \{(1, 2),(1, 3),(2, 3),(3, 2)\})$, and visualized it looks like the graph on figure \ref{fig:graph1:a}.
 
-When the order of the vertices in an edge matters, we call the graph as a \emph{directed graph} or as the shortened variation \emph{digraph}.
+When the order of the vertices in an edge matters, we call the graph as a \emph{directed graph} or with the shortened variation \emph{digraph}.
 For digraphs, the following statement must hold:
 \begin{equation} \label{eq:1}
 \forall v, w \in V, v \neq w: (v, w) \neq (w, v)
 \end{equation}
 In that case, the first vertex $v$ points to the vertex $w$.
 Usually the edge is visualized as an arrow pointing from $v$ to $w$.
-One example of a directed graph is a flow graph, in which the edges represent flows from point to another point, as seen in the figure \ref{fig:graph2}.
-An edge of a digraph can also point both directions, but in the example of flow graphs, this does not make sense therefore it is not allowed.
+One example of a directed graph is a flow graph, in which the edges represent flows from a vertex to another vertex, as seen in the figure \ref{fig:graph1:a}.
 
 \begin{figure}[h]
-  \subcaptionbox{A simple directed graph.}%
+  \subcaptionbox{A simple directed graph.\label{fig:graph1:a}}%
     [.3\linewidth] {
     \centering
     \begin{tikzpicture}[>={Latex[length=3mm]},auto, on grid, ]
@@ -50,10 +51,9 @@ An edge of a digraph can also point both directions, but in the example of flow 
       \draw[->] (1) edge[] node {} (3);
       \draw[<->] (2) edge[] node {} (3);
     \end{tikzpicture}
-    \label{fig:graphs1:a}
   }
   \hfill
-  \subcaptionbox{A simple undirected graph.}%
+  \subcaptionbox{A simple undirected graph.\label{fig:graph1:b}}%
     [.3\linewidth] {
     \centering
     \begin{tikzpicture}[auto, on grid, ]
@@ -64,10 +64,9 @@ An edge of a digraph can also point both directions, but in the example of flow 
       \draw[-] (1) edge[] node {} (3);
       \draw[-] (2) edge[] node {} (3);
     \end{tikzpicture}
-    \label{fig:graphs1:b}
   }
   \hfill
-  \subcaptionbox{An undirected multigraph.}%
+  \subcaptionbox{An undirected multigraph.\label{fig:graph1:b}}%
     [.3\linewidth] {
     \centering
     \begin{tikzpicture}[auto, on grid, ]
@@ -79,10 +78,9 @@ An edge of a digraph can also point both directions, but in the example of flow 
       \draw[-] (1) edge[bend right] node {} (3);
       \draw[-] (2) edge[] node {} (3);
     \end{tikzpicture}
-    \label{fig:graphs1:c}
   }
   \caption{Examples of different graphs}
-  \label{fig:graphs1}
+  \label{fig:graph1}
 \end{figure}
 
 \todo{refer the figures from the text and fix old refers}
@@ -91,24 +89,66 @@ Undirected graph is the opposite of directed graph in the sense that the order o
 \begin{equation}
 \forall v, w \in V: (v, w) = (w, v)
 \end{equation}
+For example $E=\{(1, 2), (1, 2), (3, 2), (2, 3), (1, 3)\}=\{(1,2),(1,3),(2,3)\}$.
+Visualization of this graph can be seen in the figure \ref{fig:graph1:b}.
 For the purpose of this work, we need only undirected edges.
 
 The definitions of graphs shown earlier do not restrict an edge to start and end in itself ($e=(v, v)$).
 This kind of an edge is called a \emph{loop}.
 The definition however restricts multiple same edges, \emph{parallel edges}.
-The edge set has to be defined as a multiset in order to allow parallel edges.
+In order to allow parallel edges, the edge set has to be defined as a multiset.
 A graph that allows parallel edges, is called a \emph{multigraph}.
-Depending on the author, multigraphs either allow or disallow loops.
+Depending on the author or context, multigraphs either allow or disallow loops.
 In this work, we consider multigraphs to exist without loops.
+Notice that on the figure \ref{fig:graph1:a}, there is an edge that points to both directions.
+This is, in fact, not one but two edges in parallel.
+It is common to visualize such cases using a two-way arrow.
 
 A graph that has no loops or parallel edges, is called as a \emph{simple graph}.
 Simple graphs can either be directed or undirected and it should be explicitly mentioned when defining graphs, unless the context implies it.
+As we do not need directedness of edges, let us assume that further expressions of graphs are always undirected.
+
+For an edge $e=(v, w) \in E$ we say that $v$ is \emph{incident} to $w$ and vice versa.
+If two edges share a vertex, we say that the edges are \emph{adjacent}.
+The degree of a vertex is the number of edges it is connected to.
+We will use the notation $\deg_G(v)$ to denote the degree of vertex $v \in V, G=(V,E)$.
+
+A graph that is bipartite, has exactly two disjoint sets of vertices ($A$ and $B$), and every edge of the graph has one endpoint in vertex of $A$ and another in $B$:
+\begin{equation}
+V = A \cup B, A \cap B = \emptyset, E=\{(a, b) | a \in A, b \in B\}
+\end{equation}
+For bipartite graphs, the sum of degrees on A and B are equal:
+\begin{equation}
+\sum_{a\in A} \deg_G(a) = \sum_{b\in B} \deg_G(b)
+\end{equation}
+An example of a bipartite graph can be seen in the figure \ref{fig:graph2}.
+
+\begin{figure}[h]
+\centering
+% https://tex.stackexchange.com/a/499577
+\begin{tikzpicture}[thick,amat/.style={matrix of nodes,nodes in empty cells,
+  row sep=1em,draw,dashed,rounded corners,
+  nodes={draw,solid,circle,execute at begin node={$\nu_{\the\pgfmatrixcurrentrow}$}}},
+  fsnode/.style={fill=myblue},
+  ssnode/.style={fill=myorange}]
+
+  \matrix[amat,nodes=fsnode,label=above:$A$] (mat1) {\\
+  \\};
+
+  \matrix[amat,right=2cm of mat1,nodes=ssnode,label=above:$B$] (mat2) {\\
+  \\
+  \\};
+
+  \draw  (mat1-1-1) edge (mat2-1-1);
+  \draw (mat1-1-1) edge (mat2-2-1);
+  \draw (mat1-2-1) edge (mat2-2-1);
+  \draw (mat1-2-1) edge (mat2-3-1);
+\end{tikzpicture}
+\caption{A simple bipartite graph.\label{fig:graph2}}
+\end{figure}
 
 
-
-
-
-
+\newpage
 \subsection{Distributed computing} \label{sec:distributed_computing}
 Computing or processing a computer program in several identical or different computation nodes is called distributed computing.
 It is similiar to running a computer program that contains multiple concurrent tasks, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
@@ -132,7 +172,7 @@ The best way to visualize these networks is by drawing a graph in which the node
   \draw (4) -- (5);
 \end{tikzpicture}
 \caption{Example of a distributed network.}
-\label{fig:graph1}
+\label{fig:dist_comp_1}
 \end{figure}
 
 According to Lamport \cite{DBLP:books/el/leeuwen90/LamportL90}, in the area of distributed computing, the term \emph{model} denotes a view or abstract representation of a distributed system.
