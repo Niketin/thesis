@@ -66,7 +66,7 @@ One example of a directed graph is a flow graph, in which the edges represent fl
     \end{tikzpicture}
   }
   \hfill
-  \subcaptionbox{An undirected multigraph.\label{fig:graph1:b}}%
+  \subcaptionbox{An undirected multigraph.\label{fig:graph1:c}}%
     [.3\linewidth] {
     \centering
     \begin{tikzpicture}[auto, on grid, ]
@@ -82,8 +82,6 @@ One example of a directed graph is a flow graph, in which the edges represent fl
   \caption{Examples of different graphs}
   \label{fig:graph1}
 \end{figure}
-
-\todo{refer the figures from the text and fix old refers}
 
 Undirected graph is the opposite of directed graph in the sense that the order of the vertices in an edge does not matter:
 \begin{equation}
@@ -128,35 +126,89 @@ An example of a bipartite graph can be seen in the figure \ref{fig:graph2}.
 % https://tex.stackexchange.com/a/499577
 \begin{tikzpicture}[thick,amat/.style={matrix of nodes,nodes in empty cells,
   row sep=1em,draw,dashed,rounded corners,
-  nodes={draw,solid,circle,execute at begin node={$\nu_{\the\pgfmatrixcurrentrow}$}}},
+  nodes={draw,solid,circle}},
   fsnode/.style={fill=myblue},
   ssnode/.style={fill=myorange}]
 
-  \matrix[amat,nodes=fsnode,label=above:$A$] (mat1) {\\
-  \\};
+  \matrix[amat,nodes=fsnode,label=above:$A$] (mat1) {
+  1\\
+  2\\
+  };
 
-  \matrix[amat,right=2cm of mat1,nodes=ssnode,label=above:$B$] (mat2) {\\
-  \\
-  \\};
+  \matrix[amat,right=2cm of mat1,nodes=ssnode,label=above:$B$] (mat2) {
+  3\\
+  4\\
+  5\\};
 
-  \draw  (mat1-1-1) edge (mat2-1-1);
+  \node (1) [left = of mat1-1-1] {$\deg_G(1)=2$};
+  \node (2) [left = of mat1-2-1] {$\deg_G(2)=1$};
+  \node (3) [right = of mat2-1-1] {$\deg_G(3)=1$};
+  \node (4) [right = of mat2-2-1] {$\deg_G(4)=1$};
+  \node (5) [right = of mat2-3-1] {$\deg_G(5)=1$};
+  \draw (mat1-1-1) edge (mat2-1-1);
   \draw (mat1-1-1) edge (mat2-2-1);
-  \draw (mat1-2-1) edge (mat2-2-1);
+  %\draw (mat1-2-1) edge (mat2-2-1);
   \draw (mat1-2-1) edge (mat2-3-1);
 \end{tikzpicture}
 \caption{A simple bipartite graph.\label{fig:graph2}}
 \end{figure}
 
+If all vertices in a graph have the same degree, then the graph is called \emph{regular}.
+For example, if every vertex in a bipartite graph has the same degree, then we call it regular bipartite graph.When each part of bipartite graph is regular, we call it \emph{biregular graph}.
+In fact, we use notation $(d_A,d_B)$-biregular, where $d_A$ and $d_B$ denote the degrees of the nodes inside partitions $A$ and $B$ respectively.
+We can see an example of a (3,2)-biregular in the figure \ref{fig:graph3}.
+The bipartite graph in the figure \ref{fig:graph2} is not biregular because the nodes in part $A$ do not share degrees i.e. $\forall v, w \in A: \deg_G(v) = \deg_G(w)$ does not hold.
 
-\newpage
+\begin{figure}[h]
+\centering
+% https://tex.stackexchange.com/a/499577
+\begin{tikzpicture}[thick,amat/.style={matrix of nodes,nodes in empty cells,
+  row sep=1em,draw,dashed,rounded corners,
+  nodes={draw,solid,circle}},
+  fsnode/.style={fill=myblue},
+  ssnode/.style={fill=myorange}]
+
+  \matrix[amat,nodes=fsnode,label=above:$A$] (mat1) {
+  1\\
+  2\\
+  };
+
+  \matrix[amat,right=2cm of mat1,nodes=ssnode,label=above:$B$] (mat2) {
+  3\\
+  4\\
+  5\\};
+
+  \node (1) [left = of mat1-1-1] {$\deg_G(1)=3$};
+  \node (2) [left = of mat1-2-1] {$\deg_G(2)=3$};
+  \node (3) [right = of mat2-1-1] {$\deg_G(3)=2$};
+  \node (4) [right = of mat2-2-1] {$\deg_G(4)=2$};
+  \node (5) [right = of mat2-3-1] {$\deg_G(5)=2$};
+  \draw (mat1-1-1) edge (mat2-1-1);
+  \draw (mat1-1-1) edge (mat2-2-1);
+  \draw (mat1-1-1) edge (mat2-3-1);
+  \draw (mat1-2-1) edge (mat2-1-1);
+  \draw (mat1-2-1) edge (mat2-2-1);
+  \draw (mat1-2-1) edge (mat2-3-1);
+\end{tikzpicture}
+\caption{A simple (3,2)-biregular graph.\label{fig:graph3}}
+\end{figure}
+
+A graph is considered as \emph{connected} if from every node one can traverse through the edges to all other nodes i.e. every pair of nodes need to also be connected.
+For instance, the graph in figure \ref{fig:graph2} has two isolated vertex subsets $\{2, 5\}$ and $\{1, 3, 4\}$, therefore the graph is not connected.
+On the other hand, the graphs on figures \ref{fig:graph1:b}, \ref{fig:graph1:c} and \ref{fig:graph3} are connected.
+Let's not worry about the connectivity of the directed graph on figure \ref{fig:graph1:a} as directed graphs are not relevant to this work other than in this section.
+
+
 \subsection{Distributed computing} \label{sec:distributed_computing}
-Computing or processing a computer program in several identical or different computation nodes is called distributed computing.
+Computing or processing a computer program in several identical or different computation nodes is called distributed computing
+\cite{DBLP:books/el/leeuwen90/LamportL90}.
 It is similiar to running a computer program that contains multiple concurrent tasks, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
 
 Computation nodes are connected to each others with communication channels.
 These communication channels carry data from node to another node.
 Together, nodes and communication channels form a network.
-The best way to visualize these networks is by drawing a graph in which the nodes represent computing nodes and edges represent the communication channels.
+A common way to visualize these networks is by drawing a graph in which the nodes represent computing nodes and edges represent the communication channels.
+\cite{HirvonenSuomelaDistAlg2020}
 
 \begin{figure}[h]
   \centering
