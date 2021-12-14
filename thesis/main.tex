@@ -275,7 +275,7 @@ text must be identical to the text on the abstract page.
 % My extra plugins
 \usepackage[textwidth=1in, textsize=footnotesize]{todonotes}
 \usepackage[]{tikz}
-\usetikzlibrary{positioning}
+\usetikzlibrary{positioning,chains,fit,shapes,calc,quotes,matrix}
 \usetikzlibrary{arrows.meta,arrows}
 
 \tikzset{main node/.style={circle,fill=blue!20,draw,minimum size=1cm,inner sep=0pt}}
@@ -283,6 +283,15 @@ text must be identical to the text on the abstract page.
 %%
 \usepackage{caption}
 \usepackage{subcaption}
+
+% Commands
+
+% Definitions
+\definecolor{myblue}{RGB}{122,152,255}
+\definecolor{myorange}{RGB}{255,190,103}
+
+%\DeclareMathOperator{\deg}{deg} % This was already declared
+
 \begin{document}
 
 %% Create the coverpage
