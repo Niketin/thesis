@@ -236,18 +236,19 @@ The main way to distinguish different process models from each other is to categ
 
 
 \subsubsection{Message passing model} \label{sec:message_passing_model}
-Message passing models are a form of process model.
+Message passing models are one form of a process model.
 In the model, processes communicate by adding a message to message queue, whether it is a shared or a process specific, and the recipient process moves the message out (dequeues) from the message queue.
 \cite{DBLP:books/el/leeuwen90/LamportL90}
 
 Different message passing models are widely used in the field.
-The models can varie in different details such as the size of the message queues \cite{DBLP:books/el/leeuwen90/LamportL90}, size of the messages \cite{peleg2000distributed} and how nodes get identified \cite{DBLP:conf/focs/Linial87}, if they are identified at all \cite{DBLP:conf/istcs/MayerNS95}.
-We will discuss more about them in the following sections \ref{sec:port_number_model} and \ref{sec:local_model}.
-The message passing model embodies a significant assumption that the message passing itself represents the dominant cost of an execution of an algorithm
-\cite{DBLP:books/el/leeuwen90/LamportL90}.
+The models can varie in different details, such as in the size of the message queues \cite{DBLP:books/el/leeuwen90/LamportL90}, in the size of the messages \cite{peleg2000distributed} and on how nodes get identified \cite{DBLP:conf/focs/Linial87}, if they are identified at all \cite{DBLP:conf/istcs/MayerNS95}.
+As the message passing model itself can be defined in multiple ways \cite{DBLP:books/el/leeuwen90/LamportL90}, we want to use a definition from which the relevant models also inherit from.
+We will discuss more about the most relevant models in the following sections \ref{sec:port_number_model} and \ref{sec:local_model}.
 
-As the message passing model can be defined in multiple ways, we use the definition that the LCL and PN use...\todo{revise}
+In the message passing model, one could easily think that the execution time of the algorithm is the standard unit used to measure the performance but this is not true.
+The message passing model implies that the dominant cost during an execution of a distributed algorithm is the message passing itself
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
+This really...
 
 
 
@@ -258,7 +259,8 @@ As the message passing model can be defined in multiple ways, we use the definit
 %With formal definitions, we can discuss more about the structure of distributed networks and reason features of those networks.
 %We can further construct proofs of different theorems and so on. \todo{Fix this paragraph}
 
-The algorithms that are executed in distributed fashion, are called distributed algorithms. \todo{where to write about distributed algorithms?}
+The algorithms that are executed in distributed fashion, are called distributed algorithms.
+\todo{where to write about distributed algorithms?}
 %A distributed algorithm is a specific type of algorithm that is executed in distributed fashion.
 Specifically, each node executes the same algorithm.
 
@@ -266,8 +268,16 @@ Specifically, each node executes the same algorithm.
 
 
 \subsubsection{Port Number model} \label{sec:port_number_model}
+
 \subsubsection{LOCAL model} \label{sec:local_model}
+
 \subsection{LCL problems} \label{sec:lcl_problems}
+
+\subsection{Boolean satisfiability problem}
+
 \subsection{Previous research} \label{sec:previous_research}
+
 \todo{Especially LCL classification research}
+
 \clearpage
+

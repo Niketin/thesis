@@ -32,29 +32,28 @@ An algorithm is the program that is given to each node in the network for execut
 Nodes may also be given different inputs but the programs are identical in every node.
 The performance of an algorithm is usually measured by the amount of communication rounds used by the program.
 The reason for this is that the nodes have only a limited information available about their neighbourhood and in order to increase this information they will need to communicate.
-Communication between nodes takes a considerable amount of time in comparison to the processing capabilities of a node, therefore the reasonable unit of measurement is time in communication rounds. % TODO Write something about synchronised communication between nodes.
+Communication between nodes takes a considerable amount of time in comparison to the processing capabilities of a node, therefore the reasonable unit of measurement is time in communication rounds.
 Communication round is a synchronised event in which each node can communicate with each of their neighbor.
 A node that executes for constant time $t$ has to base its output solely on the information it has gathered from $t$-radius of other nodes
 \cite{DBLP:journals/siamcomp/NaorS95}.
 
-Locally checkable labelling (LCL) problems are a family of graph problems for which the validity of a solution can be verified by checking the solution of each node's $\mathcal{O}(1)$-radius neighbourhood (local neighbourhood).
+Informally, locally checkable labelling (LCL) problems are a family of graph problems for which the validity of a solution can be verified by checking the solution of each node's $\mathcal{O}(1)$-radius neighbourhood (local neighbourhood).
 In case all local neighbourhoods are valid, then the whole solution is globally valid.
 \cite{DBLP:conf/podc/BrandtHKLOPRSU17}
-\footnote{This paragraph does not contain the formal definition of LCL problems.}
+%\footnote{This paragraph does not contain the formal definition of LCL problems.}
 
 Graph coloring is an example of an LCL problem.
 In a vertex coloring problem each vertex $v \in V$ of graph $G = (V, E)$ has a label $l(v): V \rightarrow \mathbb{N}$.
 The problem itself is that for each $(v, w) \in E$ it must hold that $l(v) \neq l(w)$ i.e. labels must be assigned so that no two adjacent vertices have the same label.
-What makes this an LCL problem?
-The solution is locally verifiable.
+It is an LCL problem because the solution can be verified locally.
 Let the graph represent a distributed network.
-Now each node can verify the solution by checking their local neighbourhood of radius 1 and simply check that it does not share a label with any of its neighbors.
+Now each node can verify the solution by gathering information about its local neighbourhood of radius 1 and after that, simply check that it does not share a label with any of its neighbors.
 
 Researchers are interested in automating the detection of LCL-problem's constant time solvability in LOCAL model.
 There already exists a tool called \emph{round eliminator} \cite{DBLP:conf/podc/Olivetti20} which uses a \emph{round elimination} \cite{DBLP:conf/podc/Brandt19} technique to automatically find lower bounds of LCL problems.
-Round eliminator can tell if an LCL problem is solvable in constant time and this can be done fairly fast if the constant is small (as far as I know).
+Round eliminator can tell if an LCL problem is solvable in constant time in LOCAL model and this can be done fairly fast if the constant is small.% (as far as I know).
 There can be multiple reasons for a LCL problem to not be solvable in constant time.
-One such reason is that the problem is not solvable in PN (port number) model
+One such reason is that the problem is not solvable at all in PN (port number) model.
 \footnote{Some how there is a connection between constant time solvability in LOCAL model and solvability in PN model.}.
 We would like to detect this particular case.
 
@@ -72,3 +71,9 @@ This is important because we can use the same input format in both tools.
 
 Preferably the proof of non-solvability of the problem should be visualized.
 This can be done for example by rendering the network that cannot have any viable configurations.
+
+\subsection{Thesis structure}
+The chapter \ref{background} gives a succint theoretical background to the topic of this work.
+First it explains ... \todo{Update these when background is done}.
+
+The chapter \ref{implementataion} 
