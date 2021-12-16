@@ -234,10 +234,22 @@ In process models, the work or activities are represented as concurrently execut
 The main way to distinguish different process models from each other is to categorise them by the method they use to communicate with each other (\emph{interprocess communication}).
 \cite{DBLP:books/el/leeuwen90/LamportL90}
 
+
+\subsubsection{Message passing model} \label{sec:message_passing_model}
 Message passing models are a form of process model.
-They are widely researched, for example ... \todo{add references to papers that research or use message passing models}
-In the model, processes communicate by adding a message to message queue, wheter it is a shared or a process specific, and the recipient process removes the message (dequeues) from the message queue.
+In the model, processes communicate by adding a message to message queue, whether it is a shared or a process specific, and the recipient process moves the message out (dequeues) from the message queue.
 \cite{DBLP:books/el/leeuwen90/LamportL90}
+
+Different message passing models are widely used in the field.
+The models can varie in different details such as the size of the message queues \cite{DBLP:books/el/leeuwen90/LamportL90}, size of the messages \cite{peleg2000distributed} and how nodes get identified \cite{DBLP:conf/focs/Linial87}, if they are identified at all \cite{DBLP:conf/istcs/MayerNS95}.
+We will discuss more about them in the following sections \ref{sec:port_number_model} and \ref{sec:local_model}.
+The message passing model embodies a significant assumption that the message passing itself represents the dominant cost of an execution of an algorithm
+\cite{DBLP:books/el/leeuwen90/LamportL90}.
+
+As the message passing model can be defined in multiple ways, we use the definition that the LCL and PN use...\todo{revise}
+\cite{DBLP:books/el/leeuwen90/LamportL90}.
+
+
 
 
 %The following two sections (\ref{sec:port_number_model} and \ref{sec:local_model} ) talk about different forms of message passing models that are highly relative to this paper.
@@ -250,9 +262,9 @@ The algorithms that are executed in distributed fashion, are called distributed 
 %A distributed algorithm is a specific type of algorithm that is executed in distributed fashion.
 Specifically, each node executes the same algorithm.
 
-\todo{write about computation models, why they exist}
-\todo{Add message passing model before PN model}
-\subsubsection{Message passing model} \label{sec:message_passing_model}
+%\todo{write about computation models, why they exist}
+
+
 \subsubsection{Port Number model} \label{sec:port_number_model}
 \subsubsection{LOCAL model} \label{sec:local_model}
 \subsection{LCL problems} \label{sec:lcl_problems}
