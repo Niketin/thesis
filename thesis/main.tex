@@ -309,7 +309,7 @@ text must be identical to the text on the abstract page.
 %% Note that when writting your thesis in English, place the English abstract
 %% first followed by the possible Finnish or Swedish abstract.
 
-\include{sections/abstract_eng}
+\include{sections/0_abstract_eng}
 
 %% The text in the \thesisabstract macro is stored in the macro \abstractext, so
 %% you can use the text metadata abstract directly as follows:
@@ -323,12 +323,12 @@ text must be identical to the text on the abstract page.
 %%
 \newpage
 
-\include{sections/abstract_fi}
+\include{sections/0_abstract_fi}
 
 %% Force new page so that the Swedish abstract starts from a new page
 \newpage
 
-\include{sections/preface}
+\include{sections/0_preface}
 
 %% Force a new page after the preface
 %%
@@ -340,7 +340,7 @@ text must be identical to the text on the abstract page.
 \thesistableofcontents
 
 
-\include{sections/symbols_and_abbreviations}
+\include{sections/0_symbols_and_abbreviations}
 
 
 %% \clearpage is similar to \newpage, but it also flushes the floats (figures
@@ -348,37 +348,28 @@ text must be identical to the text on the abstract page.
 %%
 \cleardoublepage
 
-\include{sections/introduction}
+\include{sections/1_introduction}
 
 %% Leave page number of the first page empty
 %%
 \thispagestyle{empty}
 
 \clearpage
-\include{sections/background}
-
-\section{Research material and methods}
-\todo{Under the methods, I can write about software development methods used. Remember that }
-\clearpage
-
-\section{Automatically proving lower bounds for LCL problems} \label{sec:solution}
-\todo{TODO should this title be just "Implementation"? Probably.}
-\subsection{Generating LCL-problems}
-\subsection{Generating graphs}
-\subsection{SAT encoding and solving}
-\subsection{Software optimizations}
+\include{sections/2_background}
 
 \clearpage
-
-\section{Results} \label{sec:results}
-\todo{Show all results that have been found while doing the research, like different problems that have now new lower bounds.}
+\include{sections/3_research}
 
 \clearpage
-
-\section{Summary} \label{sec:summary}
+\include{sections/4_implementation}
 
 \clearpage
+\include{sections/5_results}
 
+\clearpage
+\include{sections/6_summary}
+
+\clearpage
 \thesisbibliography
 \printbibliography
 

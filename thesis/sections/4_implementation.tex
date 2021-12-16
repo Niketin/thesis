@@ -1,0 +1,39 @@
+%!tex root = ../main.tex
+%% Implementation
+%%
+
+
+%\section{Automatically proving lower bounds for LCL problems} \label{sec:implementation}
+\section{Implementation} \label{sec:implementation}
+In this chapter we will cover all the important topics that are used in the actual implementation.
+The implementation is a tool, that attempts to automatically find a proof that shows the given LCL problem to be impossible to be solved in PN model (see section \ref{sec:port_number_model} for more information about PN model).
+
+\subsection{The idea}
+Given an LCL problem, the goal is to find a proof that it is impossible to solve the problem in PN model.
+To prove this we can find a counter example that shows the impossibility.
+A graph in which we cannot find any viable labelling is a good counter example, as this directly shows, that we cannot solve the LCL problem in every graph, therefore it is impossible to solve in PN model.
+
+For each pair of LCL problem and graph, we want to be able to check if labelling is impossible.
+For this purpose we can use for example a SAT solver.
+This is indeed what we have used in this work.
+%Probably, we have to iterate a lot of graphs.
+%For this purpose we want to be able to generate the graphs.
+
+
+
+
+\subsection{Generating LCL-problems}
+\todo{parallelization}
+\subsection{Generating graphs}
+\todo{parallelization}
+\subsection{SAT encoding and solving}
+\todo{parallelization?}
+%\subsection{Software optimizations}
+\subsection{Caching}
+\todo{pre-computing multigraphs}
+\todo{pre-computing lcl problems (and power sets of lcl problems)}
+\todo{caching}
+
+\subsection{parallelization}
+\todo{Talk about parallelization here or separately in above sections}
+
