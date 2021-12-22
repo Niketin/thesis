@@ -200,11 +200,11 @@ Let's not worry about the connectivity of the directed graph on figure \ref{fig:
 
 
 \subsection{Distributed computing} \label{sec:distributed_computing}
-Computing or processing a computer program in several identical or different computation nodes is called distributed computing
+Computing or processing a computer program in several identical or different computers is called distributed computing
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
-It is similiar to running a computer program that contains multiple concurrent tasks, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
+It is similiar to running a computer program that contains multiple concurrent tasks, in a computer, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
 
-Computation nodes are connected to each others with communication channels.
+Computers are called nodes, and they are connected to each other with communication channels.
 These communication channels carry data from node to another node.
 Together, nodes and communication channels form a network.
 A common way to visualize these networks is by drawing a graph in which the nodes represent computing nodes and edges represent the communication channels.
@@ -223,7 +223,7 @@ A common way to visualize these networks is by drawing a graph in which the node
   \draw (3) -- (4);
   \draw (4) -- (5);
 \end{tikzpicture}
-\caption{Example of a distributed network.}
+\caption{Example of a small distributed network.}
 \label{fig:dist_comp_1}
 \end{figure}
 
@@ -235,20 +235,39 @@ The main way to distinguish different process models from each other is to categ
 \cite{DBLP:books/el/leeuwen90/LamportL90}
 
 
-\subsubsection{Message passing model} \label{sec:message_passing_model}
+%\subsubsection{Message passing model} \label{sec:message_passing_model}
 Message passing models are one form of a process model.
-In the model, processes communicate by adding a message to message queue, whether it is a shared or a process specific, and the recipient process moves the message out (dequeues) from the message queue.
+In the model, processes communicate by adding a message to a message queue, whether it is a shared or a process specific, and the recipient process moves the message out (dequeues) from the message queue.
 \cite{DBLP:books/el/leeuwen90/LamportL90}
 
-Different message passing models are widely used in the field.
-The models can varie in different details, such as in the size of the message queues \cite{DBLP:books/el/leeuwen90/LamportL90}, in the size of the messages \cite{peleg2000distributed} and on how nodes get identified \cite{DBLP:conf/focs/Linial87}, if they are identified at all \cite{DBLP:conf/istcs/MayerNS95}.
-As the message passing model itself can be defined in multiple ways \cite{DBLP:books/el/leeuwen90/LamportL90}, we want to use a definition from which the relevant models also inherit from.
-We will discuss more about the most relevant models in the following sections \ref{sec:port_number_model} and \ref{sec:local_model}.
+Different message passing models are widely used in the research field of distributed computing.
+The models can varie in different details, such as in the size of the message queues \cite{DBLP:books/el/leeuwen90/LamportL90}, in the size of the messages \cite{peleg2000distributed} and on how the nodes get identified \cite{DBLP:conf/focs/Linial87}, if they are identified at all \cite{DBLP:conf/istcs/MayerNS95}.
+%As the message passing models itself can be defined in multiple ways \cite{DBLP:books/el/leeuwen90/LamportL90}, we will use a definition from which the relevant models commonly inherit from.
+We will dive deeper into the most relevant message passing models for this work in the following sections \ref{sec:port_number_model} and \ref{sec:local_model}.
 
+An algorithm that is executed in a distributed fashion in a distributed network, is called as a distributed algorithm.
+Each node in a network is started simultaneously and will always execute the same algorithm.
+Initially the nodes are on the same state and there can be finitely or infinitely many states.
+Initially the nodes are aware of only themselves and of the connections to their neighbours.
+One might question that if every node starts with the same state, wouldn't they also end up in the same state?
+Well yes, this happens inevitably in a case where the nodes were not given any additional symmetry breaking inputs and if every node sees the same amount of neighbours.
+\cite{HirvonenSuomelaDistAlg2020}
+
+%For example, we have a chain like network $W$ where each node $w$ has exactly two neighbours.
+%The task is to execute an algorithm that finds the number of nodes in the network.
+
+
+In practice, every computer node on a network has an UUID (Universally unique identifier) that can break the symmetry, and nodes are usually given some input data that they process, and nodes can always randomize data as they are never completely synchronized together, so this is not necessarily a problem.
+In theory, we explicitly have to assume that there exists these kind of symmetry breaking elements.
+In this works, distributed algorithms are deterministic unless otherwise mentioned.
+In other research there might be randomizing involved.
+
+
+\todo{Find a correct place to talk  about execution times if there is any}
 In the message passing model, one could easily think that the execution time of the algorithm is the standard unit used to measure the performance but this is not true.
 The message passing model implies that the dominant cost during an execution of a distributed algorithm is the message passing itself
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
-This really...
+This really... \todo{continue here}
 
 
 
@@ -268,6 +287,8 @@ Specifically, each node executes the same algorithm.
 
 
 \subsubsection{Port Number model} \label{sec:port_number_model}
+
+
 
 \subsubsection{LOCAL model} \label{sec:local_model}
 
