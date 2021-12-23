@@ -289,7 +289,28 @@ Specifically, each node executes the same algorithm.
 \subsubsection{Port number model} \label{sec:port_number_model}
 This section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
-Port numbering model is a rather weak model of computation that inherits from message passing model and does not use node identification.
+Port number model (PN model) is a rather weak model of computation that inherits from the message passing model and does not use node identification.
+An algorithm that executes in a port number model is called as a PN-algorithm.
+
+We can basically take any network $N$ that has the same structure as a simple undirected graph $G$.
+All vertices of $G$ can be one-to-one mapped to nodes of $N$.
+Respectively all edges $\{v, w\}$ of $G$ can be mapped to communication channels between nodes $v$ and $w$.
+
+Communication channels start and end from communication ports.
+Each node has communication ports numbered from $1$ to $d$ where $d$ is the degree of the node.
+The ports are numbered in an arbitrary order.
+
+All nodes are considered identical, however nodes might have different degrees.
+All nodes start execution simultaneously following the same deterministic PN-algorithm $A$.
+The execution of $A$ is done synchronously in parallel.
+\begin{enumerate}\end{enumerate}
+
+
+
+
+We call the network as a port number network or a PN-network
+Port-numbering network is a 3-element tuple $N = (V, P, p)$, where V is the set of nodes, 
+
 Each node is able to index their neighbour nodes using port numbers.
 Port numbers range from 1 to d where d is the degree of the node.
 
