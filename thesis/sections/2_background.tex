@@ -289,34 +289,115 @@ Specifically, each node executes the same algorithm.
 \subsubsection{Port number model} \label{sec:port_number_model}
 This section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
-Port number model (PN model) is a rather weak model of computation that inherits from the message passing model and does not use node identification.
+Port number model (PN model) is a rather weak model of computation that inherits from the message passing model.
+In the model, nodes do not have identification.
 An algorithm that executes in a port number model is called as a PN-algorithm.
 
 We can basically take any network $N$ that has the same structure as a simple undirected graph $G$.
-All vertices of $G$ can be one-to-one mapped to nodes of $N$.
+Each vertex of $G$ can be one-to-one mapped (bijection) to the nodes of $N$ and vice-versa.
 Respectively all edges $\{v, w\}$ of $G$ can be mapped to communication channels between nodes $v$ and $w$.
 
 Communication channels start and end from communication ports.
 Each node has communication ports numbered from $1$ to $d$ where $d$ is the degree of the node.
 The ports are numbered in an arbitrary order.
 
-All nodes are considered identical, however nodes might have different degrees.
-All nodes start execution simultaneously following the same deterministic PN-algorithm $A$.
+All nodes are considered identical, however nodes know their degree and it might differ between different nodes depending on the underlying graph $G$.
+Every node starts the execution simultaneously following the same deterministic PN-algorithm $A$.
 The execution of $A$ is done synchronously in parallel.
-\begin{enumerate}\end{enumerate}
+A communication round consists of following synchronous steps
+\begin{enumerate}
+  \item send message to each port,
+  \item wait until all messages have been sent,
+  \item receive a message from each port,
+  \item update internal state.
+\end{enumerate}
+After each communication round, a node can optionally stop execution and announce its local output.
+All nodes are required to eventually stop.
+When all nodes have stopped, the algorithm is considered as stopped.
+The running time of the algorithm $A$ is the total communication rounds that took place.
 
 
 
 
+
+
+
+
+\subsubsection{Formalized port number model}
 We call the network as a port number network or a PN-network
-Port-numbering network is a 3-element tuple $N = (V, P, p)$, where V is the set of nodes, 
+Port-numbering network is a 3-element tuple $N = (V, P, p)$, where V and P are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
+A port, an element of $P$, is a 2-element tuple $(v, i)$ where $v \in V$ and $i \in \{1, 2, ...\}$.
+Additionally we assume that $p$ is an involution, that is, $\forall x \in P : p(p(x)) = x, $ i.e. each edge of the underlying graph is undirected.
+See the figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples of valid and invalid PN networks.
 
+\begin{figure}[h]
+  \subcaptionbox{A PN network of two nodes, $a$ and $b$.
+    Both $a$ and $b$ have degree of 2, therefore 2 ports.
+    Ports are $(a, 1), (a, 2), (b, 1)$ and $(b, 2)$.
+    The connections are
+      $p((a, 1)) = (b, 1)$,
+      $p((a, 2)) = (b, 2)$,
+      $p((b, 1)) = (a, 1)$ and
+      $p((b, 2)) = (a, 2)$.
+    \label{fig:formal_pn1:a}
+  }%
+    [.45\linewidth] {
+    \centering
+    \includegraphics[scale=0.6]{diagrams/formalizing_pn_network_diagram1.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    An invalid PN network as port mapping function $p$ is not an involution:
+    $p(p((a, 1))) = p(p((a, 2))) \neq (a, 1)$.
+    \label{fig:formal_pn1:b}
+  }%
+    [.45\linewidth] {
+    \centering
+    \includegraphics[scale=0.6]{diagrams/formalizing_pn_network_diagram2.pdf}
+  }
+  \caption{Examples of a valid and an invalid PN network.}
+  \label{fig:formal_pn1}
+\end{figure}
+
+
+\begin{figure}[h]
+  \subcaptionbox{
+    A simple PN network.
+    The underlying graph is also simple.
+    \label{fig:formal_pn2:a}
+  }%
+    [.3\linewidth] {
+    \centering
+    \includegraphics[scale=0.6]{diagrams/formalizing_pn_network_diagram4.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    An alternative representation of the PN network from figure \ref{fig:formal_pn2:b}
+    \label{fig:formal_pn2:b}
+  }%
+    [.3\linewidth] {
+    \centering
+    \includegraphics[width=0.3\textwidth]{diagrams/formalizing_pn_network_diagram5.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A PN network with loops and parallel connections.
+    This kind of network cannot be shown in the alternative representation unlike the network on figure \ref{fig:formal_pn2:a}.
+    \label{fig:formal_pn2:c}
+  }%
+    [.3\linewidth] {
+    \centering
+    \includegraphics[scale=0.6]{diagrams/formalizing_pn_network_diagram3.pdf}
+  }
+  \caption{Examples of simple and non simple PN networks.}
+  \label{fig:formal_pn2}
+\end{figure}
+
+\todo{continue from here on  FRIDAY 31.12.2021}
 Each node is able to index their neighbour nodes using port numbers.
 Port numbers range from 1 to d where d is the degree of the node.
 
 Computation in a distributed network happens in synchronized rounds.
-
-\subsubsection{Formalized port number model}
 In the previous section \ref{sec:port_number_model} we introduced the PN model.
 Now we give a formal definition of the PN model.
 
