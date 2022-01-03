@@ -324,6 +324,11 @@ The running time of the algorithm $A$ is the total communication rounds that too
 
 
 \subsubsection{Formalized port number model}
+Same as the previous section, this section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
+
+In the previous section \ref{sec:port_number_model} we introduced the PN model.
+Now we give a formal definition of the PN model.
+
 We call the network as a port number network or a PN-network
 Port-numbering network is a 3-element tuple $N = (V, P, p)$, where V and P are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
 A port, an element of $P$, is a 2-element tuple $(v, i)$ where $v \in V$ and $i \in \{1, 2, ...\}$.
@@ -393,16 +398,14 @@ See the figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples o
   \label{fig:formal_pn2}
 \end{figure}
 
-\todo{continue from here on  FRIDAY 31.12.2021}
+\todo{continue from here on  TUESDAY 4.1.2022}
 Each node is able to index their neighbour nodes using port numbers.
 Port numbers range from 1 to d where d is the degree of the node.
 
-Computation in a distributed network happens in synchronized rounds.
-In the previous section \ref{sec:port_number_model} we introduced the PN model.
-Now we give a formal definition of the PN model.
+%Computation in a distributed network happens in synchronized rounds.
 
 
-\todo{Add formal definition here}
+\todo{Add formal definition of the PN algorithm}
 Port numbering algorithm is ...
 
 
