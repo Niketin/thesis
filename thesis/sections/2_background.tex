@@ -324,13 +324,13 @@ The running time of the algorithm $A$ is the total communication rounds that too
 
 
 \subsubsection{Formalized port number model}
-Same as the previous section, this section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
+As in the previous section, this section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
 In the previous section \ref{sec:port_number_model} we introduced the PN model.
 Now we give a formal definition of the PN model.
 
 We call the network as a port number network or a PN-network
-Port-numbering network is a 3-element tuple $N = (V, P, p)$, where V and P are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
+Port-numbering network is a 3-element tuple $N = (V, P, p)$, where $V$ and $P$ are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
 A port, an element of $P$, is a 2-element tuple $(v, i)$ where $v \in V$ and $i \in \{1, 2, ...\}$.
 Additionally we assume that $p$ is an involution, that is, $\forall x \in P : p(p(x)) = x, $ i.e. each edge of the underlying graph is undirected.
 See the figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples of valid and invalid PN networks.
@@ -365,6 +365,25 @@ See the figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples o
 \end{figure}
 
 
+The degree $\deg_N(v)$ of a node $v \in V$ is equal to the number of ports of $v$.
+We assume that the port numbers are consecutive positive integers starting from 1, i.e. the ports of a node $v$ are $\{(v, i) | i \in \{1, 2, ..., \deg_N(v)\}\}$.
+Note that the highest port number of $v$ is also the degree of $v$.
+
+When we say \emph{port number $i$ in node $v$}, we refer to the port $(v, i)$.
+When we say \emph{port $(v, i)$ is connected to port $(w, j)$}, we refer to $p((v, i)) = (w, j)$.
+
+A loop is a connection where port $(v, i)$ is connected to port $(v, j)$.
+For example there are two loops, p((a, 1)) = p((a, 2) and p((c,2)) = (c,2), in the figure \ref{fig:formal_pn2:c}.
+
+There are multiple connections between two distinct nodes $v$ and $w$, if $p((v, i_1)) = (w, j_1)$, $p((v, i_2)) = (w, j_2)$, $i_1 \neq j_1$ and $i_2 \neq j_2$.
+For example the connections $p((b, 2)) = (d, 1)$ and $p((b, 3)) = (d, 2)$ in the figure \ref{fig:formal_pn2:c}.
+
+If a PN network has neither loops or multiple connections, it is called a \emph{simple} network.
+For example the network is simple in the figure \ref{fig:formal_pn2:a}.
+
+Each simple PN network $N=(V,P,p)$ also has a thing called an underlying graph $G=(V,E)$.
+An edge $(v, w)$ is part of the underlying network if and only if $v$ and $w$ are connected, that is, $E = \{ \{v, w\} \, | \,  p((v, i)) = (w, j) \}$ where ${v, w} \in E$.
+
 \begin{figure}[h]
   \subcaptionbox{
     A simple PN network.
@@ -398,11 +417,9 @@ See the figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples o
   \label{fig:formal_pn2}
 \end{figure}
 
-\todo{continue from here on  TUESDAY 4.1.2022}
-Each node is able to index their neighbour nodes using port numbers.
-Port numbers range from 1 to d where d is the degree of the node.
 
-%Computation in a distributed network happens in synchronized rounds.
+%\todo{continue from here on  TUESDAY 4.1.2022}
+
 
 
 \todo{Add formal definition of the PN algorithm}
