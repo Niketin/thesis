@@ -211,23 +211,60 @@ Together, nodes and communication channels form a network.
 A common way to visualize these networks is by drawing a graph in which the nodes represent computing nodes and edges represent the communication channels.
 \cite{HirvonenSuomelaDistAlg2020}
 
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}[every node/.style={circle,thick,draw}]
-  \node (1) {};
-  \node (2) [ right of=1] {};
-  \node (3) [ right of=2] {};
-  \node (4) [ right of=3] {};
-  \node (5) [ right of=4] {};
-  \draw (1) -- (2);
-  \draw (2) -- (3);
-  \draw (3) -- (4);
-  \draw (4) -- (5);
-\end{tikzpicture}
-\caption{Example of a small distributed network.}
-\label{fig:dist_comp_1}
-\end{figure}
 
+\begin{figure}[h]
+  \subcaptionbox{A small distributed network containing 5 nodes.
+    \label{fig:dist_comp1:a}
+  }%
+    [.45\linewidth] {
+    \centering
+  \begin{tikzpicture}[every node/.style={circle,thick,draw}]
+    \node (1) {};
+    \node (2) [ right of=1] {};
+    \node (3) [ right of=2] {};
+    \node (4) [ right of=3] {};
+    \node (5) [ right of=4] {};
+    \draw (1) -- (2);
+    \draw (2) -- (3);
+    \draw (3) -- (4);
+    \draw (4) -- (5);
+  \end{tikzpicture}
+  }
+  \hfill
+  \subcaptionbox{
+    A larger distributed network containing 120 nodes.
+    \label{fig:dist_comp1:b}
+  }%
+    [.45\linewidth] {
+    \centering
+  \resizebox{0.45\textwidth}{!}{%
+  \begin{tikzpicture}[every node/.style={circle,thick,draw}]
+    \pgfmathtruncatemacro{\maxX}{14}
+    \pgfmathtruncatemacro{\maxY}{7}
+    \pgfmathtruncatemacro{\maxXm}{\maxX - 1}
+    \pgfmathtruncatemacro{\maxYm}{\maxY - 1}
+    % Nodes
+    \foreach \x in {0,...,\maxX}
+      \foreach \y in {0,...,\maxY}
+           \node []  (\x\y) at (\x,\y) {};
+    % Vertical edges
+    \foreach \x [count=\xi] in {0,...,\maxX}
+      \foreach \y [count=\yi] in {0,...,\maxYm} {
+        \draw (\x\y)--(\x\yi);
+      }
+    % Horizontal edges
+    \foreach \x [count=\xi] in {0,...,\maxXm}
+      \foreach \y [count=\yi] in {0,...,\maxY} {
+        \draw (\x\y)--(\xi\y);
+      }
+  \end{tikzpicture}
+  }%
+%    \includegraphics[scale=0.4]{diagrams/dist_comp1.pdf}
+    %\missingfigure{A bigger distributed network example}
+  }
+  \caption{Examples of distributed networks.}
+  \label{fig:dist_comp1}
+\end{figure}
 According to Lamport \cite{DBLP:books/el/leeuwen90/LamportL90}, in the area of distributed computing, the term \emph{model} denotes a view or abstract representation of a distributed system.
 There are multiple different computation models used in distributed computing.
 The most important main category of distributed computation models is \emph{process models}.
@@ -258,7 +295,7 @@ Well yes, this happens inevitably in a case where the nodes were not given any a
 %The task is to execute an algorithm that finds the number of nodes in the network.
 
 
-In practice, every computer node on a network has an UUID (Universally unique identifier) that can break the symmetry, and nodes are usually given some input data that they process, and nodes can always randomize data as they are never completely synchronized together, so this is not necessarily a problem.
+In practice, every computer node on a network has an UUID (Universally unique identifier) that can be used to break the symmetry, and nodes are usually given some input data that they process, and nodes can always randomize data as they are never completely synchronized together, so this is not necessarily a problem.
 In theory, we explicitly have to assume that there exists these kind of symmetry breaking elements.
 In this works, distributed algorithms are deterministic unless otherwise mentioned.
 In other research there might be randomizing involved.
@@ -457,7 +494,7 @@ Before that, we need to introduce distributed graph problems.
 
 Researchers are often interested in different distributed graph problems.
 These problems always have some kind of set of solution.
-As it turns out, many of these problems can be encoded using the node labelling.
+As it turns out, many of these problems can be encoded using the node labelings.
 
 Let $\Pi$ be a distributed graph problem.
 $\Pi(N)$ is the set of solutions where $N=(V, P, p)$ is a simple PN network.
@@ -469,7 +506,58 @@ Next we will give some examples of distributed graph problems and what kind of n
 A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover of the underlying graph $G$ of $N$.
 \missingfigure{An example of a vertex cover and its node labeling}
 
-Port numbering algorithm is ...
+\subsubsection{Distributed algorithms in the PN model}
+
+\newcommand{\algin}{\operatorname{Input}}
+\newcommand{\algstates}{\operatorname{States}}
+\newcommand{\algout}{\operatorname{Output}}
+\newcommand{\algmsg}{\operatorname{Msg}}
+
+\newcommand{\alginit}{\operatorname{init}}
+\newcommand{\algsend}{\operatorname{send}}
+\newcommand{\algrecv}{\operatorname{receive}}
+
+A distributed algorithm $A$ can be described as a state machine.
+The algorithm $A$ can possibly have infinitely many states or only finite many states.
+The components of $A$ are:
+\begin{enumerate}
+  \item $\algin_A$ is the set of local inputs,
+  \item $\algstates_A$ is the set of states
+  \item $\algout_A \subseteq \algstates_A$ is the set of states that are considered as output states,
+  \item $\algmsg_A$ is the set of messages.
+\end{enumerate}
+
+The algorithm always consists of 3 functions, each defined for each degree $d \in \mathbf{N}$
+The first function, $$\alginit_{A,d} : \algin_A \rightarrow \algstates_A$$ initializes the state of the node using the given input data.
+%The degree $d$ is also parameterized into the function meaning that the function can operate differently with different degree nodes.
+Each node calls the function $\alginit_{A,d}$ as its first function call.
+
+After initialization, each node constructs messages to each of their neighbour by calling the second function:
+$$\algsend_{A,d} : \algstates_A \rightarrow \algmsg_A^d$$
+A node gives its current local state as an input to the function and the returning value is a $d$-element tuple of messages.
+
+The third function allows nodes to receive messages from each of their neighbours.
+It is defined as:
+$$\algrecv_{A,d} : \algstates_A \times \algmsg_A^d \rightarrow \algstates_A$$
+The function is given a node's current state and a $d$-element tuple of received messages and in return, it gives a state value that represents the node's new state.
+Additionally whenever the current state is an output state $x \in \algout$, we require that  $\algrecv_{A,d}$ returns the exact same state $x$.
+
+The execution of an algorithm $A$ starts with $\alginit_{A,d}$, as described previously.
+After the initialization, the algorithm executes $\algsend_{A,d}$ and $\algrecv_{A,d}$ consecutively.
+Together the execution of these two functions is called as a \emph{communication round}.
+Communication rounds are repeated one after another.
+
+We can define the execution time of algorithm $A$ using a single communication round as the time unit.
+Algorithm $A$ stops in time $T$ if and only if each node is in an output state.
+
+
+
+
+The function 
+
+
+
+
 
 
 
