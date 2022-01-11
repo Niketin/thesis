@@ -517,7 +517,7 @@ A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover o
 \newcommand{\algsend}{\operatorname{send}}
 \newcommand{\algrecv}{\operatorname{receive}}
 
-A distributed algorithm $A$ can be described as a state machine.
+A \emph{distributed algorithm} $A$ can be described as a state machine.
 The algorithm $A$ can possibly have infinitely many states or only finite many states.
 The components of $A$ are:
 \begin{enumerate}
@@ -527,28 +527,31 @@ The components of $A$ are:
   \item $\algmsg_A$ is the set of messages.
 \end{enumerate}
 
-The algorithm always consists of 3 functions, each defined for each degree $d \in \mathbf{N}$
-The first function, $$\alginit_{A,d} : \algin_A \rightarrow \algstates_A$$ initializes the state of the node using the given input data.
+The algorithm always consists of 3 functions, each defined for each degree $d \in \mathbf{N}$.
+The first function, $$\alginit_{A,d} : \algin_A \rightarrow \algstates_A$$ initializes the state of the calling node using the given input data.
 %The degree $d$ is also parameterized into the function meaning that the function can operate differently with different degree nodes.
 Each node calls the function $\alginit_{A,d}$ as its first function call.
 
-After initialization, each node constructs messages to each of their neighbour by calling the second function:
+After initialization, each node constructs messages for each of their neighbour by calling the second function:
 $$\algsend_{A,d} : \algstates_A \rightarrow \algmsg_A^d$$
 A node gives its current local state as an input to the function and the returning value is a $d$-element tuple of messages.
 
 The third function allows nodes to receive messages from each of their neighbours.
 It is defined as:
 $$\algrecv_{A,d} : \algstates_A \times \algmsg_A^d \rightarrow \algstates_A$$
-The function is given a node's current state and a $d$-element tuple of received messages and in return, it gives a state value that represents the node's new state.
-Additionally whenever the current state is an output state $x \in \algout$, we require that  $\algrecv_{A,d}$ returns the exact same state $x$.
+The function is given a node's current state and a $d$-element tuple of received messages.
+In return, it gives a state value that represents the node's new state.
+Additionally whenever the current state is an output state $x \in \algout$, we require that the function $\algrecv_{A,d}$ returns the exact same state $x$.
 
 The execution of an algorithm $A$ starts with $\alginit_{A,d}$, as described previously.
 After the initialization, the algorithm executes $\algsend_{A,d}$ and $\algrecv_{A,d}$ consecutively.
 Together the execution of these two functions is called as a \emph{communication round}.
 Communication rounds are repeated one after another.
 
-We can define the execution time of algorithm $A$ using a single communication round as the time unit.
-Algorithm $A$ stops in time $T$ if and only if each node is in an output state.
+We define the execution time of algorithm $A$ using a single communication round as the time unit.
+Algorithm $A$ stops at time $T$ when each node is in an output state.
+%Algorithm $A$ stops in time $T$ if and only if each node is in an output state.
+
 
 
 
