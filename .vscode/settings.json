@@ -18,6 +18,8 @@
         "**/*.xml": true,
         "**/*.synctex.gz": true,
         "**/*.toc": true,
+        "**/*.sty": true,
+        "**/*.cls": true,
     }
 
 }

@@ -273,7 +273,6 @@ text must be identical to the text on the abstract page.
 \addbibresource{refs.bib}
 
 % My extra plugins
-\usepackage[textwidth=1in, textsize=footnotesize]{todonotes}
 \usepackage[]{tikz}
 \usetikzlibrary{positioning,chains,fit,shapes,calc,quotes,matrix}
 \usetikzlibrary{arrows.meta,arrows}
@@ -283,6 +282,11 @@ text must be identical to the text on the abstract page.
 %%
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{csquotes} % Without this, the compiler gives a warning.
+\usepackage{float}
+\hbadness 1400 %TODO Remove when finishing the thesis.
+\emergencystretch=1em % Fixes DOI link not being overfull
+
 
 % Commands
 

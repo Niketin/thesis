@@ -1,10 +1,10 @@
 %!tex root = ../main.tex
 
-\section{Background}
-\todo{Could also be named as "Theoretical background"}
-To understand the implementation chapter \ref{sec:solution}, in this section we introduce relevant terminology and concepts.
+\section{Background} \label{sec:background}
+%TODO Could also be named as "Theoretical background"
+To understand the implementation chapter \ref{sec:implementation}, in this section we introduce relevant terminology and concepts.
 
-\todo{Add info about section \ref{sec:graphs}}
+%TODO Add info about section \ref{sec:graphs}
 
 In the first section (\ref{sec:distributed_computing}) of this chapter, we discuss about the essential concepts in the theory of distributed computing.
 The section aims to explain the meaning of distributed computing and gives an introduction to the main model of distributed computing, \emph{message passing model}, from which many of the researched models inherit from.
@@ -15,7 +15,7 @@ These are widely used models in the field and they are strongly related to the r
 We are trying to find lower bound proofs for LCL-problems in this paper, therefore it is essential to include a section entirely for them.
 The fourth section (\ref{sec:lcl_problems}) is dedicated to LCL-problems.
 
-Finally, in the last section (\ref{sec:previous_research}), we talk about previous research in the field and research that are more related to this thesis.
+Finally, in the last section (\ref{sec:prior_work}), we talk about previous research in the field and research that are more related to this thesis.
 
 
 \subsection{Graphs} \label{sec:graphs}
@@ -39,7 +39,7 @@ In that case, the first vertex $v$ points to the vertex $w$.
 Usually the edge is visualized as an arrow pointing from $v$ to $w$.
 One example of a directed graph is a flow graph, in which the edges represent flows from a vertex to another vertex, as seen in the Figure \ref{fig:graph1:a}.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \subcaptionbox{A simple directed graph.\label{fig:graph1:a}}%
     [.3\linewidth] {
     \centering
@@ -121,7 +121,7 @@ For bipartite graphs, the sum of degrees on A and B are equal:
 \end{equation}
 An example of a bipartite graph can be seen in the Figure \ref{fig:graph2}.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 % https://tex.stackexchange.com/a/499577
 \begin{tikzpicture}[thick,amat/.style={matrix of nodes,nodes in empty cells,
@@ -159,7 +159,7 @@ In fact, we use notation $(d_A,d_B)$-biregular, where $d_A$ and $d_B$ denote the
 We can see an example of a (3,2)-biregular in the Figure \ref{fig:graph3}.
 The bipartite graph in the Figure \ref{fig:graph2} is not biregular because the nodes in part $A$ do not share degrees i.e. $\forall v, w \in A: \deg_G(v) = \deg_G(w)$ does not hold.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 % https://tex.stackexchange.com/a/499577
 \begin{tikzpicture}[thick,amat/.style={matrix of nodes,nodes in empty cells,
@@ -211,7 +211,7 @@ A common way to visualize these networks is by drawing a graph in which the node
 \cite{HirvonenSuomelaDistAlg2020}
 
 
-\begin{figure}[h]
+\begin{figure}[H]
   \subcaptionbox{A small distributed network containing 5 nodes.
     \label{fig:dist_comp1:a}
   }%
@@ -300,11 +300,12 @@ In this works, distributed algorithms are deterministic unless otherwise mention
 In other research there might be randomizing involved.
 
 
-\todo{Find a correct place to talk  about execution times if there is any}
+%TODO Find a correct place to talk  about execution times if there is any}
 In the message passing model, one could easily think that the execution time of the algorithm is the standard unit used to measure the performance but this is not true.
 The message passing model implies that the dominant cost during an execution of a distributed algorithm is the message passing itself
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
-This really... \todo{continue here}
+This really...
+%TODO continue here
 
 
 
@@ -313,14 +314,14 @@ This really... \todo{continue here}
 
 %In the theory of distributed computing, it is common to use terminology and concepts from graph theory as networks are basically graphs.
 %With formal definitions, we can discuss more about the structure of distributed networks and reason features of those networks.
-%We can further construct proofs of different theorems and so on. \todo{Fix this paragraph}
+%We can further construct proofs of different theorems and so on. %TODO Fix this paragraph
 
 The algorithms that are executed in distributed fashion, are called distributed algorithms.
-\todo{where to write about distributed algorithms?}
+%TODO where to write about distributed algorithms?
 %A distributed algorithm is a specific type of algorithm that is executed in distributed fashion.
 Specifically, each node executes the same algorithm.
 
-%\todo{write about computation models, why they exist}
+%%TODO write about computation models, why they exist
 
 
 \subsubsection{Port number model} \label{sec:port_number_model}
@@ -366,7 +367,7 @@ A port, an element of $P$, is a 2-element tuple $(v, i)$ where $v \in V$ and $i 
 Additionally we assume that $p$ is an involution, that is, $\forall x \in P : p(p(x)) = x, $ i.e. each edge of the underlying graph is undirected.
 See the Figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples of valid and invalid PN networks.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \subcaptionbox{A PN network of two nodes, $a$ and $b$.
     Both $a$ and $b$ have degree of 2, therefore 2 ports.
     Ports are $(a, 1), (a, 2), (b, 1)$ and $(b, 2)$.
@@ -398,7 +399,7 @@ See the Figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples o
 
 The degree $\deg_N(v)$ of a node $v \in V$ is equal to the number of ports of $v$.
 We assume that the port numbers are consecutive positive integers starting from 1, i.e. the ports of a node $v$ are $\{(v, i) | i \in \{1, 2, ..., \deg_N(v)\}\}$.
-\todo{It feels like this definition of ports should not depend on the degree as that depends on the previous definition of ports}
+%TODO It feels like this definition of ports should not depend on the degree as that depends on the previous definition of ports
 Note that the highest port number of $v$ is also the degree of $v$.
 
 When we say \emph{port number $i$ in node $v$}, we refer to the port $(v, i)$.
@@ -414,7 +415,7 @@ If a PN network has neither loops or multiple connections, it is called a \emph{
 For example the network is simple in the Figure \ref{fig:formal_pn2:a}.
 
 
-\begin{figure}[h]
+\begin{figure}[H]
   \subcaptionbox{
     A simple PN network.
     The underlying graph is also simple.
@@ -422,7 +423,7 @@ For example the network is simple in the Figure \ref{fig:formal_pn2:a}.
   }%
     [.3\linewidth] {
     \centering
-    \includegraphics[scale=0.6]{diagrams/formalizing_pn_network_diagram4.pdf}
+    \includegraphics[scale=0.55]{diagrams/formalizing_pn_network_diagram4.pdf}
   }
   \hfill
   \subcaptionbox{
@@ -441,7 +442,7 @@ For example the network is simple in the Figure \ref{fig:formal_pn2:a}.
   }%
     [.3\linewidth] {
     \centering
-    \includegraphics[scale=0.6]{diagrams/formalizing_pn_network_diagram3.pdf}
+    \includegraphics[scale=0.55]{diagrams/formalizing_pn_network_diagram3.pdf}
   }
   \caption{Examples of simple and non simple PN networks.}
   \label{fig:formal_pn2}
@@ -454,7 +455,7 @@ Each simple PN network $N=(V,P,p)$ has a concept called an \emph{underlying grap
 An edge $(v, w)$ is part of the underlying network $G$ if and only if $v$ is connected to $w$, that is, $E = \{ \{v, w\} \, | \,  p((v, i)) = (w, j) \}$.% where ${v, w} \in E$.
 A network with multiple connections uses the same definition to determine an underlying network, but in that case $E$ has to be a multiset instead of a set, in order to allow multiple same edges.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \subcaptionbox{
     An underlying simple graph of the simple PN network from Figure \ref{fig:formal_pn2:a} and Figure \ref{fig:formal_pn2:b}.
     \label{fig:underlying_graphs1:a}
@@ -477,13 +478,13 @@ A network with multiple connections uses the same definition to determine an und
 \end{figure}
 
 \subsubsection{Node labelings}
-\todo{feels like this needs a smooth transition from the previous topic}
+%TODO feels like this needs a smooth transition from the previous topic
 Node labelings are a way to associate information with each node $v \in V$.
 It is defined as a function $f: V \rightarrow Y$ where $Y$ is an arbitrary set of labels.
 
 We can use the concept of node labelings to represent a subset of nodes $X \subseteq V$ by using a node labeling $g: V \rightarrow \{0,1\}$ where $g(v) = 1$ indicates that $v \in X$ and $g(v) = 0$ indicates that $v \notin X$.
 
-\todo{Mention edge labeling?}
+%TODO Mention edge labeling?
 %We can also have an edge labeling with some additional work
 
 
@@ -503,7 +504,11 @@ Next we will give some examples of distributed graph problems and what kind of n
 
 \emph{Vertex cover} of a graph $G$ is a subset $V' \subseteq V$ of nodes which together \emph{cover} all edges of the graph, that is, at least one endpoint from each edge must be in the subset $V'$.
 A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover of the underlying graph $G$ of $N$.
-\missingfigure{An example of a vertex cover and its node labeling}
+\begin{figure}
+  \centering
+  \includegraphics{example-image-duck} %TODO Change this placeholder
+  \caption{An example of a vertex cover and its node labeling}
+\end{figure}
 
 \subsubsection{Distributed algorithms in the PN model}
 
@@ -555,7 +560,7 @@ Algorithm $A$ stops at time $T$ when each node is in an output state.
 
 
 
-The function 
+The function
 
 
 
@@ -568,10 +573,6 @@ The function
 \subsection{LCL problems} \label{sec:lcl_problems}
 
 \subsection{Boolean satisfiability problem}
-
-\subsection{Previous research} \label{sec:previous_research}
-
-\todo{Especially LCL classification research}
 
 \clearpage
 
