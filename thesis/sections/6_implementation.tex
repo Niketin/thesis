@@ -1,7 +1,4 @@
 %!tex root = ../main.tex
-%% Implementation
-%%
-
 
 %\section{Automatically proving lower bounds for LCL problems} \label{sec:implementation}
 \section{Implementation} \label{sec:implementation}
@@ -9,8 +6,8 @@ In this chapter we will cover all the important topics that are used in the actu
 The implementation itself is a computer program, that attempts to automatically find a proof which shows the nonsolvability of the given LCL problem in PN model (see section \ref{sec:port_number_model} for more information about PN model).
 \todo{should the discussion of the implementation be after explanation of the topics?}
 
-
 \subsection{The idea}
+%TODO move the content from this section to 5. Algorithm.
 Given an LCL problem, the goal is to find a proof that it is impossible to solve the problem in PN model.
 To prove this, we first assume the opposite, that it is possible to solve the problem in PN model.
 Then we try to find a counterexample that shows the assumption to be false.
