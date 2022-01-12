@@ -287,13 +287,24 @@ text must be identical to the text on the abstract page.
 \hbadness 1400 %TODO Remove when finishing the thesis.
 \emergencystretch=1em % Fixes DOI link not being overfull
 
+\usepackage{amsthm}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+
 
 % Commands
 
 % Definitions
 \definecolor{myblue}{RGB}{122,152,255}
 \definecolor{myorange}{RGB}{255,190,103}
-\newtheorem{definition}{Definition}
 
 %\DeclareMathOperator{\deg}{deg} % This was already declared
 
