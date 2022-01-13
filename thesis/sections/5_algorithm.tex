@@ -4,95 +4,89 @@
 
 In this section, we will introduce the basic idea of an essential algorithm that is used in the actual implementation discussed in section \ref{sec:implementation}.
 The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in PN model.
-Here we specifically allow PN networks to have multiple edges.
-Later we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple edges) implies that it is also impossible to solve $\Pi$ in some simple PN networks.
-%Thus it would be also impossible to solve using only simple PN networks.
-%Given an LCL problem, the goal is to find a proof that it is impossible to solve the problem in PN model.
+Here we specifically allow PN networks to have multiple connections.
+Later we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
 
 \begin{definition} \label{def:lcl_solvability}
-    An LCL problem $\Pi$ is solvable in PN model if there exists a PN algorithm $A$ that can find a solution for $\Pi$ in all PN networks.
+    An LCL problem $\Pi$ is solvable in PN model, if and only if there exists a PN algorithm $A$ that can find a solution for $\Pi$ in all PN networks.
 \end{definition}
 
+%The Definition \ref{def:lcl_solvability} works for PN networks with multiple connections\dots
+
+We can define an alternative version of the Definition \ref{def:lcl_solvability} using contraposition.
+\begin{definition} \label{def:lcl_solvability:contrapositive}
+An LCL problem $\Pi$ \textbf{is not solvable} in PN model, if and only if there \textbf{does not exist} a PN algorithm $A$ that can find a solution for $\Pi$ in all PN networks.
+\end{definition}
+
+The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter one might be more difficult to understand, but the way it is phrased, easily leads us to the following Theorem:
+
 \begin{theorem} \label{thm:lcl_nonsolvability}
-    An LCL problem $\Pi$ is not solvable in PN model if there exists a PN network $N$ such that no PN algorithm $A$ can solve the $\Pi$ in $N$.
+    An LCL problem $\Pi$ is not solvable in PN model, if there exists a PN network $N$ such that no PN algorithm $A$ can solve the $\Pi$ in $N$.
 \end{theorem}
 \begin{proof}
-    Let us assume that the implication in the theorem is false (proof by contradiction).
-    Thus $\exists N$ s.t. $\forall A$: $A$ cannot solve $\Pi$ in $N$.
-    Also, the assumption states that $\Pi$ is solvable in PN model.
-    This is in contradiction with Definition \ref{def:lcl_solvability}, since such network $N$ cannot exist when $P$ is solvable.
+    Let $\Pi$ be an LCL problem.
+    Let $N$ be a PN network such that no PN algorithm $A$ can solve $\Pi$ in $N$.
+    Therefore no PN algorithm $A$ can find a solution to $\Pi$ in all PN networks.
+    According to the definition \ref{def:lcl_solvability:contrapositive}, this is equivalent with $\Pi$ being unsolvable.
 \end{proof}
 
-As the Theorem \ref{thm:lcl_nonsolvability} hints, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
+As the Theorem \ref{thm:lcl_nonsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
+Using this fact, we can come up with an algorithm that automatically tries to find an counterexample.
 
-\begin{algorithm}
+\begin{algorithm}[H]
     \caption{Counterexample finder algorithm}
-    \label{alg:test}
+    \label{alg:counterexample_finder}
     \begin{algorithmic}[1] % The number tells where the line numbering should start
-        \Procedure{Find}{$n_{low},n_{high}, \Pi$} \Comment{Graph bounds $n_{low}$ and $n_{high}$, LCL problem $\Pi$}
-            %\State $r\gets a \bmod b$
-            \For{$n\gets n_{low}, n_{high}$} \Comment{Iterate graph sizes from lowest to highest}
-                \State $G_n \gets \operatorname{generate\_graphs}(n)$ \Comment{$G_n$ is a list of all graphs}
-                \ForEach{$g \in G_n$}
-                    \If {$\operatorname{is\_solvable}(\Pi, g)$}
-                        \State \Return $g$
+        \Require $1 \leq n_{low} \leq n_{high}$
+        %\Require $\Pi$ is an LCL problem
+        \Function{Find}{$n_{low},n_{high}, \Pi$} \Comment{Graph bounds $n_{low}$ and $n_{high}$, LCL problem $\Pi$} \label{alg:counterexample_finder:n_loop}
+            \State $d_a \gets \textsc{ActiveDegree}(\Pi)$ \label{alg:counterexample_finder:d_a}
+            \State $d_p \gets \textsc{PassiveDegree}(\Pi)$ \label{alg:counterexample_finder:d_p}
+            \For{$n\gets n_{low}, n_{high}$} \Comment{Iterate graph sizes from lowest to highest} \label{alg:counterexample_finder:n}
+                \State $G_n \gets \textsc{GenerateGraphs}(n, d_a, d_p)$ \label{alg:counterexample_finder:Gn}
+                \ForEach{$g \in G_n$} \label{alg:counterexample_finder:g}
+                    \If {$\textsc{IsUnsolvable}(\Pi, g)$} \label{alg:counterexample_finder:is_unsolvable}
+                        \State \Return $g$ \label{alg:counterexample_finder:return_g}
                     \EndIf
                 \EndFor
-            \EndFor\label{euclidendwhile}
-            \State \Return \Comment{No counterexample found. Return nothing.}
-        \EndProcedure
+            \EndFor
+            \State \Return \Comment{No counterexample found. Return nothing.} \label{alg:counterexample_finder:return_nothing}
+        \EndFunction
     \end{algorithmic}
 \end{algorithm}
 
-%TODO Continue from here and below. I believe that the algorithm above needs an explanation. Some implementation "details" from below should probably be moved to different section, maybe under 6. implementation. I do not know how much I should talk about SAT, maybe not at all.
+The Algorithm \ref{alg:counterexample_finder} is designed to find the smallest counterexample graph for an LCL problem $\Pi$.
+It starts from graphs of size $n_{low}$ and goes up to graphs of size $n_{high}$.
+%TODO define what is a graph's size, in 2. background.
+The variable for the current graph size is called $n$ (row \ref{alg:counterexample_finder:n}).
+We define $d_a$ and $d_p$ to be the active and passive degree of problem $\Pi$ respectively (rows \ref{alg:counterexample_finder:d_a} and \ref{alg:counterexample_finder:d_p}).
+For each graph size $n$, we generate all possible $(d_a, d_p)$-biregular multigraphs with $\textsc{GenerateGraphs}(n, d_a, d_p)$, and save the graphs into variable $G_n$ (row \ref{alg:counterexample_finder:Gn}).
+Now, for each graph $g \in G_n$ (row \ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ is unsolvable using the function $\textsc{IsUnsolvable}(\Pi, g)$ (row \ref{alg:counterexample_finder:is_unsolvable}).
+If it is unsolvable, we return the graph as an counterexample (row \ref{alg:counterexample_finder:return_g}).
+In the case there are no counterexamples in graphs of size $n_{low}$ to $n_{high}$, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
 
-%To prove this we first assume the opposite.
-%That is, the problem $\Pi$ is possible to be solved in PN model.
-%Then we try to find a counterexample that proves the assumption to be false.
-%A graph in which we cannot find any viable labelling is a good counterexample, as this directly shows that we cannot solve the LCL problem in every graph.
-%Therefore by finding a counterexample we show that the problem is impossible to be solved in PN model.
+Up to this moment, we have not discussed about how the function $$\textsc{GenerateGraphs}(n, d_a, d_p)$$ from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed about how the function $$\textsc{IsUnsolvable}(\Pi, g)$$ from row \ref{alg:counterexample_finder:is_unsolvable} determines the unsolvability used in the Algorithm \ref{alg:counterexample_finder}.
+These functions are implementation specific and in this section we assume that they exist as black boxes.
+Later on the section \ref{sec:implementation} we introduce our implementations of these functions.
+%First we would like to discuss about the $\textsc{GenerateGraphs}(n)$.
+%As we know from the section \ref{}, %TODO refer to LCL section and make sure that it defines the LCL problems we are using here (LCL for (b,a)-biregular graphs).
+%the LCL problems used in this thesis are defined for $(b,a)$-biregular graphs.
+%Therefore we should not generate \emph{all} graphs but only the graphs of type $(b,a)$-biregular, where the degrees $b$ and $a$ are taken from the LCL problem $\Pi$.
 
-For each pair of LCL problem and graph, we want to be able to check if labelling is impossible.
-To perform the checking, we first encode the problem and graph into a SAT problem.
-Then we leverage the power of SAT solvers to solve the SAT problem.
-We feed the SAT problem into the solver, which returns either SAT (satisfiable) or UNSAT (unsatisfiable) as a result.
-In case the result is UNSAT, we have found a counterexample and we are done.
-Otherwise we can continue searching using some other graph.
-The routine is illustrated on Figure \ref{fig:implementatio:idea:1}.
 
-\begin{figure}[H]
-\centering
-\includegraphics[]{diagrams/implementation_idea_diagram2.pdf}
-\caption{The SAT routine. When given a graph and an LCL problem, it checks if a valid labelling exists.}
-\label{fig:implementatio:idea:1}
-\end{figure}
 
-We repeat the routine for each graph in the current search space and terminate early if the result is UNSAT.
-A solid and logical strategy is to first start with the smallest graphs and continue incrementally, increasing the size of graphs  after previous size has been searched entirely.
-This can be indeed trivially automated as long as the routine is implemented.
-User needs to only input the lower and upper bounds of graph sizes.
-Here the graph size is the number of vertices, that is, $n=|V|$.
-A search space can be for example every graph from $1$ to $15$.
-Then the set of graphs would be $\{(V, E) : |V| \in \{1, 2, ..., 15\} \}$.
+%TODO talk about graphs, why they are actually (b, a)-biregular multigraphs.
+%TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
 
-\begin{figure}[H]
-\centering
-\includegraphics[]{diagrams/implementation_idea_diagram3.pdf}
-\caption{An example of an execution of multiple SAT routines. Execution terminates at graph $23077$ when first UNSAT is encountered.}
-\label{fig:implementatio:idea:2}
-\end{figure}
+\begin{theorem}
+    Later we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
+    \todo{Complete this theorem} % TODO complete this theorem
+\end{theorem}
 
-%TODO biregular multigraphs?
-%TODO LCL problems on biregular trees etc?
-
-When we assume that an LCL problem $\Pi$ is solvable in PN, we mean that there exists a deterministic distributed algorithm $A$ in PN model, that finds a solution for all multigraphs i.e. algorithm $A$ works in every multigraph.
-Every simple graph is also a multigraph, thus multigraphs are more relaxed in terms of definition.
-Allowing parallel edges potentially gives us counter examples with smaller graph sizes when we use the increasing strategy i.e. our algorithm might terminate succesfully much earlier with the desired result and graphs do not necessarily become as complex as they would be with only simple graphs.
-%TODO where to discuss about solutions that have been found only with multigraphs? Have we found any solutions with only simple graphs?
-Smaller graphs mean less complexity and less performance required but as there are also more graphs to iterate, it is not so simple to justify allowing parallel edges only with this argument.
-The main argument is that allowing parallel edges gives us more opportunities to find counterexamples.
-It might be that in some problems we cannot even find counterexamples without parallel.
-
-%This is indeed what we have used in this work.
-%Probably, we have to iterate a lot of graphs.
-%For this purpose we want to be able to generate the graphs.
+\begin{proof}
+    We take a lift $N'$ from $N$ with where $\max \deg_N(v) * |N| =|N'|$.
+    This new network $N'$ is by definition a simple network for which there exists a covermap $\phi(N')=N$.
+    Thus there exists no PN algorithm $A$ that can solve problem $\Pi$ in $N'$.
+    \todo{Complete this proof} %TODO Complete this proof
+    %TODO Make sure that the covering maps and lifts are explained under section 2. background.
+\end{proof}
