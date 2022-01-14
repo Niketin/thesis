@@ -1,10 +1,10 @@
 %!tex root = ../main.tex
 
 \section{Background} \label{sec:background}
-%TODO Could also be named as "Theoretical background"
-To understand the implementation chapter \ref{sec:implementation}, in this section we introduce relevant terminology and concepts.
+\todo{This top level section is outdated and needs to be revised after the subsections have been finalized.}
+%TODO Fix Background top level section so that it is dated.
+In this section, we introduce relevant terminology and concepts to prepare the reader for the sections \ref{sec:research_question}-\ref{sec:implementation}.
 
-%TODO Add info about section \ref{sec:graphs}
 
 In the first section (\ref{sec:distributed_computing}) of this chapter, we discuss about the essential concepts in the theory of distributed computing.
 The section aims to explain the meaning of distributed computing and gives an introduction to the main model of distributed computing, \emph{message passing model}, from which many of the researched models inherit from.
@@ -22,20 +22,19 @@ Finally, in the last section (\ref{sec:prior_work}), we talk about previous rese
 In the real world, there are many objects that are somehow related to each other.
 Such things can often be visualized by a diagrams that consists of points, and lines that connect a pair of points.
 A graph is a mathematical concept that abstracts the relations of these objects.
-In the literature, the points are called vertices and lines are called edges.
+In the literature, the points are called vertices and the lines are called edges.
 \cite{DBLP:books/others/BondyM76}
 
+\begin{definition}
 Mathematically, graph can be defined as a tuple $$G = (V, E)$$ where $V$ is the set of vertices and $E$ is the set of edges.
 %Each vertex $v \in V$
-Each edge $e \in E$ can also be thought as a tuple $e=(v, w), v, w \in V$, where vertices $v$ and $w$ are the endpoints of the edge $e$.
+An edge $e \in E$ can also be thought as a pair (2-tuple or 2-element ordered list) $e=(v, w), v, w \in V$, where vertices $v$ and $w$ are the endpoints of the edge $e$.
+\end{definition}
 For example, $G=(\{1, 2, 3\}, \{(1, 2),(1, 3),(2, 3),(3, 2)\})$, and visualized it looks like the graph on Figure \ref{fig:graph1:a}.
 
-When the order of the vertices in an edge matters, we call the graph as a \emph{directed graph} or with the shortened variation \emph{digraph}.
-For digraphs, the following statement must hold:
-\begin{equation} \label{eq:1}
-\forall v, w \in V, v \neq w: (v, w) \neq (w, v)
-\end{equation}
-In that case, the first vertex $v$ points to the vertex $w$.
+When the edge is defined as a pair, the order of the vertices in an edge matters, that is, $\forall v, w \in V, v \neq w: (v, w) \neq (w, v)$.
+We call such a graph as a \emph{directed graph} or with the shortened variation \emph{digraph}.
+In an edge, the first vertex $v$ points to the vertex $w$.
 Usually the edge is visualized as an arrow pointing from $v$ to $w$.
 One example of a directed graph is a flow graph, in which the edges represent flows from a vertex to another vertex, as seen in the Figure \ref{fig:graph1:a}.
 
@@ -83,35 +82,40 @@ One example of a directed graph is a flow graph, in which the edges represent fl
   \label{fig:graph1}
 \end{figure}
 
-Undirected graph is the opposite of directed graph in the sense that the order of the vertices in an edge does not matter:
+Undirected graph is the opposite of directed graph in the sense that the order of the vertices in an edge does not matter.
+An edge of an undirected graph is defined as an unordered pair, therefore the following holds:
 \begin{equation}
 \forall v, w \in V: (v, w) = (w, v)
 \end{equation}
 For example $E=\{(1, 2), (1, 2), (3, 2), (2, 3), (1, 3)\}=\{(1,2),(1,3),(2,3)\}$.
-Visualization of this graph can be seen in the Figure \ref{fig:graph1:b}.
-For the purpose of this work, we need only undirected edges.
+Visualization of this graph $G=(\{1,2,3\}, E)$ can be seen in the Figure \ref{fig:graph1:b}.
+For the purpose of this work, we need only undirected graphs.
 
 The definitions of graphs shown earlier do not restrict an edge to start and end in itself ($e=(v, v)$).
 This kind of an edge is called a \emph{loop}.
-The definition however restricts multiple same edges, \emph{parallel edges}.
-In order to allow parallel edges, the edge set has to be defined as a multiset.
-A graph that allows parallel edges, is called a \emph{multigraph}.
+The definitions however restricts \emph{multiple edges} (identical parallel edges).
+In order to allow multiple edges, the edge set has to be defined as a \emph{multiset}.
+A graph that allows multiple edges, is called a \emph{multigraph}.
 Depending on the author or context, multigraphs either allow or disallow loops.
 In this work, we consider multigraphs to exist without loops.
 Notice that on the Figure \ref{fig:graph1:a}, there is an edge that points to both directions.
-This is, in fact, not one but two edges in parallel.
-It is common to visualize such cases using a two-way arrow.
+This is, in fact, not one but two opposite directed edges $\{(2,3), (3,2)\}$ (in a multiset) visualized as a single two-way arrow.
 
-A graph that has no loops or parallel edges, is called as a \emph{simple graph}.
+A graph that has no loops or multiple edges, is called as a \emph{simple graph}.
 Simple graphs can either be directed or undirected and it should be explicitly mentioned when defining graphs, unless the context implies it.
 As we do not need directedness of edges, let us assume that further expressions of graphs are always undirected in this work.
 
-For an edge $e=(v, w) \in E$ we say that $v$ is \emph{incident} to $w$ and vice versa.
-If two edges share a vertex, we say that the edges are \emph{adjacent}.
-The degree of a vertex is the number of edges it is connected to.
-We will use the notation $\deg_G(v)$ to denote the degree of vertex $v \in V, G=(V,E)$.
+Let edge $e=(v,w)$.
+We say that vertex $v$ is \emph{incident} to $e$ and $e$ is incident to $v$.
+Same applies to vertex $w$ (swap $v$ and $w$).
+We also say that vertex $v$ is \emph{adjacent} to $w$ and vice versa.
+Similiary when two edges share a vertex, we say that the edges are \emph{adjacent}.
 
-A graph that is bipartite, has exactly two disjoint sets of vertices ($A$ and $B$), and every edge of the graph has one endpoint in vertex of $A$ and another in $B$:
+In a graph, the degree of a vertex is the number of edges it is incident to.
+We will use the notation $\deg_G(v)$ to denote the degree of vertex $v \in V, G=(V,E)$.
+In multigraphs with loops, a loop counts as 2 to a degree.
+
+A graph that is bipartite, has exactly two disjoint sets of vertices (we call them part $A$ and part $B$), and every edge of the graph has one endpoint in vertex of $A$ and another in $B$:
 \begin{equation}
 V = A \cup B, A \cap B = \emptyset, E=\{(a, b) | a \in A, b \in B\}
 \end{equation}
@@ -150,14 +154,14 @@ An example of a bipartite graph can be seen in the Figure \ref{fig:graph2}.
   %\draw (mat1-2-1) edge (mat2-2-1);
   \draw (mat1-2-1) edge (mat2-3-1);
 \end{tikzpicture}
-\caption{A simple bipartite graph.\label{fig:graph2}}
+\caption{A simple disconnected bipartite graph.\label{fig:graph2}}
 \end{figure}
 
 If all vertices in a graph have the same degree, then the graph is called \emph{regular}.
-For example, if every vertex in a bipartite graph has the same degree, then we call it regular bipartite graph.When each part of bipartite graph is regular, we call it \emph{biregular graph}.
-In fact, we use notation $(d_A,d_B)$-biregular, where $d_A$ and $d_B$ denote the degrees of the nodes inside partitions $A$ and $B$ respectively.
+For example, if every vertex in a bipartite graph has the same degree, then we call it regular bipartite graph. When each part of a bipartite graph is regular, we call it \emph{biregular graph}.
+In fact, we use a notation $(d_A,d_B)$-biregular, where $d_A$ and $d_B$ denote the degrees of the nodes inside parts $A$ and $B$ respectively.
 We can see an example of a (3,2)-biregular in the Figure \ref{fig:graph3}.
-The bipartite graph in the Figure \ref{fig:graph2} is not biregular because the nodes in part $A$ do not share degrees i.e. $\forall v, w \in A: \deg_G(v) = \deg_G(w)$ does not hold.
+The bipartite graph in the Figure \ref{fig:graph2} is not biregular because the nodes in part $A$ do not share a degree i.e. $\forall v, w \in A: \deg_G(v) = \deg_G(w)$ does not hold.
 
 \begin{figure}[H]
 \centering
@@ -193,14 +197,15 @@ The bipartite graph in the Figure \ref{fig:graph2} is not biregular because the 
 \caption{A simple (3,2)-biregular graph.\label{fig:graph3}}
 \end{figure}
 
+
 A graph is considered as \emph{connected} if from every node one can traverse through the edges to all other nodes i.e. every pair of nodes need to also be connected.
-For instance, the graph in Figure \ref{fig:graph2} has two isolated vertex subsets $\{2, 5\}$ and $\{1, 3, 4\}$, therefore the graph is not connected.
+For instance, the graph in Figure \ref{fig:graph2} has two isolated vertex subsets $\{2, 5\}$ and $\{1, 3, 4\}$, therefore the graph is \emph{disconnected}.
 On the other hand, the graphs on Figures \ref{fig:graph1:b}, \ref{fig:graph1:c} and \ref{fig:graph3} are connected.
 Let's not worry about the connectivity of the directed graph on Figure \ref{fig:graph1:a} as directed graphs are not relevant to this work other than in this section.
 
 
 \subsection{Distributed computing} \label{sec:distributed_computing}
-Computing or processing a computer program in several identical or different computers is called distributed computing
+Executing a computer program in several identical or different computers is called distributed computing
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
 It is similiar to running a computer program that contains multiple concurrent tasks, in a computer, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
 
@@ -274,7 +279,7 @@ The main way to distinguish different process models from each other is to categ
 
 %\subsubsection{Message passing model} \label{sec:message_passing_model}
 Message passing models are one form of a process model.
-In the model, processes communicate by adding a message to a message queue, whether it is a shared or a process specific, and the recipient process moves the message out (dequeues) from the message queue.
+In the model, processes communicate by adding a message to a message queue, whether the queue is a shared or a process specific, and the recipient process moves the message out (dequeues) from the message queue.
 \cite{DBLP:books/el/leeuwen90/LamportL90}
 
 Different message passing models are widely used in the research field of distributed computing.
@@ -301,10 +306,10 @@ In other research there might be randomizing involved.
 
 
 %TODO Find a correct place to talk  about execution times if there is any}
-In the message passing model, one could easily think that the execution time of the algorithm is the standard unit used to measure the performance but this is not true.
-The message passing model implies that the dominant cost during an execution of a distributed algorithm is the message passing itself
-\cite{DBLP:books/el/leeuwen90/LamportL90}.
-This really...
+%In the message passing model, one could easily think that the execution time of the algorithm is the standard unit used to measure the performance but this is not true.
+%The message passing model implies that the dominant cost during an execution of a distributed algorithm is the message passing itself
+%\cite{DBLP:books/el/leeuwen90/LamportL90}.
+%This really...
 %TODO continue here
 
 
@@ -316,31 +321,24 @@ This really...
 %With formal definitions, we can discuss more about the structure of distributed networks and reason features of those networks.
 %We can further construct proofs of different theorems and so on. %TODO Fix this paragraph
 
-The algorithms that are executed in distributed fashion, are called distributed algorithms.
-%TODO where to write about distributed algorithms?
-%A distributed algorithm is a specific type of algorithm that is executed in distributed fashion.
-Specifically, each node executes the same algorithm.
 
-%%TODO write about computation models, why they exist
-
-
-\subsubsection{Port number model} \label{sec:port_number_model}
+\subsection{Port number model} \label{sec:port_number_model}
 This section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
 Port number model (PN model) is a rather weak model of computation that inherits from the message passing model.
 In the model, nodes do not have identification.
-An algorithm that executes in a port number model is called as a PN-algorithm.
+A distributed algorithm that executes in a port number model is called as a PN-algorithm.
 
 We can basically take any network $N$ that has the same structure as a simple undirected graph $G$.
 Each vertex of $G$ can be one-to-one mapped (bijection) to the nodes of $N$ and vice-versa.
-Respectively all edges $\{v, w\}$ of $G$ can be mapped to communication channels between nodes $v$ and $w$.
+Respectively all edges $(v, w)$ of $G$ can be mapped to communication channels between nodes $v$ and $w$.
 
 Communication channels start and end from communication ports.
 Each node has communication ports numbered from $1$ to $d$ where $d$ is the degree of the node.
 The ports are numbered in an arbitrary order.
 
 All nodes are considered identical, however nodes know their degree and it might differ between different nodes depending on the underlying graph $G$.
-Every node starts the execution simultaneously following the same deterministic PN-algorithm $A$.
+Every node starts the execution simultaneously following the same PN-algorithm $A$.
 The execution of $A$ is done synchronously in parallel.
 A communication round consists of following synchronous steps
 \begin{enumerate}
@@ -359,11 +357,11 @@ The running time of the algorithm $A$ is the total communication rounds that too
 As in the previous section, this section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
 In the section \ref{sec:port_number_model} we briefly and informally introduced the PN model.
-Now in this section and in the following subsections we give a more formal definition of the PN model.
+Now in this section and in the following subsections we give a more formal definition to the PN model.
 
-We call the network as a port number network or a PN-network
-Port-numbering network is a 3-element tuple $N = (V, P, p)$, where $V$ and $P$ are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
-A port, an element of $P$, is a 2-element tuple $(v, i)$ where $v \in V$ and $i \in \{1, 2, ...\}$.
+We call the network as a port number network or a PN network.
+PN network is a 3-element tuple $N = (V, P, p)$, where $V$ and $P$ are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
+A port, an element of $P$, is a pair $(v, i)$ where $v \in V$ and $i \in \{1, 2, ...\}$.
 Additionally we assume that $p$ is an involution, that is, $\forall x \in P : p(p(x)) = x, $ i.e. each edge of the underlying graph is undirected.
 See the Figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples of valid and invalid PN networks.
 

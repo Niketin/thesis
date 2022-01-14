@@ -6,12 +6,12 @@ In this section, we will introduce the basic idea of an essential algorithm that
 The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in PN model.
 Here we specifically allow PN networks to have multiple connections.
 Later we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
+Finally we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 
+%TODO These definitions and theorems might have a better place under section 2 background.
 \begin{definition} \label{def:lcl_solvability}
     An LCL problem $\Pi$ is solvable in PN model, if and only if there exists a PN algorithm $A$ that can find a solution for $\Pi$ in all PN networks.
 \end{definition}
-
-%The Definition \ref{def:lcl_solvability} works for PN networks with multiple connections\dots
 
 We can define an alternative version of the Definition \ref{def:lcl_solvability} using contraposition.
 \begin{definition} \label{def:lcl_solvability:contrapositive}
@@ -31,10 +31,11 @@ The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapos
 \end{proof}
 
 As the Theorem \ref{thm:lcl_nonsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
-Using this fact, we can come up with an algorithm that automatically tries to find an counterexample.
+To show that, it is enough to find an underlying graph $G$ of $N$ in which the problem $\Pi$ cannot be solved.
+Using this fact, we can come up with an algorithm that automatically tries to find an counterexample graph.
 
 \begin{algorithm}[H]
-    \caption{Counterexample finder algorithm}
+    \caption{Counterexample graph finder algorithm}
     \label{alg:counterexample_finder}
     \begin{algorithmic}[1] % The number tells where the line numbering should start
         \Require $1 \leq n_{low} \leq n_{high}$
@@ -58,9 +59,11 @@ Using this fact, we can come up with an algorithm that automatically tries to fi
 The Algorithm \ref{alg:counterexample_finder} is designed to find the smallest counterexample graph for an LCL problem $\Pi$.
 It starts from graphs of size $n_{low}$ and goes up to graphs of size $n_{high}$.
 %TODO define what is a graph's size, in 2. background.
+We define $d_a$ and $d_p$ to be the active and passive degree of the problem $\Pi$ respectively (rows \ref{alg:counterexample_finder:d_a} and \ref{alg:counterexample_finder:d_p}).
 The variable for the current graph size is called $n$ (row \ref{alg:counterexample_finder:n}).
-We define $d_a$ and $d_p$ to be the active and passive degree of problem $\Pi$ respectively (rows \ref{alg:counterexample_finder:d_a} and \ref{alg:counterexample_finder:d_p}).
 For each graph size $n$, we generate all possible $(d_a, d_p)$-biregular multigraphs with $\textsc{GenerateGraphs}(n, d_a, d_p)$, and save the graphs into variable $G_n$ (row \ref{alg:counterexample_finder:Gn}).
+The reason for generating only these types of graphs comes from our definition of LCL problem from section \ref{sec:lcl_problems}, they are defined specifically for $(b,a)$-biregular (multi)graphs.
+%TODO make sure that it defines the LCL problems we are using here (LCL for (b,a)-biregular graphs)
 Now, for each graph $g \in G_n$ (row \ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ is unsolvable using the function $\textsc{IsUnsolvable}(\Pi, g)$ (row \ref{alg:counterexample_finder:is_unsolvable}).
 If it is unsolvable, we return the graph as an counterexample (row \ref{alg:counterexample_finder:return_g}).
 In the case there are no counterexamples in graphs of size $n_{low}$ to $n_{high}$, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
@@ -77,16 +80,26 @@ Later on the section \ref{sec:implementation} we introduce our implementations o
 
 %TODO talk about graphs, why they are actually (b, a)-biregular multigraphs.
 %TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
-
+%TODO Do we need to talk about trees and how these biregular multigraphs relate to them? 'Informally, the idea is to prove negative results for the case in which "we are in the middle of a very large tree, far away from the leaves".'
 \begin{theorem}
     Later we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
     \todo{Complete this theorem} % TODO complete this theorem
 \end{theorem}
 
 \begin{proof}
-    We take a lift $N'$ from $N$ with where $\max \deg_N(v) * |N| =|N'|$.
+    We take a lift $N'$ from $N = (V, P, p)$ with where $|N'| = \max \deg_N(v \forall V) * |N| $.
     This new network $N'$ is by definition a simple network for which there exists a covermap $\phi(N')=N$.
     Thus there exists no PN algorithm $A$ that can solve problem $\Pi$ in $N'$.
     \todo{Complete this proof} %TODO Complete this proof
     %TODO Make sure that the covering maps and lifts are explained under section 2. background.
+    %TODO Actually this lifting procedure could be explained also in the section 2. background.
+\end{proof}
+
+\begin{theorem}
+    If a problem is not solvable in simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
+    %TODO Make sure that the LOCAL model is explained under section 2. background.
+    %TODO Make sure that the solving complexities (($\mathcal{O}(1)$) time) are explained under section 2. background.
+\end{theorem}
+\begin{proof}
+    \todo{Complete this proof} %TODO Complete this proof
 \end{proof}
