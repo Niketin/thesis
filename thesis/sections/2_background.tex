@@ -529,7 +529,7 @@ The components of $A$ are:
   \item $\algmsg_A$ is the set of messages.
 \end{enumerate}
 
-The algorithm always consists of 3 functions, each defined for each degree $d \in \mathbf{N}$.
+The algorithm always consists of 3 functions, each defined for each degree $d \in \mathbb{N}$.
 The first function, $$\alginit_{A,d} : \algin_A \rightarrow \algstates_A$$ initializes the state of the calling node using the given input data.
 %The degree $d$ is also parameterized into the function meaning that the function can operate differently with different degree nodes.
 Each node calls the function $\alginit_{A,d}$ as its first function call.
@@ -545,14 +545,40 @@ The function is given a node's current state and a $d$-element tuple of received
 In return, it gives a state value that represents the node's new state.
 Additionally whenever the current state is an output state $x \in \algout$, we require that the function $\algrecv_{A,d}$ returns the exact same state $x$.
 
-The execution of an algorithm $A$ starts with $\alginit_{A,d}$, as described previously.
-After the initialization, the algorithm executes $\algsend_{A,d}$ and $\algrecv_{A,d}$ consecutively.
-Together the execution of these two functions is called as a \emph{communication round}.
-Communication rounds are repeated one after another.
+\subsubsection{Execution of PN algorithm}
 
-We define the execution time of algorithm $A$ using a single communication round as the time unit.
-Algorithm $A$ stops at time $T$ when each node is in an output state.
-%Algorithm $A$ stops in time $T$ if and only if each node is in an output state.
+As formerly mentioned, a distributed algorithm $A$ can be described as a state machine.
+Correspondingly the \emph{execution} of $A$ can be described as the history of states of each node of a PN network $N=(V, P, p)$.
+Let $f: V \rightarrow \algin_A$ be a node labeling.
+A \emph{state vector} is a function $x: V \rightarrow \algstates_A$.
+The execution of $A$ on $(N, f)$ is a sequence of state vectors $x_0, x_1, ...$ where the $x_0$ is the initial state vector.
+When we use the notation $x_t, t \in \mathbb{Z}_{\geq 0}$, we refer to the state vector at time $t$.
+Similiary, we use $x_t(u), u \in V$ when we refer to the state of the node $u$ at time $t$.
+
+We define $$x_0(u) = \alginit_{A,d}(f(u))$$ where $u\in V$ and $d=\deg_N(u)$.
+The state vectors $x_1, x_2, ...$ are defined recursively in the following paragraph.
+
+We assume that we have defined $x_{t-1}$ and we show how we define $x_{t}$ using the assumption of $x_{t-1}$.
+Let function $m_t: P \rightarrow \algmsg_A$ map a port to a message at time $t$.
+Let port $(v, j) \in P$, port $(u, i) = p((v, j))$, and degree $\deg_N(v) = d'$.
+Let $m_t((u, i))$ be $j$'th element of the vector $\algsend_{A, d'}(x_{t-1}(v))$.
+Here the element $m_t((u, i))$ is a message sent by node $v$ through communication port $(v, j)$.
+It is also the message received by node $u$ from port $(u, i)$.
+
+We define the message vector $$r_t(u)=(m_t((u, 1)), m_t((u, 2)), ..., m_t((u, \deg_N(u))))$$ for each $u\in V$.
+The message vector contains every message node $u$ receives at time $t$.
+
+Now we give the final definition for $x_t(u)$:
+$$x_t(u) = \algrecv_{A,d}(x_{t-1}(u, r_t(u)))$$
+
+Next we define when the execution is considered as stopped, using the definition of execution.
+Algorithm \emph{$A$ stops in time $T$}, if $x_T(u) \in \algout_A$ for each $u \in V$, that is, each node $u$ is in output state at time $T$.
+Algorithm \emph{$A$ stops}, if $A$ stops in some finite time $T$.
+
+
+Now that we know when $A$ stops, we define what is considered as the output of $A$.
+Assuming that $A$ stops in time $T$, we define the \emph{output} of $A$ as $g=x_T$.
+With the same assumption, we define the \emph{local output} of node $u$ as $x_t(u)$.
 
 \todo{Add an example execution of an example problem.} %TODO Add an example execution of an example problem.
 
