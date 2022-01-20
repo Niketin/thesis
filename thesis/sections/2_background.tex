@@ -499,14 +499,58 @@ $\Pi(N)$ is the set of solutions where $N=(V, P, p)$ is a simple PN network.
 A solution $f \in \Pi(N)$ is a node labeling $f: V \rightarrow Y$ where $Y$ is some set of local outputs specific to the problem in question.
 
 Next we will give some examples of distributed graph problems and what kind of node labelings their solutions have.
+\todo{Add more examples?}
+\begin{description}
+  \item[Vertex cover] of a graph $G$ is a subset $V' \subseteq V$ of nodes which together \emph{cover} all edges of the graph, that is, at least one endpoint from each edge must be in the subset $V'$.
+  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover of the underlying graph $G$ of $N$.
+  \item[Independent set] of a graph $G$ is a subset $V' \subseteq V$ of nodes where no two nodes are adjacent. That is, for each $u, v, \in V' s.t. u \neq v$, an edge $(u, v)$ is not in $E$.
+  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
+  \item[3-coloring] of a graph $G$ is 3 subsets $C_1, C_2, C_3 \subset V$ such that the sets are subsets of $V$, and each node is exactly in one subset.
+  Additionally it is required that the subsets are independent sets.
+  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a 3-coloring of the underlying graph $G$ of $N$.
+\end{description}
 
-\emph{Vertex cover} of a graph $G$ is a subset $V' \subseteq V$ of nodes which together \emph{cover} all edges of the graph, that is, at least one endpoint from each edge must be in the subset $V'$.
-A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover of the underlying graph $G$ of $N$.
-\begin{figure}
-  \centering
-  \includegraphics{example-image-duck} %TODO Change this placeholder
-  \caption{An example of a vertex cover and its node labeling}
+\begin{figure}[H]
+  \subcaptionbox{
+    A vertex cover.
+    \label{fig:distributed_graph_problems1:a}
+  }%
+    [.30\linewidth] {
+    \centering
+    \includegraphics[width=0.30\textwidth]{diagrams/formalizing_pn_network_6.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    An independent set.
+    \label{fig:distributed_graph_problems1:b}
+  }%
+    [.30\linewidth] {
+    \centering
+    \includegraphics[width=0.30\textwidth]{diagrams/formalizing_pn_network_7.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A 3-coloring.
+    \label{fig:distributed_graph_problems1:c}
+  }%
+    [.30\linewidth] {
+    \centering
+    \includegraphics[width=0.30\textwidth]{diagrams/formalizing_pn_network_8.pdf}
+  }
+  \caption{Example solutions to different graph problems.
+  In the Figures \ref{fig:distributed_graph_problems1:a} and \ref{fig:distributed_graph_problems1:b}, the blue nodes form a node labeling that denote a solution.
+  In the Figure \ref{fig:distributed_graph_problems1:c} the colors are the color
+  }
+  \label{fig:distributed_graph_problems1}
 \end{figure}
+
+In Figure \ref{fig:distributed_graph_problems1} we can see two examples of graph problem encodings.
+The node labeling in Figure \ref{fig:distributed_graph_problems1:a} is a vertex cover.
+However, the node labeling in Figure \ref{fig:distributed_graph_problems1:b} is not a vertex cover, because there is an edge $(d, f)$ and neither of the nodes are in the solution set $\{c, e\}$.
+The node labeling in Figure \ref{fig:distributed_graph_problems1:b} is an independent set.
+On the other hand, the node labeling in Figure \ref{fig:distributed_graph_problems1:a} is not an independent set, because there is an edge $(e, f)$ and both $e$ and $f$ are in the solution set.
+
+
 
 \subsubsection{Distributed algorithms in the PN model}
 
@@ -580,14 +624,33 @@ Now that we know when $A$ stops, we define what is considered as the output of $
 Assuming that $A$ stops in time $T$, we define the \emph{output} of $A$ as $g=x_T$.
 With the same assumption, we define the \emph{local output} of node $u$ as $x_t(u)$.
 
+
+
 \todo{Add an example execution of an example problem.} %TODO Add an example execution of an example problem.
 
+\subsubsection{Solving graph problems in PN}
+\todo{This is probably needed}
+%% HERE IS SOME DRAFT TEXT WRITTEN ABOUT THE ABOVE TOPIC.
+%As this thesis focuses strongly on graph problems, it is necessary to define what it means for a distributed algorithm to solve a graph problem.
+%
+%A family of graphs is a set of graphs with same kind of properties.
+%For example a set of all simple undirected graphs is a family of graphs.
+%
+%Let $\mathcal{F}$ be a family of simple undirected graphs.
+%
+%When we say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given problem $\Pi'$ if the execution
 
-
-
-
+\subsubsection{Covering maps}
+\todo{This is probably needed because we basically talk about covering maps when we use the word "lift" on Section \ref{sec:algorithm}.}
 
 \subsection{LOCAL model} \label{sec:local_model}
+The LOCAL model is another message passing model that is used in the field of distributed computation.
+It is similiar with PN model so most of the definition is already done.
+The exception is that the given problem $\Pi'$ is always predetermined.
+A solution to problem $\Pi'$ is a node labeling $\operatorname{id}: V \rightarrow \{1,2,...,|V|^c\}$, where each node has a unique label.
+If a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given $\Pi'$, we say that $A$ solves $\Pi$ on graph family $\mathcal{F}$ in the LOCAL model.
+
+\todo{Talk about the benefits on the local model when compared to PN model (symmetry breaking things). ONLY IF NEEDED}
 
 \subsection{LCL problems} \label{sec:lcl_problems}
 
