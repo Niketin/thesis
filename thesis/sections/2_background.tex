@@ -505,6 +505,8 @@ Next we will give some examples of distributed graph problems and what kind of n
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover of the underlying graph $G$ of $N$.
   \item[Independent set] of a graph $G$ is a subset $V' \subseteq V$ of nodes where no two nodes are adjacent. That is, for each $u, v, \in V' s.t. u \neq v$, an edge $(u, v)$ is not in $E$.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
+  \item[Maximal independent set] of a graph $G$ is an independent subset $V' \subseteq V$ of nodes such that there is no additional vertex $w \in V \backslash V'$ that can be included in $V'$ s.t. it stays as an independent set.
+  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
   \item[3-coloring] of a graph $G$ is 3 subsets $C_1, C_2, C_3 \subset V$ such that the sets are subsets of $V$, and each node is exactly in one subset.
   Additionally it is required that the subsets are independent sets.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a 3-coloring of the underlying graph $G$ of $N$.
@@ -521,7 +523,7 @@ Next we will give some examples of distributed graph problems and what kind of n
   }
   \hfill
   \subcaptionbox{
-    An independent set.
+    A maximal independent set.
     \label{fig:distributed_graph_problems1:b}
   }%
     [.30\linewidth] {
@@ -539,7 +541,7 @@ Next we will give some examples of distributed graph problems and what kind of n
   }
   \caption{Example solutions to different graph problems.
   In the Figures \ref{fig:distributed_graph_problems1:a} and \ref{fig:distributed_graph_problems1:b}, the blue nodes form a node labeling that denote a solution.
-  In the Figure \ref{fig:distributed_graph_problems1:c} the colors are the color
+  In the Figure \ref{fig:distributed_graph_problems1:c} there are two additional labels, yellow and green in order there to be 3 labels for 3 colors.
   }
   \label{fig:distributed_graph_problems1}
 \end{figure}
@@ -547,7 +549,7 @@ Next we will give some examples of distributed graph problems and what kind of n
 In Figure \ref{fig:distributed_graph_problems1} we can see two examples of graph problem encodings.
 The node labeling in Figure \ref{fig:distributed_graph_problems1:a} is a vertex cover.
 However, the node labeling in Figure \ref{fig:distributed_graph_problems1:b} is not a vertex cover, because there is an edge $(d, f)$ and neither of the nodes are in the solution set $\{c, e\}$.
-The node labeling in Figure \ref{fig:distributed_graph_problems1:b} is an independent set.
+The node labeling in Figure \ref{fig:distributed_graph_problems1:b} is a maximal independent set.
 On the other hand, the node labeling in Figure \ref{fig:distributed_graph_problems1:a} is not an independent set, because there is an edge $(e, f)$ and both $e$ and $f$ are in the solution set.
 
 
@@ -640,7 +642,7 @@ With the same assumption, we define the \emph{local output} of node $u$ as $x_t(
 %
 %When we say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given problem $\Pi'$ if the execution
 
-\subsubsection{Covering maps}
+\subsection{Covering maps}
 \todo{This is probably needed because we basically talk about covering maps when we use the word "lift" on Section \ref{sec:algorithm}.}
 
 \subsection{LOCAL model} \label{sec:local_model}
