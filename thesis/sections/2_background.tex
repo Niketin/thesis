@@ -26,13 +26,13 @@ In the literature, the points are called vertices and the lines are called edges
 \cite{DBLP:books/others/BondyM76}
 
 \begin{definition}
-Mathematically, graph can be defined as a tuple $$G = (V, E)$$ where $V$ is the set of vertices and $E$ is the set of edges.
+Mathematically, a graph can be defined as a tuple $$G = (V, E)$$ where $V$ is the set of vertices and $E$ is the set of edges.
 %Each vertex $v \in V$
-An edge $e \in E$ can also be thought as a pair (2-tuple or 2-element ordered list) $e=(v, w), v, w \in V$, where vertices $v$ and $w$ are the endpoints of the edge $e$.
+An edge $e \in E$ can also be thought of as a pair (2-tuple or 2-element ordered list) $e=(v, w), v, w \in V$, where vertices $v$ and $w$ are the endpoints of the edge $e$.
 \end{definition}
 For example, $G=(\{1, 2, 3\}, \{(1, 2),(1, 3),(2, 3),(3, 2)\})$, and visualized it looks like the graph on Figure \ref{fig:graph1:a}.
 
-When the edge is defined as a pair, the order of the vertices in an edge matters, that is, $\forall v, w \in V, v \neq w: (v, w) \neq (w, v)$.
+When an edge is defined as a pair, the order of the vertices in the edge matters, that is, $\forall v, w \in V, v \neq w: (v, w) \neq (w, v)$.
 We call such a graph as a \emph{directed graph} or with the shortened variation \emph{digraph}.
 In an edge, the first vertex $v$ points to the vertex $w$.
 Usually the edge is visualized as an arrow pointing from $v$ to $w$.
@@ -271,15 +271,15 @@ A common way to visualize these networks is by drawing a graph in which the node
 \end{figure}
 According to Lamport \cite{DBLP:books/el/leeuwen90/LamportL90}, in the area of distributed computing, the term \emph{model} denotes a view or abstract representation of a distributed system.
 There are multiple different computation models used in distributed computing.
-The most important main category of distributed computation models is \emph{process models}.
+The most important category of distributed computation models is \emph{process models}.
 In process models, the work or activities are represented as concurrently executed processes that execute their instructions sequentially.
-The main way to distinguish different process models from each other is to categorise them by the method they use to communicate with each other (\emph{interprocess communication}).
+A standard way to distinguish different process models from each other is to categorise them by the method they use to communicate with each other (\emph{interprocess communication}).
 \cite{DBLP:books/el/leeuwen90/LamportL90}
 
 
 %\subsubsection{Message passing model} \label{sec:message_passing_model}
 Message passing models are one form of a process model.
-In the model, processes communicate by adding a message to a message queue, whether the queue is a shared or a process specific, and the recipient process moves the message out (dequeues) from the message queue.
+In the model, processes communicate by adding a message to a message queue, and the recipient process moves the message out (dequeues) from the message queue.
 \cite{DBLP:books/el/leeuwen90/LamportL90}
 
 Different message passing models are widely used in the research field of distributed computing.
@@ -329,15 +329,15 @@ Port number model (PN model) is a rather weak model of computation that inherits
 In the model, nodes do not have identification.
 A distributed algorithm that executes in a port number model is called as a PN-algorithm.
 
-We can basically take any network $N$ that has the same structure as a simple undirected graph $G$.
-Each vertex of $G$ can be one-to-one mapped (bijection) to the nodes of $N$ and vice-versa.
-Respectively all edges $(v, w)$ of $G$ can be mapped to communication channels between nodes $v$ and $w$.
+%We can basically take any network $N$ that has the same structure as a simple undirected graph $G$.
+%Each vertex of $G$ can be one-to-one mapped (bijection) to the nodes of $N$ and vice-versa.
+%Respectively all edges $(v, w)$ of $G$ can be mapped to communication channels between nodes $v$ and $w$.
 
 Communication channels start and end from communication ports.
 Each node has communication ports numbered from $1$ to $d$ where $d$ is the degree of the node.
 The ports are numbered in an arbitrary order.
 
-All nodes are considered identical.
+All nodes are considered identical; initially they are in the same internal state.
 %TODO IS THIS NEEDED? However, nodes know their degree and there can be different degreed nodes, depending on the underlying graph $G$.
 Every node starts the execution simultaneously following the same PN-algorithm $A$.
 The execution of $A$ is done synchronously in parallel.
@@ -359,7 +359,6 @@ In the section \ref{sec:port_number_model} we briefly and informally introduced 
 Now in this section and in the following subsections we give a more formal definition to the PN model.
 As in the previous section, this section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
-We call the network as a port number network or a PN network.
 PN network is a 3-element tuple $N = (V, P, p)$, where $V$ and $P$ are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
 A port, an element of $P$, is a pair $(v, i)$ where $v \in V$ and $i \in \{1, 2, ...\}$.
 Additionally we assume that $p$ is an involution, that is, $\forall x \in P : p(p(x)) = x, $ i.e. each edge of the "underlying graph" is undirected.
@@ -449,7 +448,7 @@ For example the network is simple in the Figure \ref{fig:formal_pn2:a}.
 
 \subsubsection{Underlying graph}
 
-Each simple PN network $N=(V,P,p)$ has a concept called an \emph{underlying graph} $G=(V,E)$.
+Each simple PN network $N=(V,P,p)$ has an \emph{underlying graph} $G=(V,E)$.
 An edge $(v, w)$ is part of the underlying network $G$ if and only if $v$ is connected to $w$, that is, $E = \{ (v, w) \, | \,  p((v, i)) = (w, j) \}$.
 A network with multiple connections uses the same definition to determine an underlying network, but in that case $E$ has to be a multiset instead of a set, in order to allow multiple same edges.
 
@@ -475,42 +474,40 @@ A network with multiple connections uses the same definition to determine an und
   \label{fig:underlying_graphs1}
 \end{figure}
 
-\subsubsection{Node labelings}
+%\subsubsection{Node labelings}
+\subsubsection{Distributed graph problems}
+Researchers are often interested in different distributed graph problems.
+These problems always have some kind of set of solution.
+As it turns out, many of these problems can be encoded using the node labelings.
+
 %TODO feels like this needs a smooth transition from the previous topic
 Node labelings are a way to associate information with each node $v \in V$.
 It is defined as a function $f: V \rightarrow Y$ where $Y$ is an arbitrary set of labels.
 
-We can use the concept of node labelings to represent a subset of nodes $X \subseteq V$ by using a node labeling $g: V \rightarrow \{0,1\}$ where $g(v) = 1$ indicates that $v \in X$ and $g(v) = 0$ indicates that $v \notin X$.
-
-%TODO Mention edge labeling?
-%We can also have an edge labeling with some additional work
-
-
-\subsubsection{Distributed graph problems}
-We are coming close to the topic of defining algorithms in PN network.
-Before that, we need to introduce distributed graph problems.
-
-Researchers are often interested in different distributed graph problems.
-These problems always have some kind of set of solution.
-As it turns out, many of these problems can be encoded using the node labelings.
+We can use the concept of node labelings to represent subsets $X_1, X_2, ... X_n \in V$ for some $n \in \mathbb{Z}_{>0}$ with node labeling $g: V \rightarrow \{1, 2, ..., n\}$ where $g(v) = i$ indicates that $v \in X_i$ and $v \notin X_j, j \neq i$.
+Note that the subsets $X_1, X_2, ... X_n$  are disjoint, and $X_1 \cup X_2 \cup ... \cup X_n = V$.
 
 Let $\Pi$ be a distributed graph problem.
 $\Pi(N)$ is the set of solutions where $N=(V, P, p)$ is a simple PN network.
 A solution $f \in \Pi(N)$ is a node labeling $f: V \rightarrow Y$ where $Y$ is some set of local outputs specific to the problem in question.
 
-Next we will give some examples of distributed graph problems and what kind of node labelings their solutions have.
-\todo{Add more examples?}
+%Next we will give some examples of distributed graph problems and what kind of node labelings their solutions have.
+For example:
 \begin{description}
   \item[Vertex cover] of a graph $G$ is a subset $V' \subseteq V$ of nodes which together \emph{cover} all edges of the graph, that is, at least one endpoint from each edge must be in the subset $V'$.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover of the underlying graph $G$ of $N$.
   \item[Independent set] of a graph $G$ is a subset $V' \subseteq V$ of nodes where no two nodes are adjacent. That is, for each $u, v, \in V' s.t. u \neq v$, an edge $(u, v)$ is not in $E$.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
-  \item[Maximal independent set] of a graph $G$ is an independent subset $V' \subseteq V$ of nodes such that there is no additional vertex $w \in V \backslash V'$ that can be included in $V'$ s.t. it stays as an independent set.
+  \item[Maximal independent set] of a graph $G$ is an independent subset $V' \subseteq V$ of nodes such that there is no additional vertex $w \in V \backslash V'$ that can be included in $V'$ such that it stays as an independent set.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
-  \item[3-coloring] of a graph $G$ is 3 subsets $C_1, C_2, C_3 \subset V$ such that the sets are subsets of $V$, and each node is exactly in one subset.
-  Additionally it is required that the subsets are independent sets.
-  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a 3-coloring of the underlying graph $G$ of $N$.
+  \item[$k$-coloring] of a graph $G$ is partition of $V$ with $k$ subsets $X_1, X_2, ..., X_k$ where each subset is an independent set.
+  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a $k$-coloring of the underlying graph $G$ of $N$.
 \end{description}
+
+In the first three problems it seems like we are looking for only one subset of vertices $V' \subseteq V$.
+Indeed, but we also have the subset of vertices $V \backslash V'$, thus $n=2$.
+Therefore we can define $X_1 = V'$ and $X_2 = V \backslash V'$.
+In the problem $k$-coloring, we are looking for $k$ subsets of vertices $X_1, X_2, ..., X_k$, therefore $n=k$.
 
 \begin{figure}[H]
   \subcaptionbox{
@@ -631,16 +628,20 @@ With the same assumption, we define the \emph{local output} of node $u$ as $x_t(
 \todo{Add an example execution of an example problem.} %TODO Add an example execution of an example problem.
 
 \subsubsection{Solving graph problems in PN}
-\todo{This is probably needed}
-%% HERE IS SOME DRAFT TEXT WRITTEN ABOUT THE ABOVE TOPIC.
-%As this thesis focuses strongly on graph problems, it is necessary to define what it means for a distributed algorithm to solve a graph problem.
-%
-%A family of graphs is a set of graphs with same kind of properties.
-%For example a set of all simple undirected graphs is a family of graphs.
-%
-%Let $\mathcal{F}$ be a family of simple undirected graphs.
-%
-%When we say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given problem $\Pi'$ if the execution
+As this thesis focuses strongly on graph problems, it is necessary to define what it means for a distributed algorithm to solve a graph problem.
+
+A family of graphs is a set of graphs with same kind of properties.
+For example a set of all simple undirected graphs is a family of graphs.
+
+Let $\mathcal{F}$ be a family of simple undirected graphs.
+We assume that $N=(V, P, p)$ is a simple PN network, the underlying graph $G$ of $N$ is in the family $\mathcal{F}$ and finally the input $f$ to the algorithm $A$ is in $\Pi'(N)$.
+We say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given problem $\Pi'$, if the execution of $A$ on $(N, f)$ stops and yields an output $g \in \Pi(N)$.
+
+The input problem $\Pi'$ is often omited.
+Then we say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$.
+
+\todo{Continue from here}
+
 
 \subsection{Covering maps}
 \todo{This is probably needed because we basically talk about covering maps when we use the word "lift" on Section \ref{sec:algorithm}.}
