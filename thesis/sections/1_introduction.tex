@@ -30,13 +30,13 @@ A distributed network is modelled as an undirected graph where each node represe
 Nodes are always connected to a fixed number of other nodes and the connections do not change.
 \cite{DBLP:journals/siamcomp/NaorS95}
 
-An algorithm is the program that is given to each node in the network for execution.
+An algorithm is a program that is given to each node in the network for execution.
 Nodes may also be given different inputs but the programs are identical in every node.
 The performance of an algorithm is usually measured by the amount of communication rounds used by the program.
-The reason for this is that the nodes have only a limited information available about their neighbourhood and in order to increase this information they will need to communicate.
+The reason for this is that the nodes have only a limited information available about its neighbourhood and in order to increase this information they will need to communicate.
 Communication between nodes takes a considerable amount of time in comparison to the processing capabilities of a node, therefore the reasonable unit of measurement is time in communication rounds.
 Communication round is a synchronised event in which each node can communicate with each of their neighbor.
-A node that executes for constant time $t$ has to base its output solely on the information it has gathered from $t$-radius of other nodes
+A node that executes for constant time $t$ has to base its output solely on the information it has gathered from its own $t$-radius
 \cite{DBLP:journals/siamcomp/NaorS95}.
 
 Informally, locally checkable labelling (LCL) problems are a family of graph problems for which the validity of a solution can be verified by checking the solution of each node's $\mathcal{O}(1)$-radius neighbourhood (local neighbourhood).
@@ -44,23 +44,24 @@ In case all local neighbourhoods are valid, then the whole solution is globally 
 \cite{DBLP:conf/podc/BrandtHKLOPRSU17}
 %\footnote{This paragraph does not contain the formal definition of LCL problems.}
 
-Graph coloring is an example of an LCL problem.
-In a vertex coloring problem each vertex $v \in V$ of graph $G = (V, E)$ has a label $l(v): V \rightarrow \mathbb{N}$.
+Vertex graph coloring is an example of an LCL problem.
+In a vertex coloring problem each vertex $v \in V$ of a graph $G = (V, E)$ has a label $l(v): V \rightarrow \mathbb{N}$.
 The problem itself is that for each $(v, w) \in E$ it must hold that $l(v) \neq l(w)$ i.e. labels must be assigned so that no two adjacent vertices have the same label.
 It is an LCL problem because the solution can be verified locally.
 Let the graph represent a distributed network.
 Now each node can verify the solution by gathering information about its local neighbourhood of radius 1 and after that, simply check that it does not share a label with any of its neighbors.
 
-Researchers are interested in automating the detection of LCL-problem's constant time solvability in LOCAL model.
+Researchers are interested in automating the detection of LCL-problem's constant time solvability in LOCAL model (please see Section \ref{sec:local_model} for the definition of LOCAL model).
 There already exists a tool called \emph{round eliminator} \cite{DBLP:conf/podc/Olivetti20} which uses a \emph{round elimination} \cite{DBLP:conf/podc/Brandt19} technique to automatically find lower bounds of LCL problems.
 Round eliminator can tell if an LCL problem is solvable in constant time in LOCAL model and this can be done fairly fast if the constant is small.% (as far as I know).
-There can be multiple reasons for a LCL problem to not be solvable in constant time.
+There can be multiple reasons for an LCL problem to not be solvable in constant time.
 One such reason is that the problem is not solvable at all in PN (port number) model.
 \footnote{Some how there is a connection between constant time solvability in LOCAL model and solvability in PN model.}.
 We would like to detect this particular case.
 
 
 \subsection*{Objective} %TODO Change to 'Objectives' and explain all of the objectives.
+% Advisor's comment: It would be good if this section or some other section below this contains a brief overview of the techniques that you use. The challenges that you face etc.
 The objective is to develope a tool (computer program) which tells if an LCL (locally checkable labelling) problem is not solvable in PN (port number) model.
 The idea is to find a network where there exists no valid labellings implying that the problem is impossible to solve.
 The tool should work fast, therefore optimizations are one of the main focuses of the work.
