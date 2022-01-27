@@ -636,19 +636,52 @@ For example a set of all simple undirected graphs is a family of graphs.
 Let $\mathcal{F}$ be a family of simple undirected graphs.
 We assume that $N=(V, P, p)$ is a simple PN network, the underlying graph $G$ of $N$ is in the family $\mathcal{F}$ and finally the input $f$ to the algorithm $A$ is in $\Pi'(N)$.
 We say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given problem $\Pi'$, if the execution of $A$ on $(N, f)$ stops and yields an output $g \in \Pi(N)$.
+We say that $A$ solves the problem in time $T$, if $A$ stops in time $T(|V|)$ where $T: \mathbb{N} \rightarrow \mathbb{N}$.
 
 The input problem $\Pi'$ is often omited.
 Then we say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$.
 
-\todo{Continue from here}
+Often when we discuss about some algorithms solving some problems, we state $\mathcal{F}, \Pi, \Pi'$ and $T$ implicitly.
+For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} implies that $\mathcal{F}$ is bipartite graphs, $\Pi$ is the problem of finding a vertex cover and problem $\Pi'$ is omitted.
+
+\todo{Continue from here with an example problem and an algorithm that solves it in some graph family given some other problem or omit it.}
 
 
-\subsection{Covering maps}
-\todo{This is probably needed because we basically talk about covering maps when we use the word "lift" on Section \ref{sec:algorithm}.}
+\subsection{Covering graph}
+%TODO fix somehow
+There exists a limitation to what problems can be solved in a deterministic PN model.
+The limitation comes from a PN networks underlying graph being "somehow" symmetric.
+\cite{DBLP:conf/focs/Linial87}
+\cite{DBLP:journals/siamcomp/Linial92}
+
+In this section we discuss about a graph theoretical concept that can help us determining the symmetries in an underlying graph.
+The concept is called \emph{covering graph}
+\footnote{Note that this is not related to the vertex cover problem even though they share the word \emph{cover}.}.
+\begin{displayquote}
+A graph $H$ is a \emph{covering} of a graph $G$ if there is a way to label the nodes of $H$ with the names of nodes in $G$ in such a way that if a node $x$ of $H$ is labelled "v" then the labels of the neighbors of $x$ are precisely the neighbors of $v$ in G.
+\cite{DBLP:conf/stoc/Angluin80}
+\end{displayquote}
+
+If $H$ is a covering of a connected graph $G$, then $H$ consists rather of multiple copies of $G$.
+This implies that the graphs $H$ and $G$ are indistinguishable from a PN algorithm's perspective.
+\cite{DBLP:conf/stoc/Angluin80}
+
+% Let $H=(V', E')$ and $G=(V, E)$ be some graphs in the graph family $\mathcal{F}$.
+% A covering map is a function $\Phi: V' \rightarrow V$ that maps the vertices $v' \in V'$ to vertices $v \in V$ in such a way that if
+
+The function that maps $H$ to $G$ is called a \emph{covering map}.
+
+% This symmetricity implies that each node ends up in an identical output state with its symmetrical equivalent given that the input problem $\Pi$ does not break the symmetry.
+% In this section we are discussing about a graph theoretic method that can show
+
+continue...........
+
+\todo{Explain word lift also.}
 
 \subsection{LOCAL model} \label{sec:local_model}
 The LOCAL model is another message passing model that is used in the field of distributed computation.
-It is similiar with PN model so most of the definition is already done.
+
+It is similiar to the PN model so most of the definition is already done.
 The exception is that the given problem $\Pi'$ is always predetermined.
 A solution to problem $\Pi'$ is a node labeling $\operatorname{id}: V \rightarrow \{1,2,...,|V|^c\}$, where each node has a unique label.
 If a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given $\Pi'$, we say that $A$ solves $\Pi$ on graph family $\mathcal{F}$ in the LOCAL model.
