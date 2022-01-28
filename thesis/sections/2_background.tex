@@ -110,6 +110,8 @@ We say that vertex $v$ is \emph{incident} to $e$ and $e$ is incident to $v$.
 Same applies to vertex $w$ (swap $v$ and $w$).
 We also say that vertex $v$ is \emph{adjacent} to $w$ and vice versa.
 Similiary when two edges share a vertex, we say that the edges are \emph{adjacent}.
+We can also say that $w$ is a \emph{neighbour} of $v$ and vice versa.
+
 
 In a graph, the degree of a vertex is the number of edges it is incident to.
 We will use the notation $\deg_G(v)$ to denote the degree of vertex $v \in V, G=(V,E)$.
@@ -647,29 +649,64 @@ For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} imp
 \todo{Continue from here with an example problem and an algorithm that solves it in some graph family given some other problem or omit it.}
 
 
-\subsection{Covering graph}
-%TODO fix somehow
+\subsection{Covering \todo{?????}}
 There exists a limitation to what problems can be solved in a deterministic PN model.
-The limitation comes from a PN networks underlying graph being "somehow" symmetric.
+The limitation comes from an underlying graph of a PN network being symmetric.
 \cite{DBLP:conf/focs/Linial87}
 \cite{DBLP:journals/siamcomp/Linial92}
 
-In this section we discuss about a graph theoretical concept that can help us determining the symmetries in an underlying graph.
-The concept is called \emph{covering graph}
+In this section we discuss about a topological concept that can help us formalizing symmetries in a PN network.
+The concept is called \emph{covering map}
 \footnote{Note that this is not related to the vertex cover problem even though they share the word \emph{cover}.}.
+
+First we want to show a definition of \emph{covering} for graphs, from an excellent paper
+\cite{DBLP:conf/stoc/Angluin80}:
 \begin{displayquote}
 A graph $H$ is a \emph{covering} of a graph $G$ if there is a way to label the nodes of $H$ with the names of nodes in $G$ in such a way that if a node $x$ of $H$ is labelled "v" then the labels of the neighbors of $x$ are precisely the neighbors of $v$ in G.
 \cite{DBLP:conf/stoc/Angluin80}
 \end{displayquote}
+In this definition, covering map is the function that maps the nodes from $H$ to $G$.
+If $H$ is a covering of a connected graph $G$, then an intuition is that $H$ consists of multiple copies of $G$ "glued" together in a clever way.
 
-If $H$ is a covering of a connected graph $G$, then $H$ consists rather of multiple copies of $G$.
-This implies that the graphs $H$ and $G$ are indistinguishable from a PN algorithm's perspective.
-\cite{DBLP:conf/stoc/Angluin80}
+
+% First we define function $\xi_G(v)$ to be the set of all neighbors of vertex $v$ in graph $G$.
+% If graphs $G=(V, E)$ and $G'=(V', E')$ are from the same graph family $\mathcal{F}$, we say that $G$ is a \emph{covering} of $G'$ via a map $\psi$ if and only if all of the following hold:
+% \begin{enumerate}
+%   \item $\psi=\psi: V \rightarrow V'$ such that for all vertices $v \in V$, the neighbour nodes $\xi_G(v)$ and $\xi_{G'}(\psi(v))$ are equal.
+%   \item asd
+% \end{enumerate}
+In order for us to use covering maps with PN networks, we need to additionally consider the port numbers of nodes so that they are also preserver by the covering map.
+
+We define now the covering map for PN networks similiary it is defined in the excellent course book \cite{HirvonenSuomelaDistAlg2020}.
+Let $N=(V, P, p)$ and $N'=(V', P', p')$ be PN networks and let $\phi: V \rightarrow V'$.
+The function $\phi$ is a covering map from $N$ to $N'$ if all of the following hold:
+\begin{enumerate}
+  \item $\phi$ is a surjection i.e. for every $v' \in V'$ there exists at least one $v \in V$ such that $\phi(v) = v'$.
+  \item $\phi$ preserves the degrees of a node i.e. $\deg_N(v) = \deg_{N'}(\phi(v))$, for all $v \in V$.
+  \item $\phi$ preserves port numbers and connections i.e. if $p((u, i)) = (v, j)$ then $p((\phi(u), i)) = (\phi(v), j)$.
+\end{enumerate}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[]{example-image-duck}
+  \caption{Show network N and N' and the covering map}
+  \label{fig:duck1}
+\end{figure}
+
+\todo{explain lift}
+\begin{figure}[H]
+  \centering
+  \includegraphics[]{example-image-duck}
+  \caption{Show lift from N' to N}
+  \label{fig:duck2}
+\end{figure}
+%%%This implies that the graphs $H$ and $G$ are indistinguishable from a PN algorithm's perspective.
+%%%\cite{DBLP:conf/stoc/Angluin80}
 
 % Let $H=(V', E')$ and $G=(V, E)$ be some graphs in the graph family $\mathcal{F}$.
 % A covering map is a function $\Phi: V' \rightarrow V$ that maps the vertices $v' \in V'$ to vertices $v \in V$ in such a way that if
 
-The function that maps $H$ to $G$ is called a \emph{covering map}.
+%The function that maps $H$ to $G$ is called a \emph{covering map}.
 
 % This symmetricity implies that each node ends up in an identical output state with its symmetrical equivalent given that the input problem $\Pi$ does not break the symmetry.
 % In this section we are discussing about a graph theoretic method that can show
