@@ -687,19 +687,104 @@ The function $\phi$ is a covering map from $N$ to $N'$ if all of the following h
 \end{enumerate}
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[]{example-image-duck}
-  \caption{Show network N and N' and the covering map}
-  \label{fig:duck1}
+  \subcaptionbox{
+    A PN network N.
+    \label{fig:covering_map1:a}
+  }%
+    [.5\linewidth] {
+    \centering
+    \includegraphics[scale=0.55]{diagrams/covering_map_1.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A PN network N'.
+    \label{fig:covering_map1:b}
+  }%
+    [.5\linewidth] {
+    \centering
+    \includegraphics[scale=0.55]{diagrams/covering_map_2.pdf}
+  }
+  \caption{There is a covering map $\phi$ from $N$ to $N'$ that maps each $x_i$ to $x$ for all $x\in \{a, b, c, d\}$ and for all $i \in \{1, 2\}$.
+  }
+  \label{fig:covering_map1}
 \end{figure}
 
-\todo{explain lift}
 \begin{figure}[H]
-  \centering
-  \includegraphics[]{example-image-duck}
-  \caption{Show lift from N' to N}
-  \label{fig:duck2}
+  \subcaptionbox{
+    A PN network N.
+    \label{fig:covering_map2:a}
+  }%
+    [.5\linewidth] {
+    \centering
+    \includegraphics[scale=0.55]{diagrams/covering_map_3.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A PN network N'.
+    \label{fig:covering_map2:b}
+  }%
+    [.5\linewidth] {
+    \centering
+    \includegraphics[scale=0.55]{diagrams/covering_map_4.pdf}
+  }
+  \caption{There is a covering map $\phi$ from $N$ to $N'$ that maps each $a_i$ to $a$ for all $i \in \{1, 2, 3, 4\}$.
+  }
+  \label{fig:covering_map2}
 \end{figure}
+
+There are two examples of covering maps on Figure \ref{fig:covering_map1} and \ref{fig:covering_map2}.
+In these examples we can see that the sizes of covering networks are integer multiplications of the sizes of original networks.
+This actually
+\footnote{\todo{Do I need to show this?}}
+applies to every covering map, i.e. if we have a covering map $\phi: V \rightarrow V'$, then $|V| = k*|V'|$ for some $k \in \mathbb{N}_{>0}$.
+We often call covering networks as \emph{lifts}.
+A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size of $N'$.
+
+
+
+
+\begin{figure}[H]
+  \subcaptionbox{
+    A PN network $N_0$ with loops.
+    \label{fig:covering_map3:a}
+  }%
+    [.30\linewidth] {
+    \centering
+    \includegraphics[scale=0.50]{diagrams/covering_map_5a.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A PN network $N_1$ with multiple connections.
+    \label{fig:covering_map3:b}
+  }%
+    [.30\linewidth] {
+    \centering
+    \includegraphics[scale=0.50]{diagrams/covering_map_5b.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A simple PN network $N_2$.
+    \label{fig:covering_map3:c}
+  }%
+    [.30\linewidth] {
+    \centering
+    \includegraphics[scale=0.50]{diagrams/covering_map_5c.pdf}
+  }
+  \caption{
+    There is a covering map $\phi_0$ from $N_1$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2\}$.
+    Similiarly there is a covering map $\phi_1$ from $N_2$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2, 3\}$.
+  }
+  \label{fig:covering_map3}
+\end{figure}
+
+
+%\todo{explain lift}
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[]{example-image-duck}
+%  \caption{Show lift from N' to N}
+%  \label{fig:duck2}
+%\end{figure}
 %%%This implies that the graphs $H$ and $G$ are indistinguishable from a PN algorithm's perspective.
 %%%\cite{DBLP:conf/stoc/Angluin80}
 
@@ -712,8 +797,6 @@ The function $\phi$ is a covering map from $N$ to $N'$ if all of the following h
 % In this section we are discussing about a graph theoretic method that can show
 
 continue...........
-
-\todo{Explain word lift also.}
 
 \subsection{LOCAL model} \label{sec:local_model}
 The LOCAL model is another message passing model that is used in the field of distributed computation.
