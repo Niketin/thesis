@@ -114,7 +114,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
         \item For each $v \in V_2$, there are $k$ clones in $V_1$, namely the nodes $v_2, v_1, ..., v_k \in V_1$.
             Thus the size $|V_1|$ is $k|V_2|$.
         \item For each port $(v, i) \in P_2$, we have each port $(v_x, i) \in P_1$ where $x=1, 2, ..., k$.
-        \item For each non multiple connection $p_2((v, i)) = (u, j)$, we have connections $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
+        \item For each non-multiple connection $p_2((v, i)) = (u, j)$, we have connections $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
         \item For each multiple connections $p_2((v, i_a)) = (u, j_a)$ where $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$.
     \end{itemize}
 
@@ -124,8 +124,8 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     \begin{itemize}
         \item By the definition of $\phi$, it is surjective.
         \item For each connection in $N_2$, we have $k$ similiar connections in $N_1$, therefore degrees of each node are preserved.
-        \item For each non multiple connection $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$, we have $p_2((v, i)) = (u, j)$.
-        From our definition of $\phi$ we can see that the mapping preserves port numbers and connections in non multiple connections.
+        \item For each non-multiple connection $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$, we have $p_2((v, i)) = (u, j)$.
+        From our definition of $\phi$ we can see that the mapping preserves port numbers and connections in non-multiple connections.
         \item For each multiple connection $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$ we have
         \begin{align*}
             p_2((\phi(v_{x}), i_a)) &= (\phi(u_{x+a-1 \mod k}), j_a)\\
@@ -137,7 +137,10 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     therefore $N_1$ is a $k$-lift of $N_2$.
 
     Finally we need to show that $N_1$ is a simple PN network i.e. it does not have multiple edges.
-    \todo{Complete this proof}
+    As we know, the non-multiple connections in $N_2$ are preserved in $N_1$ therefore we need to only look at the multiple connections of $N_2$ in more detail.
+    We know that there are connections $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{x+a-1 \mod k}))$.
+     We see that nodes $u_{x+a-1 \mod k}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{x+a-1 \mod k})) \leq k$ and there are exactly k many "u" nodes in $N_1$, namely $u_1, u_2, ..., u_k \in V_1$.
+     Thus for each node $v_x$, all connections from $v_x$ to different nodes, therefore $N_1$ is simple.
 \end{proof}
 
 \begin{figure}[H]
