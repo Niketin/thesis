@@ -83,6 +83,7 @@ Later on the section \ref{sec:implementation} we introduce our implementations o
 %TODO Do we need to talk about trees and how these biregular multigraphs relate to them? 'Informally, the idea is to prove negative results for the case in which "we are in the middle of a very large tree, far away from the leaves".'
 
 \subsection{\todo{Couple implications}}
+\footnote{Where should I put these theorems? Do they fit under Section \ref{sec:algorithm}?}
 In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
 We try to split this into couple of theorems and at the end utilize the shown theorems to show this to be true.
 
@@ -100,35 +101,49 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 
 % Network with multiple connections ----k-lift--->  simple network
 \begin{theorem} \label{thm:lcl_nonsolvability:3}
-    If there is a PN network $N$ with multiple connections with $k$ being the highest count of multiple connections between any two nodes, then there exists a $k$-lift $N'$ of $N$ such that $N'$ is a simple PN network.
+    If there is a PN network $N_2$ with multiple connections with $k$ being the highest count of multiple connections between any two nodes, then there exists a $k$-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
 \end{theorem}
 \begin{proof}
-    Let $N=(V, P, p)$ be a PN network with multiple connections.
-    Let $\operatorname{mul}(u, v)$ be the number of connections between any nodes $u, v \in V$.
-    Let $k=\max {m(u, v) | u, v \in V}$ i.e. the maximum number of multiple connections.
+    Let $N_2=(V_2, P_2, p_2)$ be a PN network with multiple connections.
+    Let $\operatorname{mul}(u, v)$ be the number of connections between any nodes $u, v \in V_2$.
+    Let $k=\max {m(u, v) | u, v \in V_2}$ i.e. the maximum number of multiple connections.
     \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
 
-    Let there be another network $N'=(V', P', p')$ such that:
+    Let there be another network $N_1=(V_1, P_1, p_1)$ such that:
     \begin{itemize}
-        \item For each $v \in V$, there are $k$ clones, namely the nodes $v_1, v_2, ..., v_k \in V'$.
-            Thus the size $|V'|$ is $k|V|$.
-        \item For each port $(v, i) \in P$, we have port $(v_x, i) \in P'$ where $x=1, 2, ..., k$.
-        \item For each non multiple connection $p((v, i)) = (u, j)$, we have a connections $p'((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
-        \item For each multiple connections $p((v, i_a)) = (u, j_a)$ and each $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p'((v_{x}, i_a)) = (u_{x+a-1}, j_a)$.
+        \item For each $v \in V_2$, there are $k$ clones in $V_1$, namely the nodes $v_2, v_1, ..., v_k \in V_1$.
+            Thus the size $|V_1|$ is $k|V_2|$.
+        \item For each port $(v, i) \in P_2$, we have each port $(v_x, i) \in P_1$ where $x=1, 2, ..., k$.
+        \item For each non multiple connection $p_2((v, i)) = (u, j)$, we have connections $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
+        \item For each multiple connections $p_2((v, i_a)) = (u, j_a)$ where $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$.
     \end{itemize}
 
-    Now we show that $N'$ is a simple PN network.
+    Now we show that there is a covering map $\phi: V_1 \rightarrow V_2$.
+    Let $\phi(v_i) = v \in V_2$ for each $v_i \in V_1$ where $i=1, 2, ..., k$.
+    We will show that $\phi$ is a covering map using the Definition \ref{def:covering_map}:
+    \begin{itemize}
+        \item By the definition of $\phi$, it is surjective.
+        \item For each connection in $N_2$, we have $k$ similiar connections in $N_1$, therefore degrees of each node are preserved.
+        \item For each non multiple connection $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$, we have $p_2((v, i)) = (u, j)$.
+        From our definition of $\phi$ we can see that the mapping preserves port numbers and connections in non multiple connections.
+        \item For each multiple connection $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$ we have
+        \begin{align*}
+            p_2((\phi(v_{x}), i_a)) &= (\phi(u_{x+a-1 \mod k}), j_a)\\
+            \Leftrightarrow p_2((v, i_a)) &= (u, j_a)
+        \end{align*}
+        Both $(v, i_a)$ and $(u, j_a)$ are in $P_2$ and $p_2((v, i_a)) = (u, j_a)$, therefore for each multiple connection, the port numbers and connections are preserved.
+    \end{itemize}
+    Each condition holds, hence the function $\phi$ is a covering map from $V_1$ to $V_2$
+    therefore $N_1$ is a $k$-lift of $N_2$.
 
-    Finally we need to show that there is a covering map $\phi: V' \rightarrow V$.
+    Finally we need to show that $N_1$ is a simple PN network i.e. it does not have multiple edges.
     \todo{Complete this proof}
-    Function $\phi$ is a covering map, therefore $V'$ is a k-lift of $V$.
-
 \end{proof}
 
 \begin{figure}[H]
  \centering
  \includegraphics[]{example-image-duck}
- \caption{Illustration of k-lift using Theorem \ref{thm:lcl_nonsolvability:3} }
+ \caption{\todo{Illustration of k-lift using Theorem \ref{thm:lcl_nonsolvability:3}}}
  \label{fig:duck2}
 \end{figure}
 %% This is more like an instruction on how to build the network, not a proof or is it?
