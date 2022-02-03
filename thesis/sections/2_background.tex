@@ -325,7 +325,7 @@ In other research there might be randomizing involved.
 
 
 \subsection{Port number model} \label{sec:port_number_model}
-This section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
+This section is based on the excellent textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
 Port number model (PN model) is a rather weak model of computation that inherits from the message passing model.
 In the model, nodes do not have identification.
@@ -359,7 +359,7 @@ The running time of the algorithm $A$ is the total communication rounds that too
 \subsection{Formalized port number model}
 In the section \ref{sec:port_number_model} we briefly and informally introduced the PN model.
 Now in this section and in the following subsections we give a more formal definition to the PN model.
-As in the previous section, this section is based on the course material from \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
+As in the previous section, this section is based on the textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
 PN network is a 3-element tuple $N = (V, P, p)$, where $V$ and $P$ are the sets of vertices and ports respectively, and $p: P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
 A port, an element of $P$, is a pair $(v, i)$ where $v \in V$ and $i \in \{1, 2, ...\}$.
@@ -660,7 +660,7 @@ The concept is called \emph{covering map}
 \footnote{Note that this is not related to the vertex cover problem even though they share the word \emph{cover}.}.
 Later in this work, we use the concept to show
 
-First we want to show a definition of \emph{covering} for graphs, from an excellent paper
+First we want to show a definition of \emph{covering} for graphs, from  paper
 \cite{DBLP:conf/stoc/Angluin80}:
 \begin{displayquote}
 A graph $H$ is a \emph{covering} of a graph $G$ if there is a way to label the nodes of $H$ with the names of nodes in $G$ in such a way that if a node $x$ of $H$ is labelled "v" then the labels of the neighbors of $x$ are precisely the neighbors of $v$ in G.
@@ -678,14 +678,17 @@ If $H$ is a covering of a connected graph $G$, then an intuition is that $H$ con
 % \end{enumerate}
 In order for us to use covering maps with PN networks, we need to additionally consider the port numbers of nodes so that they are also preserver by the covering map.
 
-We define now the covering map for PN networks similiary it is defined in the excellent course book \cite{HirvonenSuomelaDistAlg2020}.
-Let $N=(V, P, p)$ and $N'=(V', P', p')$ be PN networks and let $\phi: V \rightarrow V'$.
-The function $\phi$ is a covering map from $N$ to $N'$ if all of the following hold:
-\begin{enumerate}
-  \item $\phi$ is a surjection i.e. for every $v' \in V'$ there exists at least one $v \in V$ such that $\phi(v) = v'$.
-  \item $\phi$ preserves the degrees of a node i.e. $\deg_N(v) = \deg_{N'}(\phi(v))$, for all $v \in V$.
-  \item $\phi$ preserves port numbers and connections i.e. if $p((u, i)) = (v, j)$ then $p((\phi(u), i)) = (\phi(v), j)$.
-\end{enumerate}
+We define now the covering map for PN networks similiary it is defined in the excellent textbook \cite{HirvonenSuomelaDistAlg2020}.
+
+\begin{definition} \label{def:covering_map}
+  Let $N=(V, P, p)$ and $N'=(V', P', p')$ be PN networks and let $\phi: V \rightarrow V'$.
+  The function $\phi$ is a covering map from $N$ to $N'$ if all of the following hold:
+  \begin{enumerate}
+    \item $\phi$ is a surjection i.e. for every $v' \in V'$ there exists at least one $v \in V$ such that $\phi(v) = v'$.
+    \item $\phi$ preserves the degrees of a node i.e. $\deg_N(v) = \deg_{N'}(\phi(v))$, for all $v \in V$.
+    \item $\phi$ preserves port numbers and connections i.e. if $p((u, i)) = (v, j)$ then $p'((\phi(u), i)) = (\phi(v), j)$.
+  \end{enumerate}
+\end{definition}
 
 \begin{figure}[H]
   \subcaptionbox{
