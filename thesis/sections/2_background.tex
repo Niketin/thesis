@@ -649,7 +649,7 @@ For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} imp
 \todo{Continue from here with an example problem and an algorithm that solves it in some graph family given some other problem or omit it.}
 
 
-\subsection{Covering \todo{?????}}
+\subsection{Covering map}
 There exists a limitation to what problems can be solved in a deterministic PN model.
 The limitation comes from an underlying graph of a PN network being symmetric.
 \cite{DBLP:conf/focs/Linial87}
@@ -658,6 +658,7 @@ The limitation comes from an underlying graph of a PN network being symmetric.
 In this section we discuss about a topological concept that can help us formalizing symmetries in a PN network.
 The concept is called \emph{covering map}
 \footnote{Note that this is not related to the vertex cover problem even though they share the word \emph{cover}.}.
+Later in this work, we use the concept to show
 
 First we want to show a definition of \emph{covering} for graphs, from an excellent paper
 \cite{DBLP:conf/stoc/Angluin80}:
@@ -777,6 +778,10 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
   \label{fig:covering_map3}
 \end{figure}
 
+In the Figure \ref{fig:covering_map3} we can see that the network $N_1$ is a 2-lift of the network $N_0$ and the network $N_2$ is a 3-lift of the network $N_0$.
+The network $N_0$ has 2 loops, $p(p((a, 2))) = p((a, 3)) = (a, 2)$ and $p(p((b, 2))) = p((b, 3)) = (b, 2)$.
+
+
 
 %\todo{explain lift}
 %\begin{figure}[H]
@@ -793,7 +798,7 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
 
 %The function that maps $H$ to $G$ is called a \emph{covering map}.
 
-% This symmetricity implies that each node ends up in an identical output state with its symmetrical equivalent given that the input problem $\Pi$ does not break the symmetry.
+This symmetricity implies that each node ends up in an identical output state with its symmetrical equivalent given that the input problem $\Pi$ does not break the symmetry.
 % In this section we are discussing about a graph theoretic method that can show
 
 continue...........

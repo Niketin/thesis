@@ -10,12 +10,12 @@ Finally we show that the unsolvability of $\Pi$ in \emph{simple} PN networks imp
 
 %TODO These definitions and theorems might have a better place under section 2 background.
 \begin{definition} \label{def:lcl_solvability}
-    An LCL problem $\Pi$ is solvable in PN model, if and only if there exists a PN algorithm $A$ that can find a solution for $\Pi$ in all PN networks.
+    An LCL problem $\Pi$ is solvable in PN model, if and only if there exists a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
 \end{definition}
 
 We can define an alternative version of the Definition \ref{def:lcl_solvability} using contraposition.
 \begin{definition} \label{def:lcl_solvability:contrapositive}
-An LCL problem $\Pi$ \textbf{is not solvable} in PN model, if and only if there \textbf{does not exist} a PN algorithm $A$ that can find a solution for $\Pi$ in all PN networks.
+An LCL problem $\Pi$ \textbf{is not solvable} in PN model, if and only if there \textbf{does not exist} a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
 \end{definition}
 
 The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter one might be more difficult to understand, but the way it is phrased, easily leads us to the following Theorem:
@@ -81,19 +81,79 @@ Later on the section \ref{sec:implementation} we introduce our implementations o
 %TODO talk about graphs, why they are actually (b, a)-biregular multigraphs.
 %TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
 %TODO Do we need to talk about trees and how these biregular multigraphs relate to them? 'Informally, the idea is to prove negative results for the case in which "we are in the middle of a very large tree, far away from the leaves".'
-\begin{theorem}
-    Later we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
-    \todo{Complete this theorem} % TODO complete this theorem
-\end{theorem}
 
+\subsection{\todo{Couple implications}}
+In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
+We try to split this into couple of theorems and at the end utilize the shown theorems to show this to be true.
+
+% Pi is nonsolvable in multiple connection PN network N -> Pi is nonsolvable in lift of N
+\begin{theorem} \label{thm:lcl_nonsolvability:2}
+If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not solvable in any PN network $N'$ that is a lift of $N$.
+\end{theorem}
 \begin{proof}
-    We take a lift $N'$ from $N = (V, P, p)$ with where $|N'| = \max \deg_N(v \forall V) * |N| $.
-    This new network $N'$ is by definition a simple network for which there exists a covermap $\phi(N')=N$.
-    Thus there exists no PN algorithm $A$ that can solve problem $\Pi$ in $N'$.
-    \todo{Complete this proof} %TODO Complete this proof
-    %TODO Make sure that the covering maps and lifts are explained under section 2. background.
-    %TODO Actually this lifting procedure could be explained also in the section 2. background.
+    Let problem $\Pi$ have no solution in some PN network $N$.
+    Then any algorithm $A$ produces a result that is nonvalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
+    Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$
+    Theorem 7.1. \footnote{\todo{should I show the theorem or is this enough?}} from the text book \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$.
+    Hence if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
 \end{proof}
+
+% Network with multiple connections ----k-lift--->  simple network
+\begin{theorem} \label{thm:lcl_nonsolvability:3}
+    If there is a PN network $N$ with multiple connections with $k$ being the highest count of multiple connections between any two nodes, then there exists a $k$-lift $N'$ of $N$ such that $N'$ is a simple PN network.
+\end{theorem}
+\begin{proof}
+    Let $N=(V, P, p)$ be a PN network with multiple connections.
+    Let $\operatorname{mul}(u, v)$ be the number of connections between any nodes $u, v \in V$.
+    Let $k=\max {m(u, v) | u, v \in V}$ i.e. the maximum number of multiple connections.
+    \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
+
+    Let there be another network $N'=(V', P', p')$ such that:
+    \begin{itemize}
+        \item For each $v \in V$, there are $k$ clones, namely the nodes $v_1, v_2, ..., v_k \in V'$.
+            Thus the size $|V'|$ is $k|V|$.
+        \item For each port $(v, i) \in P$, we have port $(v_x, i) \in P'$ where $x=1, 2, ..., k$.
+        \item For each non multiple connection $p((v, i)) = (u, j)$, we have a connections $p'((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
+        \item For each multiple connections $p((v, i_a)) = (u, j_a)$ and each $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p'((v_{x}, i_a)) = (u_{x+a-1}, j_a)$.
+    \end{itemize}
+
+    Now we show that $N'$ is a simple PN network.
+
+    Finally we need to show that there is a covering map $\phi: V' \rightarrow V$.
+    \todo{Complete this proof}
+    Function $\phi$ is a covering map, therefore $V'$ is a k-lift of $V$.
+
+\end{proof}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[]{example-image-duck}
+ \caption{Illustration of k-lift using Theorem \ref{thm:lcl_nonsolvability:3} }
+ \label{fig:duck2}
+\end{figure}
+%% This is more like an instruction on how to build the network, not a proof or is it?
+
+    % Let $N=(V, P, p)$ be a PN network with multiple connections.
+    % Let $m(u, v)$ be the number of connections between any nodes $u, v \in V$.
+    % Let $k=\max {m(u, v) | u, v \in V}$ i.e. the maximum number of multiple connections.
+    % \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
+
+    %Let's construct a new network $N'=(V', P', p')$ that consists of $k$ copies of $N$.
+    %Initially the network $N'$ is not connected and therefore it is not a valid PN network but lets ignore this for now as the network gets valid soon as we alter it.
+    %For each connection (v', j')
+%
+    %Let $\phi: V' \rightarrow V$ be a surjection such that for each node $v_i \in V'$ where $i=1, 2, ..., k$, $\phi(v_i) = v \in V$.
+    %Next, we will swap the ends of connections such that the network becomes connected and 
+    %\todo{Complete this proof}
+% Pi is nonsolvable in multiple connection PN network N -> Pi is nonsolvable in simple PN network N' (lift of N)
+\begin{theorem} \label{thm:lcl_nonsolvability:4}
+    If an LCL problem $\Pi$ is not solvable in PN network $N$ with multiple connections, then it is also not solvable in simple PN network $N'$ that is a lift of $N$.
+\end{theorem}
+\begin{proof}
+    \todo{Complete this proof}
+\end{proof}
+
+
 
 \begin{theorem}
     If a problem is not solvable in simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
