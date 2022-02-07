@@ -82,8 +82,29 @@ Later on the section \ref{sec:implementation} we introduce our implementations o
 %TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
 %TODO Do we need to talk about trees and how these biregular multigraphs relate to them? 'Informally, the idea is to prove negative results for the case in which "we are in the middle of a very large tree, far away from the leaves".'
 
-\subsection{\todo{Couple implications}}
+In the following sections, we will prove that if an LCL problem $\Pi$ is not solvable in PN network $N$ with multiple connections, then it is not solvable in constant time in the LOCAL model.
+We have divided the proofs into multiple theorems and grouped them under two different sections, Section \ref{sec:algorithm:theorems:a} and Section \ref{sec:algorithm:theorems:b}.
+The dependencies of theorems are shown in the Figure \ref{fig:algorithm:theorem_dependency}.
 \footnote{Where should I put these theorems? Do they fit under Section \ref{sec:algorithm}?}
+
+\begin{figure}[H]
+    \centering
+    % https://tex.stackexchange.com/a/499577
+    \begin{tikzpicture}[]
+        \node (1) [] {Theorem \ref{thm:lcl_nonsolvability:2}};
+        \node (2) [right = of 1] {Theorem \ref{thm:lcl_nonsolvability:3}};
+        \node (3) [below = of $(1)!0.5!(2)$] {Theorem \ref{thm:lcl_nonsolvability:4}};
+        \node (4) [below = of 3] {Theorem \ref{thm:lcl_nonsolvability:5}};
+        %\node (4) [right = of mat2-2-1] {$\deg_G(4)=2$};
+        %\node (5) [right = of mat2-3-1] {$\deg_G(5)=2$};
+        \draw[<-] (1) edge (3);
+        \draw[<-] (2) edge (3);
+        \draw[<-] (3) edge (4);
+    \end{tikzpicture}
+    \caption{A dependency graph of the following theorems.\label{fig:algorithm:theorem_dependency}}
+\end{figure}
+
+\subsection{\todo{Theorems A}} \label{sec:algorithm:theorems:a}
 In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
 We try to split this into couple of theorems and at the end utilize the shown theorems to show this to be true.
 
@@ -143,12 +164,37 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
      Thus for each node $v_x$, all connections from $v_x$ to different nodes, therefore $N_1$ is simple.
 \end{proof}
 
+%\begin{figure}[H]
+% \centering
+% \includegraphics[]{example-image-duck}
+% \caption{\todo{Illustration of k-lift using Theorem \ref{thm:lcl_nonsolvability:3}}}
+% \label{fig:duck2}
+%\end{figure}
+
 \begin{figure}[H]
- \centering
- \includegraphics[]{example-image-duck}
- \caption{\todo{Illustration of k-lift using Theorem \ref{thm:lcl_nonsolvability:3}}}
- \label{fig:duck2}
-\end{figure}
+    \subcaptionbox{
+      A PN network $N_2$ with multiple connections.
+      \label{fig:algorithm:k-lift_proof_simple1:a}
+    }%
+      [.5\linewidth] {
+      \centering
+      \includegraphics[scale=0.55]{diagrams/algorithm_k-lift_proof_simple_1.pdf}
+    }
+    \hfill
+    \subcaptionbox{
+      A simple PN network $N_1$.
+      \label{fig:algorithm:k-lift_proof_simple1:b}
+    }%
+      [.5\linewidth] {
+      \centering
+      \includegraphics[scale=0.55]{diagrams/algorithm_k-lift_proof_simple_2.pdf}
+    }
+    \caption{Network $N_1$ is a 3-lift of $N_2$.
+    }
+    \label{fig:algorithm:k-lift_proof_simple1}
+  \end{figure}
+
+
 %% This is more like an instruction on how to build the network, not a proof or is it?
 
     % Let $N=(V, P, p)$ be a PN network with multiple connections.
@@ -161,7 +207,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     %For each connection (v', j')
 %
     %Let $\phi: V' \rightarrow V$ be a surjection such that for each node $v_i \in V'$ where $i=1, 2, ..., k$, $\phi(v_i) = v \in V$.
-    %Next, we will swap the ends of connections such that the network becomes connected and 
+    %Next, we will swap the ends of connections such that the network becomes connected and
     %\todo{Complete this proof}
 % Pi is nonsolvable in multiple connection PN network N -> Pi is nonsolvable in simple PN network N' (lift of N)
 \begin{theorem} \label{thm:lcl_nonsolvability:4}
@@ -171,9 +217,10 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     \todo{Complete this proof}
 \end{proof}
 
+\subsection{\todo{Theorems B}} \label{sec:algorithm:theorems:b}
 
 
-\begin{theorem}
+\begin{theorem} \label{thm:lcl_nonsolvability:5}
     If a problem is not solvable in simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
     %TODO Make sure that the LOCAL model is explained under section 2. background.
     %TODO Make sure that the solving complexities (($\mathcal{O}(1)$) time) are explained under section 2. background.
