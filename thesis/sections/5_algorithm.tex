@@ -5,8 +5,8 @@
 In this section, we will introduce the basic idea of an essential algorithm that is used in the actual implementation discussed in section \ref{sec:implementation}.
 The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in PN model.
 Here we specifically allow PN networks to have multiple connections.
-Later we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
-Finally we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
+Later in the Section \ref{sec:algorithm:theorems:a} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
+Finally in the Section \ref{sec:algorithm:theorems:b} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 
 %TODO These definitions and theorems might have a better place under section 2 background.
 \begin{definition} \label{def:lcl_solvability}
@@ -15,7 +15,7 @@ Finally we show that the unsolvability of $\Pi$ in \emph{simple} PN networks imp
 
 We can define an alternative version of the Definition \ref{def:lcl_solvability} using contraposition.
 \begin{definition} \label{def:lcl_solvability:contrapositive}
-An LCL problem $\Pi$ \textbf{is not solvable} in PN model, if and only if there \textbf{does not exist} a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
+An LCL problem $\Pi$ is not solvable in PN model, if and only if there \textbf{does not exist} a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
 \end{definition}
 
 The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter one might be more difficult to understand, but the way it is phrased, easily leads us to the following Theorem:
@@ -127,41 +127,69 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \begin{proof}
     Let $N_2=(V_2, P_2, p_2)$ be a PN network with multiple connections.
     Let $\operatorname{mul}(u, v)$ be the number of connections between any nodes $u, v \in V_2$.
-    Let $k=\max {m(u, v) | u, v \in V_2}$ i.e. the maximum number of multiple connections.
+    Let $k=\max (\{ m(u, v) | u, v \in V_2\} )$ i.e. the highest count of multiple connections.
     \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
+    Let $\operatorname{M}(x+hk) = x$ for all $x = 1, ..., k$ and $h\in \mathbb{N}$ i.e. $\operatorname{M}$ maps positive integers to positive integers under modulo $k$, for example $\operatorname{M}(1 + hk) = 1$ and $\operatorname{M}(k + hk) = k$.
 
     Let there be another network $N_1=(V_1, P_1, p_1)$ such that:
     \begin{itemize}
-        \item For each $v \in V_2$, there are $k$ clones in $V_1$, namely the nodes $v_2, v_1, ..., v_k \in V_1$.
-            Thus the size $|V_1|$ is $k|V_2|$.
+        \item For each $v \in V_2$, there are $k$ clones in $V_1$, namely the nodes $v_1, v_2, ..., v_k \in V_1$.
+        Thus the sizes $|V_1|$ and $k|V_2|$ are equal.
+        %$V_1 = \{v_x: \forall v \in V_2, \forall x \in \{1, 2, ..., k\}\}$
         \item For each port $(v, i) \in P_2$, we have each port $(v_x, i) \in P_1$ where $x=1, 2, ..., k$.
-        \item For each non-multiple connection $p_2((v, i)) = (u, j)$, we have connections $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
-        \item For each multiple connections $p_2((v, i_a)) = (u, j_a)$ where $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$.
+        %% TODO remove these comments when this has been reviewed.
+        %\item For each non-multiple connection $p_2((v, i)) = (u, j)$, we have connections $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
+        %\item For each multiple connections $p_2((v, i_a)) = (u, j_a)$ where $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$.
+        %Note that the non-multiple connections are just a special case where $a$ is always $1$.
+
+        \item For each connection $p_2((v, i_a)) = (u, j_a)$ where $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$.
+        Note that if $\operatorname{mul}(u, v) = 1$, then $p_1((v_{x}, i_1)) = (u_{\operatorname{M}(x)}, j_1) = (u_{x}, j_1)$.
     \end{itemize}
 
     Now we show that there is a covering map $\phi: V_1 \rightarrow V_2$.
-    Let $\phi(v_i) = v \in V_2$ for each $v_i \in V_1$ where $i=1, 2, ..., k$.
+    Let $\phi(v_x) = v \in V_2$ for each $v_x \in V_1$ where $x=1, 2, ..., k$.
     We will show that $\phi$ is a covering map using the Definition \ref{def:covering_map}:
     \begin{itemize}
         \item By the definition of $\phi$, it is surjective.
         \item For each connection in $N_2$, we have $k$ similiar connections in $N_1$, therefore degrees of each node are preserved.
-        \item For each non-multiple connection $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$, we have $p_2((v, i)) = (u, j)$.
-        From our definition of $\phi$ we can see that the mapping preserves port numbers and connections in non-multiple connections.
-        \item For each multiple connection $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$ we have
+        %% TODO remove these comments when this has been reviewed.
+        %\item For each non-multiple connection $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$, we have $p_2((v, i)) = (u, j)$.
+        %From our definition of $\phi$ we can see that the mapping preserves port numbers and connections in non-multiple connections.
+        %\item For each multiple connection $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ we have
+        %\begin{align*}
+        %    p_2((\phi(v_{x}), i_a)) &= (\phi(u_{\operatorname{M}(x+a-1)}), j_a)\\
+        %    \Leftrightarrow p_2((v, i_a)) &= (u, j_a)
+        %\end{align*}
+        %Both $(v, i_a)$ and $(u, j_a)$ are in $P_2$ and $p_2((v, i_a)) = (u, j_a)$, therefore for each multiple connection, the port numbers and connections are preserved.
+        \item For each connection $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ we have
         \begin{align*}
-            p_2((\phi(v_{x}), i_a)) &= (\phi(u_{x+a-1 \mod k}), j_a)\\
-            \Leftrightarrow p_2((v, i_a)) &= (u, j_a)
+           p_2((\phi(v_{x}), i_a)) &= (\phi(u_{\operatorname{M}(x+a-1)}), j_a)\\
+           \Leftrightarrow p_2((v, i_a)) &= (u, j_a)
         \end{align*}
-        Both $(v, i_a)$ and $(u, j_a)$ are in $P_2$ and $p_2((v, i_a)) = (u, j_a)$, therefore for each multiple connection, the port numbers and connections are preserved.
+        Both $(v, i_a)$ and $(u, j_a)$ are in $P_2$ and $p_2((v, i_a)) = (u, j_a)$, therefore for each connection, the port numbers and connections are preserved.
     \end{itemize}
     Each condition holds, hence the function $\phi$ is a covering map from $V_1$ to $V_2$
     therefore $N_1$ is a $k$-lift of $N_2$.
 
-    Finally we need to show that $N_1$ is a simple PN network i.e. it does not have multiple edges.
-    As we know, the non-multiple connections in $N_2$ are preserved in $N_1$ therefore we need to only look at the multiple connections of $N_2$ in more detail.
-    We know that there are connections $p_1((v_{x}, i_a)) = (u_{x+a-1 \mod k}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{x+a-1 \mod k}))$.
-     We see that nodes $u_{x+a-1 \mod k}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{x+a-1 \mod k})) \leq k$ and there are exactly k many "u" nodes in $N_1$, namely $u_1, u_2, ..., u_k \in V_1$.
-     Thus for each node $v_x$, all connections from $v_x$ to different nodes, therefore $N_1$ is simple.
+    We need to show that $N_1$ is a simple PN network i.e. it does not have multiple edges.
+    %As we know, the non-multiple connections in $N_2$ are preserved in $N_1$ therefore we need to only look at the multiple connections of $N_2$ in more detail.
+    We know that there are connections $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)}))$.
+    We see that nodes $u_{\operatorname{M}(x+a-1)}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)})) \leq k$, $1 \leq \operatorname{M}(x+a-1) \leq k$ and
+    there are exactly k many "u" nodes in $V_1$, namely nodes $u_1, u_2, ..., u_k \in V_1$.
+    Thus for each node $v_x$, all connections from $v_x$ are mapped to distinct nodes, therefore $N_1$ is simple.
+
+    It might not be clear that $N_1$ is connected, thus we show next that this is the case.
+    The network $N_2$ is connected by the assumption (Section \ref{sec:underlying_graph}).
+    Let u
+    \begin{itemize}
+        \item Let us look at all connections in $p_1$ and fix $a=1$.
+        Then $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$
+        $=p_1((v_{x}, i_1)) = (u_{x}, j_1)$.
+        This shows that we can traverse from any node $w_x\in P$ to any other node $w'_x\in P$ only using nodes with subscript $x$.
+        \item[$a>1$]:
+        There are at least some nodes $u, v \in P_2$ such that $\operatorname{mul}(u,v) = k$, therefore we can traverse from any $u_x \in P_1$ to any $v_y \in P_1$ for any $x, y \in \{1, 2, ..., k\}$.
+    \end{itemize}
+    Thus $N_1$ is connected.
 \end{proof}
 
 %\begin{figure}[H]
@@ -189,7 +217,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
       \centering
       \includegraphics[scale=0.55]{diagrams/algorithm_k-lift_proof_simple_2.pdf}
     }
-    \caption{Network $N_1$ is a 3-lift of $N_2$.
+    \caption{The network $N_1$ is a 3-lift of the network $N_2$.
     }
     \label{fig:algorithm:k-lift_proof_simple1}
   \end{figure}
