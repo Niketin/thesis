@@ -15,7 +15,7 @@ Finally in the Section \ref{sec:algorithm:theorems:b} we show that the unsolvabi
 
 We can define an alternative version of the Definition \ref{def:lcl_solvability} using contraposition.
 \begin{definition} \label{def:lcl_solvability:contrapositive}
-An LCL problem $\Pi$ is not solvable in PN model, if and only if there \textbf{does not exist} a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
+An LCL problem $\Pi$ is not solvable in PN model, if and only if there does not exist a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
 \end{definition}
 
 The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter one might be more difficult to understand, but the way it is phrased, easily leads us to the following Theorem:
@@ -115,7 +115,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \begin{proof}
     Let problem $\Pi$ have no solution in some PN network $N$.
     Then any algorithm $A$ produces a result that is nonvalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
-    Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$
+    Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$.
     Theorem 7.1. \footnote{\todo{should I show the theorem or is this enough?}} from the text book \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$.
     Hence if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
 \end{proof}
@@ -127,9 +127,9 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \begin{proof}
     Let $N_2=(V_2, P_2, p_2)$ be a PN network with multiple connections.
     Let $\operatorname{mul}(u, v)$ be the number of connections between any nodes $u, v \in V_2$.
-    Let $k=\max (\{ m(u, v) | u, v \in V_2\} )$ i.e. the highest count of multiple connections.
+    Let $k=\max (\{ m(u, v) \mid u, v \in V_2\} )$ i.e. the highest count of multiple connections.
     \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
-    Let $\operatorname{M}(x+hk) = x$ for all $x = 1, ..., k$ and $h\in \mathbb{N}$ i.e. $\operatorname{M}$ maps positive integers to positive integers under modulo $k$, for example $\operatorname{M}(1 + hk) = 1$ and $\operatorname{M}(k + hk) = k$.
+    Let $\operatorname{M}(x+hk) = x$ for all $x = 1, ..., k$ and $h\in \mathbb{N}$, for example $\operatorname{M}(1 + hk) = 1$ and $\operatorname{M}(k + hk) = k$.
 
     Let there be another network $N_1=(V_1, P_1, p_1)$ such that:
     \begin{itemize}
@@ -174,21 +174,18 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     We need to show that $N_1$ is a simple PN network i.e. it does not have multiple edges.
     %As we know, the non-multiple connections in $N_2$ are preserved in $N_1$ therefore we need to only look at the multiple connections of $N_2$ in more detail.
     We know that there are connections $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)}))$.
-    We see that nodes $u_{\operatorname{M}(x+a-1)}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)})) \leq k$, $1 \leq \operatorname{M}(x+a-1) \leq k$ and
+    We see that nodes $u_{\operatorname{M}(x+a-1)}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)})) \leq k$ and
     there are exactly k many "u" nodes in $V_1$, namely nodes $u_1, u_2, ..., u_k \in V_1$.
     Thus for each node $v_x$, all connections from $v_x$ are mapped to distinct nodes, therefore $N_1$ is simple.
 
-    It might not be clear that $N_1$ is connected, thus we show next that this is the case.
-    The network $N_2$ is connected by the assumption (Section \ref{sec:underlying_graph}).
-    Let u
-    \begin{itemize}
-        \item Let us look at all connections in $p_1$ and fix $a=1$.
-        Then $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$
-        $=p_1((v_{x}, i_1)) = (u_{x}, j_1)$.
-        This shows that we can traverse from any node $w_x\in P$ to any other node $w'_x\in P$ only using nodes with subscript $x$.
-        \item[$a>1$]:
-        There are at least some nodes $u, v \in P_2$ such that $\operatorname{mul}(u,v) = k$, therefore we can traverse from any $u_x \in P_1$ to any $v_y \in P_1$ for any $x, y \in \{1, 2, ..., k\}$.
-    \end{itemize}
+    The network $N_2$ is connected by the assumption (Section \ref{sec:underlying_graph}) but it might not be clear that $N_1$ is connected, thus we show next that this is the case.
+
+    Let us look at all connections in $p_1$ and fix $a=1$.
+    Then $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$
+    $=p_1((v_{x}, i_1)) = (u_{x}, j_1)$.
+    This shows that we can traverse from any node $w_x\in P$ to any other node $w'_x\in P$ only using nodes with subscript $x$.
+
+    There are at least some nodes $u, v \in P_2$ such that $\operatorname{mul}(u,v) = k$, therefore we can traverse from any $u_x \in P_1$ to any $v_y \in P_1$ for any $x, y \in \{1, 2, ..., k\}$.
     Thus $N_1$ is connected.
 \end{proof}
 
