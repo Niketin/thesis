@@ -448,11 +448,14 @@ For example the network is simple in the Figure \ref{fig:formal_pn2:a}.
 \end{figure}
 
 
-\subsubsection{Underlying graph}
+\subsubsection{Underlying graph} \label{sec:underlying_graph}
 
 Each simple PN network $N=(V,P,p)$ has an \emph{underlying graph} $G=(V,E)$.
 An edge $(v, w)$ is part of the underlying network $G$ if and only if $v$ is connected to $w$, that is, $E = \{ (v, w) \, | \,  p((v, i)) = (w, j) \}$.
 A network with multiple connections uses the same definition to determine an underlying network, but in that case $E$ has to be a multiset instead of a set, in order to allow multiple same edges.
+
+In case an underlying graph of a network is connected, we say that \emph{the network is connected.}
+Throughout this work, we assume that the introduced networks are connected.
 
 \begin{figure}[H]
   \subcaptionbox{
