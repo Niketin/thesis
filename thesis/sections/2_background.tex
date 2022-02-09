@@ -610,7 +610,7 @@ Here the element $m_t((u, i))$ is a message sent by node $v$ through communicati
 It is also the message received by node $u$ from port $(u, i)$.
 
 We define the message vector $$r_t(u)=(m_t((u, 1)), m_t((u, 2)), \dotsc, m_t((u, \deg_N(u))))$$ for each $u\in V$.
-The message vector contains every message node $u$ receives at time $t$.
+The message vector contains every message node $u$ receives at time~$t$.
 
 Now we give the final definition for $x_t(u)$:
 $$x_t(u) = \algrecv_{A,d}(x_{t-1}(u, r_t(u)))$$
@@ -650,23 +650,23 @@ For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} imp
 
 \subsection{Covering map}
 There exists a limitation to what problems can be solved in a deterministic PN model.
-The limitation comes from an underlying graph of a PN network being symmetric.
-\cite{DBLP:conf/focs/Linial87}
-\cite{DBLP:journals/siamcomp/Linial92}
+The limitation comes from an underlying graph of a PN network being symmetric~%
+\cite{DBLP:conf/focs/Linial87}~%
+\cite{DBLP:journals/siamcomp/Linial92}.
 
 In this section we discuss about a topological concept that can help us formalizing symmetries in a PN network.
 The concept is called \emph{covering map}
 \footnote{Note that this is not related to the vertex cover problem even though they share the word \emph{cover}.}.
-Later in this work, we use the concept to show
+Later in this work, we use the concept in proving Theorems \ref{thm:lcl_nonsolvability:2} and \ref{thm:lcl_nonsolvability:3}.
+%TODO Final check: are they all of the theorems where covering map is used?
 
-First we want to show a definition of \emph{covering} for graphs, from  paper
+First we want to show a definition of \emph{covering} for graphs from the paper
 \cite{DBLP:conf/stoc/Angluin80}:
 \begin{displayquote}
-A graph $H$ is a \emph{covering} of a graph $G$ if there is a way to label the nodes of $H$ with the names of nodes in $G$ in such a way that if a node $x$ of $H$ is labelled "v" then the labels of the neighbors of $x$ are precisely the neighbors of $v$ in G.
-\cite{DBLP:conf/stoc/Angluin80}
+A graph $H$ is a \emph{covering} of a graph $G$ if there is a way to label the nodes of $H$ with the names of nodes in $G$ in such a way that if a node $x$ of $H$ is labelled ``v'' then the labels of the neighbors of $x$ are precisely the neighbors of $v$ in G.
 \end{displayquote}
 In this definition, covering map is the function that maps the nodes from $H$ to $G$.
-If $H$ is a covering of a connected graph $G$, then an intuition is that $H$ consists of multiple copies of $G$ "glued" together in a clever way.
+If $H$ is a covering of a connected graph $G$, then an intuition is that $H$ consists of multiple copies of $G$ ``glued'' together in a clever way.
 
 
 % First we define function $\xi_G(v)$ to be the set of all neighbors of vertex $v$ in graph $G$.
@@ -677,7 +677,7 @@ If $H$ is a covering of a connected graph $G$, then an intuition is that $H$ con
 % \end{enumerate}
 In order for us to use covering maps with PN networks, we need to additionally consider the port numbers of nodes so that they are also preserver by the covering map.
 
-We define now the covering map for PN networks similiary it is defined in the excellent textbook \cite{HirvonenSuomelaDistAlg2020}.
+We define now the covering map for PN networks similiary it is defined in the textbook \cite{HirvonenSuomelaDistAlg2020}.
 
 \begin{definition} \label{def:covering_map}
   Let $N=(V, P, p)$ and $N'=(V', P', p')$ be PN networks and let $\phi\colon V \rightarrow V'$.
@@ -685,7 +685,7 @@ We define now the covering map for PN networks similiary it is defined in the ex
   \begin{enumerate}
     \item $\phi$ is a surjection i.e. for every $v' \in V'$ there exists at least one $v \in V$ such that $\phi(v) = v'$.
     \item $\phi$ preserves the degrees of a node i.e. $\deg_N(v) = \deg_{N'}(\phi(v))$, for all $v \in V$.
-    \item $\phi$ preserves port numbers and connections i.e. if $p((u, i)) = (v, j)$ then $p'((\phi(u), i)) = (\phi(v), j)$.
+    \item $\phi$ preserves port numbers and connections i.e.\ if $p((u, i)) = (v, j)$ then $p'((\phi(u), i)) = (\phi(v), j)$.
   \end{enumerate}
 \end{definition}
 
@@ -739,7 +739,7 @@ There are two examples of covering maps on Figure \ref{fig:covering_map1} and \r
 In these examples we can see that the sizes of covering networks are integer multiplications of the sizes of original networks.
 This actually
 \footnote{\todo{Do I need to show this?}}
-applies to every covering map, i.e. if we have a covering map $\phi\colon V \rightarrow V'$, then $|V| = k*|V'|$ for some $k \in \mathbb{N}_{>0}$.
+applies to every covering map, i.e. if we have a covering map $\phi\colon V \rightarrow V'$, then $|V| = k|V'|$ for some $k \in \mathbb{N}_{>0}$.
 We often call covering networks as \emph{lifts}.
 A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size of $N'$.
 
