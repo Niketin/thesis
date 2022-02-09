@@ -288,8 +288,9 @@ text must be identical to the text on the abstract page.
 \emergencystretch=1em % Fixes DOI link not being overfull
 
 \usepackage{amsthm}
-\newtheorem{definition}{Definition}
-\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[section] % Applies counting based on section number
+\theoremstyle{definition} % Non-italic style for definitions
+\newtheorem{definition}[theorem]{Definition} % the [theorem] is an optional argument that applies counter sharing with "theorem"
 
 \usepackage{algorithm}
 \usepackage{algorithmicx}
