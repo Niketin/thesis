@@ -8,6 +8,7 @@ Here we specifically allow PN networks to have multiple connections.
 Later in the Section \ref{sec:algorithm:theorems:a} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
 Finally in the Section \ref{sec:algorithm:theorems:b} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 
+First we start with defining the meaning of solvability of an LCL problem.
 %TODO These definitions and theorems might have a better place under section 2 background.
 \begin{definition} \label{def:lcl_solvability}
     An LCL problem $\Pi$ is solvable in PN model, if and only if there exists a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
@@ -32,6 +33,13 @@ The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapos
 
 As the Theorem \ref{thm:lcl_nonsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
 To show that, it is enough to find an underlying graph $G$ of $N$ in which the problem $\Pi$ cannot be solved.
+\begin{theorem} \label{thm:problem_nonsolvability_in_graphs}
+    If a problem $\Pi$ is not solvable in graph $G$, then $\Pi$ is also not solvable in any PN network $N$ that has $G$ as its underlying graph.
+\end{theorem}
+\begin{proof}
+\todo{Complete proof} %TODO complete proof
+\end{proof}
+
 Using this fact, we can come up with an algorithm that automatically tries to find an counterexample graph.
 
 \begin{algorithm}[H]
@@ -57,16 +65,15 @@ Using this fact, we can come up with an algorithm that automatically tries to fi
 \end{algorithm}
 
 The Algorithm \ref{alg:counterexample_finder} is designed to find the smallest counterexample graph for an LCL problem $\Pi$.
-It starts from graphs of size $n_{low}$ and goes up to graphs of size $n_{high}$.
-%TODO define what is a graph's size, in 2. background.
+It starts from graphs with $n_{low}$ vertices and goes up to graphs with $n_{high}$ vertices.
 We define $d_a$ and $d_p$ to be the active and passive degree of the problem $\Pi$ respectively (rows \ref{alg:counterexample_finder:d_a} and \ref{alg:counterexample_finder:d_p}).
-The variable for the current graph size is called $n$ (row \ref{alg:counterexample_finder:n}).
-For each graph size $n$, we generate all possible $(d_a, d_p)$-biregular multigraphs with $\textsc{GenerateGraphs}(n, d_a, d_p)$, and save the graphs into variable $G_n$ (row \ref{alg:counterexample_finder:Gn}).
+The variable for the current vertex count is called $n$ (row \ref{alg:counterexample_finder:n}).
+For each graph with $n$ vertices, we generate all possible $(d_a, d_p)$-biregular multigraphs with $\textsc{GenerateGraphs}(n, d_a, d_p)$, and save the graphs into variable $G_n$ (row \ref{alg:counterexample_finder:Gn}).
 The reason for generating only these types of graphs comes from our definition of LCL problem from section \ref{sec:lcl_problems}, they are defined specifically for $(b,a)$-biregular (multi)graphs.
 %TODO make sure that it defines the LCL problems we are using here (LCL for (b,a)-biregular graphs)
 Now, for each graph $g \in G_n$ (row \ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ is unsolvable using the function $\textsc{IsUnsolvable}(\Pi, g)$ (row \ref{alg:counterexample_finder:is_unsolvable}).
 If it is unsolvable, we return the graph as an counterexample (row \ref{alg:counterexample_finder:return_g}).
-In the case there are no counterexamples in graphs of size $n_{low}$ to $n_{high}$, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
+In the case there are no counterexamples in graphs with $n_{low}$ to $n_{high}$ vertices, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
 
 Up to this moment, we have not discussed about how the function $$\textsc{GenerateGraphs}(n, d_a, d_p)$$ from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed about how the function $$\textsc{IsUnsolvable}(\Pi, g)$$ from row \ref{alg:counterexample_finder:is_unsolvable} determines the unsolvability used in the Algorithm \ref{alg:counterexample_finder}.
 These functions are implementation specific and in this section we assume that they exist as black boxes.
@@ -78,7 +85,7 @@ Later on the section \ref{sec:implementation} we introduce our implementations o
 
 
 
-%TODO talk about graphs, why they are actually (b, a)-biregular multigraphs.
+%TODO talk about graphs, why they are actually (b, a)-biregular multigraphs. Maybe this is explained by the fact that our LCL problems are defined for (b, a)-biregular.
 %TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
 %TODO Do we need to talk about trees and how these biregular multigraphs relate to them? 'Informally, the idea is to prove negative results for the case in which "we are in the middle of a very large tree, far away from the leaves".'
 
@@ -236,10 +243,13 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     %\todo{Complete this proof}
 % Pi is nonsolvable in multiple connection PN network N -> Pi is nonsolvable in simple PN network N' (lift of N)
 \begin{theorem} \label{thm:lcl_nonsolvability:4}
-    If an LCL problem $\Pi$ is not solvable in PN network $N$ with multiple connections, then it is also not solvable in simple PN network $N'$ that is a lift of $N$.
+    If an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections, then it is also not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{theorem}
 \begin{proof}
-    \todo{Complete this proof}
+    Let us assume that an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections.
+    Theorem \ref{thm:lcl_nonsolvability:3} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
+    Theorem \ref{thm:lcl_nonsolvability:2} shows that the problem $\Pi$ is also not solvable in network $N_1$.
+    Therefore the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{proof}
 
 \subsection{\todo{Theorems B}} \label{sec:algorithm:theorems:b}

@@ -83,7 +83,7 @@ One example of a directed graph is a flow graph, in which the edges represent fl
   \label{fig:graph1}
 \end{figure}
 
-Undirected graph is the opposite of directed graph in the sense that the order of the vertices in an edge does not matter.
+\emph{Undirected graph} is a graph in which the order of the vertices in an edge does not matter.
 An edge of an undirected graph is defined as an unordered pair $\{v, w\} \in E$, therefore the following holds:
 \begin{equation}
 \forall v, w \in V\colon \{v, w\} = \{w, v\}
@@ -271,7 +271,7 @@ A common way to visualize these networks is by drawing a graph in which the node
   \label{fig:dist_comp1}
 \end{figure}
 According to Lamport \cite{DBLP:books/el/leeuwen90/LamportL90}, in the area of distributed computing, the term \emph{model} denotes a view or abstract representation of a distributed system.
-There are multiple different computation models used in distributed computing\cite{DBLP:books/el/leeuwen90/LamportL90}.
+There are multiple different computation models used in distributed computing \cite{DBLP:books/el/leeuwen90/LamportL90}.
 The most important category of distributed computation models is \emph{process models} \cite{DBLP:books/el/leeuwen90/LamportL90}.
 In process models, the work or activities are represented as concurrently executed processes that execute their instructions sequentially \cite{DBLP:books/el/leeuwen90/LamportL90}.
 A standard way to distinguish different process models from each other is to categorise them by the method they use to communicate with each other (\emph{interprocess communication}) \cite{DBLP:books/el/leeuwen90/LamportL90}.
@@ -315,11 +315,6 @@ In other research there might be randomizing involved.
 
 %The following two sections (\ref{sec:port_number_model} and \ref{sec:local_model} ) talk about different forms of message passing models that are highly relative to this paper.
 
-%In the theory of distributed computing, it is common to use terminology and concepts from graph theory as networks are basically graphs.
-%With formal definitions, we can discuss more about the structure of distributed networks and reason features of those networks.
-%We can further construct proofs of different theorems and so on. %TODO Fix this paragraph
-
-
 \subsection{Port number model} \label{sec:port_number_model}
 This section is based on the excellent textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
@@ -336,7 +331,6 @@ Each node has communication ports numbered from $1$ to $d$, where $d$ is the deg
 The ports are numbered in an arbitrary order.
 
 All nodes are considered identical; initially they are in the same internal state.
-%TODO IS THIS NEEDED? However, nodes know their degree and there can be different degreed nodes, depending on the underlying graph $G$.
 Every node starts the execution simultaneously following the same PN-algorithm $A$.
 The execution of $A$ is done synchronously in parallel.
 A communication round consists of following synchronous steps:
@@ -394,7 +388,6 @@ See Figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples of va
 
 The degree $\deg_N(v)$ of a node $v \in V$ is equal to the number of ports of $v$.
 We assume that the port numbers are consecutive positive integers starting from 1, i.e. the ports of a node $v$ are $\{(v, i) \mid i \in \{1, 2, \dotsc, \deg_N(v)\}\}$.
-%TODO It feels like this definition of ports should not depend on the degree as that depends on the previous definition of ports
 Note that the highest port number of $v$ is also the degree of $v$.
 
 When we say \emph{port number $i$ in node $v$}, we refer to the port $(v, i)$.
@@ -626,7 +619,7 @@ With the same assumption, we define the \emph{local output} of node $u$ as $x_t(
 
 
 
-\todo{Add an example execution of an example problem.} %TODO Add an example execution of an example problem.
+\todo{Add an example execution of an example problem if necessary.} %TODO Add an example execution of an example problem if necessary.
 
 \subsubsection{Solving graph problems in PN}
 As this thesis focuses strongly on graph problems, it is necessary to define what it means for a distributed algorithm to solve a graph problem.
