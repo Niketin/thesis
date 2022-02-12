@@ -799,16 +799,23 @@ This symmetricity implies that each node ends up in an identical output state wi
 continue...........
 
 \subsection{LOCAL model} \label{sec:local_model}
-The LOCAL model is another message passing model that is used in the field of distributed computation. It is similiar to the PN model, hence most of the definition is already done.
+The LOCAL model is another message passing model that is used in the field of distributed computation. It is a variant of the PN model, hence most of the definition is already done.
 The difference is that the graph problem $\Pi'$ given as an input is always predetermined.
-A solution to problem $\Pi'$ is a node labeling $\operatorname{id}\colon V \rightarrow \{1,2,\dotsc,|V|^c\}$, where each node has a unique label \cite{HirvonenSuomelaDistAlg2020}.
-The value $c$ is a positive constant greater than 1 \cite{HirvonenSuomelaDistAlg2020}, but in older literature it has been defined as 1 \cite{DBLP:journals/siamcomp/Linial92}.
-If a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given $\Pi'$, we say that $A$ solves $\Pi$ on graph family $\mathcal{F}$ in the LOCAL model.
+A solution to problem $\Pi'$ is a node labeling $\operatorname{id}\colon V \rightarrow \{1,2,\dotsc,|V|\}$, where each node has a unique label \cite{DBLP:conf/focs/Linial87}.
+Sometimes the node labeling is defined $\operatorname{id}\colon V \rightarrow \{1,2,\dotsc,|V|^c\}$, where $c$ is a positive constant greater than 1 \cite{HirvonenSuomelaDistAlg2020}, but in this work we assume $c=1$.
+If a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given $\Pi'$, we say that $A$ solves $\Pi$ on graph family $\mathcal{F}$ in the LOCAL model \cite{HirvonenSuomelaDistAlg2020}.
 
 Earlier in Section \ref{def:covering_map} we discussed about the limitation in a deterministic PN model that comes from symmetry.
 In the LOCAL model, each node has a unique identifier, therefore an algorithm developed for the LOCAL model can utilize these identifiers to break the symmetry and avoid the limitation of PN model.
 
 \subsection{LCL problems} \label{sec:lcl_problems}
+
+\todo{Talk about LCL's in general}
+
+\todo{Define LCL for vertex or edge labels}
+
+\todo{(a,b)-biregular LCL problems}
+\todo{(a,b)-biregular LCL problems with examples}
 
 \cite{DBLP:journals/siamcomp/NaorS95}
 
