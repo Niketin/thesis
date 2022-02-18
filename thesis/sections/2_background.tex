@@ -206,6 +206,7 @@ Let us not worry about the connectivity of the directed graph on Figure \ref{fig
 
 A \emph{distance} between two nodes $u, v\in V$ is the length of the shortest path between $u$ and $v$ (see Figure \ref{fig:graph4:b}).
 We use the notation $\operatorname{dist}(u, v)$ for the distance between $u$ and $v$.
+The maximum of all shortest paths in a graph $G$ is called the \emph{diameter} of $G$.
 A \emph{subgraph} $H$ of a graph $G=(V, E)$ is a graph formed from a subset $V'$ of vertices of $V$ and a subset $E'$ of edges of $E$ such that each endpoint of $e' \in E'$ must be in $V'$.
 A $r$-radius \emph{ball} of node $u$ of graph $G$ is a subgraph $H=(V', E')$ of $G$ containing:
 \begin{itemize}
@@ -219,7 +220,7 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
   \subcaptionbox{A path between nodes 1 and 5 in a graph $G$.
   The length of the path is 4.
   \label{fig:graph4:a}}
-    [.45\linewidth] {
+    [.30\linewidth] {
     \centering
     \begin{tikzpicture}[]
       \node[nodeSBlue] (1) [] at (0,0) {$1$};
@@ -249,7 +250,7 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
   \subcaptionbox{A shortest path between nodes 1 and 5 in a graph $G$.
   The length of the path is 2, thus $\operatorname{dist}(u,v)=2$.
   \label{fig:graph4:b}}
-    [.45\linewidth] {
+    [.30\linewidth] {
     \centering
     \begin{tikzpicture}[]
       \node[nodeSBlue] (1) [] at (0,0) {$1$};
@@ -261,12 +262,12 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
       \node[nodeSBlue] (7) [below =  of 4] {$7$};
       \node[nodeSBlue] (8) [below =  of 5] {$8$};
       \node[nodeSBlue] (9) [below =  of 6] {$9$};
-      \draw[highlight] (1) -- (2);
+      \draw[highlight={green}] (1) -- (2);
       \draw[] (2) -- (3);
       \draw[] (4) -- (5);
       \draw[] (5) -- (6);
       \draw[] (1) -- (4);
-      \draw[highlight] (2) -- (5);
+      \draw[highlight={green}] (2) -- (5);
       \draw[] (3) -- (6);
       \draw[] (4) -- (7);
       \draw[] (5) -- (8);
@@ -275,7 +276,37 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
       \draw[] (8) -- (9);
     \end{tikzpicture}
   }
-  \caption{Examples of different graphs}
+  \hfill
+  \subcaptionbox{A path between nodes 1 and 9 illustrating the diameter of the graph $G$.
+  The length of the path is 4, thus $\operatorname{diameter}(G)=4$.
+  \label{fig:graph4:c}}
+    [.30\linewidth] {
+    \centering
+    \begin{tikzpicture}[]
+      \node[nodeSBlue] (1) [] at (0,0) {$1$};
+      \node[nodeSBlue] (2) [right =  of 1] {$2$};
+      \node[nodeSBlue] (3) [right =  of 2] {$3$};
+      \node[nodeSBlue] (4) [below =  of 1] {$4$};
+      \node[nodeSBlue] (5) [below =  of 2] {$5$};
+      \node[nodeSBlue] (6) [below =  of 3] {$6$};
+      \node[nodeSBlue] (7) [below =  of 4] {$7$};
+      \node[nodeSBlue] (8) [below =  of 5] {$8$};
+      \node[nodeSBlue] (9) [below =  of 6] {$9$};
+      \draw[] (1) -- (2);
+      \draw[] (2) -- (3);
+      \draw[] (4) -- (5);
+      \draw[] (5) -- (6);
+      \draw[highlight={blue}] (1) -- (4);
+      \draw[] (2) -- (5);
+      \draw[] (3) -- (6);
+      \draw[highlight={blue}] (4) -- (7);
+      \draw[] (5) -- (8);
+      \draw[] (6) -- (9);
+      \draw[highlight={blue}] (7) -- (8);
+      \draw[highlight={blue}] (8) -- (9);
+    \end{tikzpicture}
+  }
+  \caption{Examples of different kind of paths illustrated by highlighting the edges that form the path.}
   \label{fig:graph4}
 \end{figure}
 
@@ -944,15 +975,22 @@ Sometimes the node labeling is defined $\operatorname{id}\colon V \rightarrow \{
 If a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given $\Pi'$, we say that $A$ solves $\Pi$ on graph family $\mathcal{F}$ in the LOCAL model \cite{HirvonenSuomelaDistAlg2020}.
 
 Earlier in Section \ref{def:covering_map} we discussed about the limitation in a deterministic PN model that comes from symmetry.
-In the LOCAL model, each nod   LOCAL model can utilize these identifiers to break the symmetry and avoid the limitation of PN model.
+In the LOCAL model, an algorithm can utilize these identifiers to break the symmetry and avoid the limitation of PN model.
 
-\clearpage % TODO REMOVE clearpage
+A well-known property of the LOCAL model is the ability to compute \emph{every} function of a graph $G$ in time $\mathcal{O}(\operatorname{diameter}(G))$.
+This amount of time is enough for any node in $G$ to gather complete information of both the graph and the unique labels from function $\operatorname{id}$, because a message can travel from a node to any other node at most in $\operatorname{diameter}(G)$ time.
+With the complete information of everything, each node can compute the whole solution and output its own part of the solution.
+Because of this, researchers are usually interested in complexity classes below the $\mathcal{O}(\operatorname{diameter}(G))$.
+
+\todo{Discuss more about LOCAL? }
+\todo{Tell about the diameter time algorithms, how any problem can be solved using diam time (gather all information about the network) }
+
 \subsection{Locally checkable labeling problems} \label{sec:lcl_problems}
 In this section we define \emph{Locally checkable labeling (LCL)} problems generally and after that we introduce an alternative definition that we will be using in this work.
 Briefly, LCL problems are a family of graph problems where a global solution (node labeling) can be verified locally by the individual nodes.
 
 LCL problems were first introduced in the paper \cite{DBLP:journals/siamcomp/NaorS95} by Moni Naor and Larry Stockmeyer in 1995.
-The paper laid the groundwork that was needed for researching the locality of distributed graph problems.
+The paper laid the groundwork for further researches of the locality of distributed graph problems.
 Locality is or can be understood as ...
 \todo{talk something about the constant radius and every t-time problem basically has to form the output based on the t-radius neighourhood (the information about the t-radius network the nodes have gathered) }.
 
