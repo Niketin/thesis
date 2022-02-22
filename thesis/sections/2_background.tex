@@ -1024,20 +1024,29 @@ We now define these problems using the LCL notation.
 The input is unnecessary for each of these problems,
 therefore we set the input labels $\Sigmain = \{1\}$ for each problem.
 Each problem has radius 1.
-Listing the locally consistent labelings of each problem would result in too large lists, hence we give only a brief description of the elements.
+Listing the locally consistent labelings of each problem would result in substantially large sets of graphs, hence we give only a brief description of the elements.
 \begin{description}
   \item[$k$-coloring] The set of output labels $\Sigmaout$ contains all $k$ colors, e.g. $1, 2, \dotsc, k$.
   The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of vertex colorings with $k$-colors.
   \item[Maximal independent set]
   The set of output labels $\Sigmaout$ contains labels 0 and 1.
-  The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of output labels such that if the node $s$ (the center node) is $1$, then all adjacent nodes are labelled with $0$.
+  The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of output labels such that if and only if the node $s$ (the center node) is $1$, then all adjacent nodes are labelled with $0$.
+  Label 0 denotes that the vertex is not in the maximal independent set, and label 1 denotes that it is in the set.
   \item[Minimal vertex cover]
   The set of output labels $\Sigmaout$ contains labels 0 and 1.
   The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of output labels such that if and only if the node $s$ (the center node) is $0$, then all adjacent nodes are labelled with $1$.
+  Label 0 denotes that the vertex is not in the minimal vertex cover, and label 1 denotes that it is in the set.
+  \footnote{This problem is a complement of the maximal independent set.}
 \end{description}
 
+It is clear that defining the whole set $C$ explicitly in this formalism would be a substantial amount of work.
+Therefore we depend on another formalism of LCL problems.
+\todo{Aren't there more reasons?}
 
 
+
+%Usually research around LCL problems focuses on some specific family of graphs.
+%The graphs are also often assumed to have a bounded degree.
 
 
 
@@ -1045,13 +1054,52 @@ Listing the locally consistent labelings of each problem would result in too lar
 
 
 \subsubsection{LCL problems in biregular graphs}
+In this work, we use an alternative formalism of LCL problems originating from paper \cite{DBLP:conf/podc/Brandt19} and recently it has been seen in the papers including \cite{DBLP:conf/podc/Olivetti20} and \cite{DBLP:journals/sigact/Suomela20}.
+We will be referring to these papers in the following definitions.
+
+In the formalism, LCL problems are defined for \emph{infinite $\Delta$-regular tree} graphs.
+\todo{
+Input labels are considered to be part of the given graphs.
+This way whe problem is separated from the inputs and graph topology?\cite{DBLP:conf/podc/Brandt19}
+}
+
+\todo{
+The output labels of a node are split into parts that belong to incident edges \cite{DBLP:conf/podc/Brandt19}.
+}
+
+\todo{
+"Nodes are required to write a label on each incident edge => each edge will be labelled with 2 labels, one for each endpoint" \cite{DBLP:conf/podc/Olivetti20}
+}
+
+\todo{
+  " there is a set of acceptable output configurations for the two endpoints of an edge, and the global output is correct if and only if the configuration for each edge is acceptable."
+  \cite{DBLP:conf/podc/Brandt19}
+}
+
+\todo{
+  "Also, we can use this encoding
+to define problems on bipartite 2-colored graphs, by mapping white
+and black nodes to nodes and hyperedges. In this case, we will refer
+to the node constraint as white constraint and to the hyperedge
+constraint as black constraint."
+\cite{DBLP:conf/podc/Olivetti20}
+}
+
+We call the partition $A$ of the graph as the \emph{active} partition and the partition $B$ as the \emph{passive} partition.
+
+
+
+
+
+
 
 \todo{(a,b)-biregular LCL problems}
 \todo{(a,b)-biregular LCL problems with examples}
 
-\cite{DBLP:journals/siamcomp/NaorS95}
+%\cite{DBLP:journals/siamcomp/NaorS95}
 
-In this work, we are specially interested in LCL problems in $(b,a)$-biregular graphs.
+In this work, we are specially interested in LCL problems in $b$-regular graphs.
+
 The reason is ...
 
 Examples:
