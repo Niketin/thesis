@@ -1057,35 +1057,42 @@ Therefore we depend on another formalism of LCL problems.
 In this work, we use an alternative formalism of LCL problems originating from paper \cite{DBLP:conf/podc/Brandt19} and recently it has been seen in the papers including \cite{DBLP:conf/podc/Olivetti20} and \cite{DBLP:journals/sigact/Suomela20}.
 We will be referring to these papers in the following definitions.
 
-In the formalism, LCL problems are defined for \emph{infinite $\Delta$-regular tree} graphs.
-\todo{
-Input labels are considered to be part of the given graphs.
-This way whe problem is separated from the inputs and graph topology?\cite{DBLP:conf/podc/Brandt19}
-}
+In the formalism, LCL problems are generally defined for \emph{infinite $\Delta$-regular $\delta$-uniform hypertrees} \cite{DBLP:conf/podc/Olivetti20}.
+The concept of hypergraphs might first seem difficult to understand.
+It is a generalization of graphs.
+It simply means that an edge is called as a hyperedge, and it can connect \emph{any} number of nodes.
+$\delta$-uniform means that the hyperedges connect to exactly $\delta$ nodes.
+Hypertrees are hypergraphs with tree structure.
+
+An LCL problem $\Pi$ is a tuple $(\Sigma, A, P)$, where $\Sigma$ is a finite set of labels, and $A$ and $B$ are finite sets containing all allowed label configurations of nodes and hyperedges, respectively.
+The sets $A$ and $P$ both contain multisets, each containing labels from the set $\Sigma$.
+The multisets in $A$ have a length of $\Delta$ and the multisets in $P$ have a length of $\delta$.
+
+The task of each node is to label each of its incident hyperedge with a label from $\Sigma$ \cite{DBLP:journals/sigact/Suomela20}.
+Each node will label $\Delta$ incident hyperedges, thus each hyperedge will be labeled with $\delta$ labels.
+These labels form a $\Delta$ length multiset of labels, for each node.
+This way, each hyperedge will be labeled $\delta$ times, once from each endpoint.
+Each hyperedge will have a multiset of labels with 2 elements.
+
+From a solution, we require that:
+\begin{enumerate}
+  \item a multiset consisting of of each label given by a node must be in $A$, and
+  \item a multiset consisting of each label given to a hyperedge is in $B$.
+\end{enumerate}
+
+Note that if we fix $\delta=2$, then the problems are defined for $\Delta$-regular trees \cite{DBLP:conf/podc/Olivetti20}.
+
+Alternatively to $\Delta$-regular $\delta$-uniform hypertrees, we can think of the hyperedges as a separate nodes \cite{DBLP:conf/podc/Olivetti20}.
+This way the problems are defined for $(\Delta, \delta)$-biregular graphs.
+We say that the original nodes of the graph are called \emph{active nodes}, and the newly introduced nodes, formerly hyperedges, are called \emph{passive nodes}.
+This naming convention can be seen in the sets $A$ and $P$, which can be called as the sets of active constraints and passive constraints, respectively.
+
+\todo{Address the fact that this definition is for infinite hypertrees. Can we use it with finite graphs?}
+
 
 \todo{
 The output labels of a node are split into parts that belong to incident edges \cite{DBLP:conf/podc/Brandt19}.
 }
-
-\todo{
-"Nodes are required to write a label on each incident edge => each edge will be labelled with 2 labels, one for each endpoint" \cite{DBLP:conf/podc/Olivetti20}
-}
-
-\todo{
-  " there is a set of acceptable output configurations for the two endpoints of an edge, and the global output is correct if and only if the configuration for each edge is acceptable."
-  \cite{DBLP:conf/podc/Brandt19}
-}
-
-\todo{
-  "Also, we can use this encoding
-to define problems on bipartite 2-colored graphs, by mapping white
-and black nodes to nodes and hyperedges. In this case, we will refer
-to the node constraint as white constraint and to the hyperedge
-constraint as black constraint."
-\cite{DBLP:conf/podc/Olivetti20}
-}
-
-We call the partition $A$ of the graph as the \emph{active} partition and the partition $B$ as the \emph{passive} partition.
 
 
 
@@ -1096,11 +1103,6 @@ We call the partition $A$ of the graph as the \emph{active} partition and the pa
 \todo{(a,b)-biregular LCL problems}
 \todo{(a,b)-biregular LCL problems with examples}
 
-%\cite{DBLP:journals/siamcomp/NaorS95}
-
-In this work, we are specially interested in LCL problems in $b$-regular graphs.
-
-The reason is ...
 
 Examples:
 Maximal independent set
