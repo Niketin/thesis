@@ -986,13 +986,17 @@ Because of this, researchers are usually interested in complexity classes below 
 \todo{Discuss more about LOCAL? }
 
 \subsection{Locally checkable labeling problems} \label{sec:lcl_problems}
-In this section we define \emph{Locally checkable labeling (LCL)} problems generally and after that we introduce an alternative definition that we will be using in this work.
+In this section we define \emph{Locally checkable labeling (LCL)} problems generally.
+After that in Section \ref{sec:lcl_problems:biregular}, we introduce an alternative definition that we will be using in this work.
 Briefly, LCL problems are a family of graph problems where a global solution (node labeling) can be verified locally by the individual nodes.
+The reason why we discuss about the former definition is that we want the reader to have a good introduction to LCL problems before we discuss about the latter definition.
 
-LCL problems were first introduced in the paper \cite{DBLP:journals/siamcomp/NaorS95} by Moni Naor and Larry Stockmeyer in 1995.
-The paper laid the groundwork for further researches of the locality of distributed graph problems.
-Locality is or can be understood as ...
-\todo{talk something about the constant radius and every t-time problem basically has to form the output based on the t-radius neighourhood (the information about the t-radius network the nodes have gathered) }.
+%TODO move this commented paragraph to somewhere where we talk about locality and complexity.
+%LCL problems were first introduced in the paper \cite{DBLP:journals/siamcomp/NaorS95} by Moni Naor and Larry Stockmeyer in 1995.
+%The paper laid the groundwork for further researches of the locality of distributed graph problems.
+%\emph{Locality} is the maximum distance each node has to gather information from, in order to choose an output \cite{DBLP:journals/sigact/Suomela20}.
+%Instead of discussing about locality, we can equally talk about round complexity of message passing algorithms \cite{DBLP:journals/sigact/Suomela20}.
+%\todo{talk something about the constant radius and every t-time problem basically has to form the output based on the t-radius neighourhood (the information about the t-radius network the nodes have gathered) }.
 
 \newcommand{\Sigmain}{\Sigma_{\text{in}}}
 \newcommand{\Sigmaout}{\Sigma_{\text{out}}}
@@ -1053,7 +1057,7 @@ Therefore we depend on another formalism of LCL problems.
 
 
 
-\subsubsection{LCL problems in biregular graphs}
+\subsubsection{LCL problems in biregular graphs} \label{sec:lcl_problems:biregular}
 In this work, we use an alternative formalism of LCL problems originating from paper \cite{DBLP:conf/podc/Brandt19} and recently it has been seen in the papers including \cite{DBLP:conf/podc/Olivetti20} and \cite{DBLP:journals/sigact/Suomela20}.
 We will be referring to these papers in the following definitions.
 
