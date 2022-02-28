@@ -107,7 +107,7 @@ As we do not need directedness of edges, let us assume that further expressions 
 Suppose there is an edge $e=\{v,w\}$.
 We say that vertex $v$ is \emph{incident} to $e$ and $e$ is incident to $v$.
 We also say that vertex $v$ is \emph{adjacent} to $w$ and vice versa.
-Similiarly when two edges share a vertex, we say that the edges are \emph{adjacent}.
+Similarly when two edges share a vertex, we say that the edges are \emph{adjacent}.
 We can also say that $w$ is a \emph{neighbour} of $v$ and vice versa.
 
 In a graph, the degree of a vertex is the number of edges it is incident to.
@@ -377,7 +377,7 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
 \subsection{Distributed computing} \label{sec:distributed_computing}
 Executing a computer program in several identical or different computers is called distributed computing
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
-It is similiar to running a computer program that contains multiple concurrent tasks, in a computer, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
+It is similar to running a computer program that contains multiple concurrent tasks, in a computer, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
 
 Computers are called nodes, and they are connected to each other with communication channels.
 These communication channels carry data from a node to another node.
@@ -759,7 +759,7 @@ Let $f\colon V \rightarrow \algin_A$ be a node labeling.
 A \emph{state vector} is a function $x\colon V \rightarrow \algstates_A$.
 The execution of $A$ on $(N, f)$ is a sequence of state vectors $x_0, x_1, \dotsc$ where the $x_0$ is the initial state vector.
 When we use the notation $x_t, t \in \mathbb{Z}_{\geq 0}$, we refer to the state vector at time $t$.
-Similiary, we use $x_t(u), u \in V$ when we refer to the state of the node $u$ at time $t$.
+Similarly, we use $x_t(u), u \in V$ when we refer to the state of the node $u$ at time $t$.
 
 We define $$x_0(u) = \alginit_{A,d}(f(u))$$ where $u\in V$ and $d=\deg_N(u)$.
 The state vectors $x_1, x_2, \dotsc$ are defined recursively in the following paragraph.
@@ -839,7 +839,7 @@ If $H$ is a covering of a connected graph $G$, then an intuition is that $H$ con
 % \end{enumerate}
 In order for us to use covering maps with PN networks, we need to additionally consider the port numbers of nodes so that they are also preserver by the covering map.
 
-We define now the covering map for PN networks similiary it is defined in the textbook \cite{HirvonenSuomelaDistAlg2020}.
+We define now the covering map for PN networks similarly it is defined in the textbook \cite{HirvonenSuomelaDistAlg2020}.
 
 \begin{definition} \label{def:covering_map}
   Let $N=(V, P, p)$ and $N'=(V', P', p')$ be PN networks and let $\phi\colon V \rightarrow V'$.
@@ -937,7 +937,7 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
   }
   \caption{
     There is a covering map $\phi_0$ from $N_1$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2\}$.
-    Similiarly there is a covering map $\phi_1$ from $N_2$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2, 3\}$.
+    Similarly there is a covering map $\phi_1$ from $N_2$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2, 3\}$.
   }
   \label{fig:covering_map3}
 \end{figure}
@@ -969,14 +969,14 @@ continue...........
 
 \subsection{LOCAL model} \label{sec:local_model}
 The LOCAL model is another message passing model that is used in the field of distributed computation.
-It is a variant of the PN model, hence most of the definition is already done in Section \ref{sec:formalized_pn_model}.
-The difference is that the graph problem $\Pi'$ given as an input is always predetermined.
+It inherits from the PN model, hence most of the definition is already done in Section \ref{sec:formalized_pn_model}.
+The difference is that the graph problem $\Pi'$, given as an input, is always predetermined.
 A solution to problem $\Pi'$ is a node labeling $\operatorname{id}\colon V \rightarrow \{1,2,\dotsc,|V|\}$, where each node has a unique label \cite{DBLP:conf/focs/Linial87}.
 Sometimes the node labeling is defined $\operatorname{id}\colon V \rightarrow \{1,2,\dotsc,|V|^c\}$, where $c$ is a positive constant greater than 1 \cite{HirvonenSuomelaDistAlg2020}, but in this work we assume $c=1$.
 If a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given $\Pi'$, we say that $A$ solves $\Pi$ on graph family $\mathcal{F}$ in the LOCAL model \cite{HirvonenSuomelaDistAlg2020}.
 
 Earlier in Section \ref{def:covering_map} we discussed about the limitation in a deterministic PN model that comes from symmetry.
-In the LOCAL model, an algorithm can utilize these identifiers to break the symmetry and avoid the limitation of PN model.
+In the LOCAL model, an algorithm can utilize these identifiers to break the symmetry and avoid the limitation of the PN model.
 
 A well-known property of the LOCAL model is the ability to compute \emph{every} function of a graph $G$ in time $\mathcal{O}(\operatorname{diameter}(G))$.
 This amount of time is enough for any node in $G$ to gather complete information of both the graph and the unique labels from function $\operatorname{id}$, because a message can travel from a node to any other node at most in $\operatorname{diameter}(G)$ time.
@@ -987,9 +987,9 @@ Because of this, researchers are usually interested in complexity classes below 
 
 \subsection{Locally checkable labeling problems} \label{sec:lcl_problems}
 In this section we define \emph{Locally checkable labeling (LCL)} problems generally.
-After that in Section \ref{sec:lcl_problems:biregular}, we introduce an alternative definition that we will be using in this work.
+This section is intended as an introduction for the Section \ref{sec:lcl_problems:biregular} where we introduce an alternative definition of LCL problems that we will be using in this work.
 Briefly, LCL problems are a family of graph problems where a global solution (node labeling) can be verified locally by the individual nodes.
-The reason why we discuss about the former definition is that we want the reader to have a good introduction to LCL problems before we discuss about the latter definition.
+
 
 %TODO move this commented paragraph to somewhere where we talk about locality and complexity.
 %LCL problems were first introduced in the paper \cite{DBLP:journals/siamcomp/NaorS95} by Moni Naor and Larry Stockmeyer in 1995.
@@ -1010,17 +1010,12 @@ An LCL problem $\Pi$ consists of:
   \item a finite set of \emph{output labels} $\Sigmaout$ and
   \item a finite set of \emph{locally consistent labelings} $C$, where:
   \begin{itemize}
-    \item elements are pairs $(H=(V^H, E^H), s)$,
-    \item $H$ graph, node $s$ is in $V^H$, and the distance from $s$ to any other node in $V^H$ is at most $r$
+    \item the elements are pairs $(H=(V^H, E^H), s)$,
+    \item $H$ is a graph, node $s$ is in $V^H$, and the distance from the node $s$ to any other node in $V^H$ is at most $r$,
     \item every pair $(v, e) \in (V^H \times E^H)$ is labeled with a pair from $\Sigmain \times \Sigmaout$.
   \end{itemize}
 \end{itemize}
-Given a graph $G = (V, E)$ and a node labeling $f: V \rightarrow \Sigmain \times \Sigmaout$, the node labeling $f$ is a solution to an LCL problem $\Pi$ if for every node $v \in V$, the $r$-radius ball $B_G(v, r)$ is isomorphic to a labeled graph in $C$.
-\todo{Discuss about the solving of $\Pi$ as in the paper \cite{DBLP:journals/corr/abs-2105-05574} }
-
-
-
-\todo{Definition of LCL (in the round eliminator formalism)}
+Given a graph $G = (V, E)$ and a node labeling $f: V \rightarrow \Sigmain \times \Sigmaout$, the node labeling $f$ is a solution to an LCL problem $\Pi$ if for every node $v \in V$, the $r$-radius ball $B_G(v, r)$ is isomorphic to some labeled graph in $C$ \cite{DBLP:journals/corr/abs-2105-05574}.
 
 Several common graph problems are in the LCL family.
 For example the problems introduced in Section \ref{sec:dist_graph_probl} are LCL problems.
@@ -1057,49 +1052,80 @@ Therefore we depend on another formalism of LCL problems.
 
 
 
-\subsubsection{LCL problems in biregular graphs} \label{sec:lcl_problems:biregular}
-In this work, we use an alternative formalism of LCL problems originating from paper \cite{DBLP:conf/podc/Brandt19} and recently it has been seen in the papers including \cite{DBLP:conf/podc/Olivetti20} and \cite{DBLP:journals/sigact/Suomela20}.
+\subsection{LCL problems in biregular graphs} \label{sec:lcl_problems:biregular}
+In this section, we will introduce an alternative formalism of LCL problems used in this work, that originates from paper \cite{DBLP:conf/podc/Brandt19}, and recently it has been seen in the papers including \cite{DBLP:conf/podc/Olivetti20} and \cite{DBLP:journals/sigact/Suomela20}.
 We will be referring to these papers in the following definitions.
 
 In the formalism, LCL problems are generally defined for \emph{infinite $\Delta$-regular $\delta$-uniform hypertrees} \cite{DBLP:conf/podc/Olivetti20}.
-The concept of hypergraphs might first seem difficult to understand.
-It is a generalization of graphs.
-It simply means that an edge is called as a hyperedge, and it can connect \emph{any} number of nodes.
-$\delta$-uniform means that the hyperedges connect to exactly $\delta$ nodes.
 Hypertrees are hypergraphs with tree structure.
+Hypergraph is a generalization of graphs.
+The concept of hypergraphs might first seem difficult to understand.
+It simply means that an edge is called as a hyperedge, and it can connect \emph{any} number of nodes.
+To be $\delta$-uniform means that the hyperedges connect to exactly $\delta$ nodes.
+Note that if we fix $\delta=2$, then the problems are defined for infinite $\Delta$-regular trees \cite{DBLP:conf/podc/Olivetti20}.
 
-An LCL problem $\Pi$ is a tuple $(\Sigma, A, P)$, where $\Sigma$ is a finite set of labels, and $A$ and $B$ are finite sets containing all allowed label configurations of nodes and hyperedges, respectively.
-The sets $A$ and $P$ both contain multisets, each containing labels from the set $\Sigma$.
-The multisets in $A$ have a length of $\Delta$ and the multisets in $P$ have a length of $\delta$.
+An LCL problem $\Pi$ is a tuple $(\Sigma, A, P)$, where $\Sigma$ is a finite set of labels, and $A$ and $P$ are finite sets containing all allowed \emph{label configurations} of nodes and hyperedges, respectively.
+A label configuration is a multiset containing labels from the set $\Sigma$.
+The label configurations in $A$ have a length of $\Delta$ and the label configurations in $P$ have a length of $\delta$ \cite{DBLP:journals/sigact/Suomela20}.
 
 The task of each node is to label each of its incident hyperedge with a label from $\Sigma$ \cite{DBLP:journals/sigact/Suomela20}.
 Each node will label $\Delta$ incident hyperedges, thus each hyperedge will be labeled with $\delta$ labels.
-These labels form a $\Delta$ length multiset of labels, for each node.
-This way, each hyperedge will be labeled $\delta$ times, once from each endpoint.
-Each hyperedge will have a multiset of labels with 2 elements.
-
-From a solution, we require that:
+The labels given by a node to its incident hyperedges form a label configuration.
+Similarly the labels given to a hyperedge form a label configuration.
+Label configurations of a node have a length of $\Delta$ and label configurations of a hyperedge have a length of $\delta$.
+We require from a solution that:
 \begin{enumerate}
-  \item a multiset consisting of of each label given by a node must be in $A$, and
-  \item a multiset consisting of each label given to a hyperedge is in $B$.
+  \item every label configuration of a node is contained in $A$, and
+  \item every label configuration of a hyperedge is contained in $P$.
 \end{enumerate}
 
-Note that if we fix $\delta=2$, then the problems are defined for $\Delta$-regular trees \cite{DBLP:conf/podc/Olivetti20}.
-
 Alternatively to $\Delta$-regular $\delta$-uniform hypertrees, we can think of the hyperedges as a separate nodes \cite{DBLP:conf/podc/Olivetti20}.
-This way the problems are defined for $(\Delta, \delta)$-biregular graphs.
+This way the problems are defined for infinite $(\Delta, \delta)$-biregular graphs.
 We say that the original nodes of the graph are called \emph{active nodes}, and the newly introduced nodes, formerly hyperedges, are called \emph{passive nodes}.
 This naming convention can be seen in the sets $A$ and $P$, which can be called as the sets of active constraints and passive constraints, respectively.
 
 \todo{Address the fact that this definition is for infinite hypertrees. Can we use it with finite graphs?}
 
+The definition above is for infinite
 
 \todo{
 The output labels of a node are split into parts that belong to incident edges \cite{DBLP:conf/podc/Brandt19}.
 }
 
 
-
+\begin{figure}[H]
+  \subcaptionbox{
+    A part of a infinite (3,2)-biregular treePN network $N_0$ with loops.
+    \label{fig:biregular_graph1:a}
+  }%
+    [.45\linewidth] {
+    \centering
+    \includegraphics[scale=0.30]{diagrams/biregular_graph.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A PN network $N_1$ with multiple connections.
+    \label{fig:biregular_graph1:b}
+  }%
+    [.45\linewidth] {
+    \centering
+    \includegraphics[scale=0.10]{diagrams/biregular_graph.pdf}
+  }
+  % \hfill
+  % \subcaptionbox{
+  %   A simple PN network $N_2$.
+  %   \label{fig:biregular_graph1:c}
+  % }%
+  %   [.30\linewidth] {
+  %   \centering
+  %   \includegraphics[scale=0.46]{diagrams/biregular_graph.pdf}
+  % }
+  \caption{
+    There is a covering map $\phi_0$ from $N_1$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2\}$.
+    Similarly there is a covering map $\phi_1$ from $N_2$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2, 3\}$.
+  }
+  \label{fig:biregular_graph1}
+\end{figure}
 
 
 
