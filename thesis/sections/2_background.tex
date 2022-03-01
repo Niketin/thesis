@@ -1080,64 +1080,93 @@ We require from a solution that:
 \end{enumerate}
 
 Alternatively to $\Delta$-regular $\delta$-uniform hypertrees, we can think of the hyperedges as a separate nodes \cite{DBLP:conf/podc/Olivetti20}.
-This way the problems are defined for infinite $(\Delta, \delta)$-biregular graphs.
+This way the problems are defined for infinite $(\Delta, \delta)$-biregular trees.
 We say that the original nodes of the graph are called \emph{active nodes}, and the newly introduced nodes, formerly hyperedges, are called \emph{passive nodes}.
-This naming convention can be seen in the sets $A$ and $P$, which can be called as the sets of active constraints and passive constraints, respectively.
+%This naming convention can be seen in the sets $A$ and $P$.
+%In  which can be called as the sets of active constraints and passive constraints, respectively.
+In this setting the passive nodes do not output anything.
+Only the active nodes output their labels.
 
-\todo{Address the fact that this definition is for infinite hypertrees. Can we use it with finite graphs?}
+We showed some examples of LCL problems in Section \ref{sec:lcl_problems}.
+Now we show some of the problems in the alternative formalism.
 
-The definition above is for infinite
-
-\todo{
-The output labels of a node are split into parts that belong to incident edges \cite{DBLP:conf/podc/Brandt19}.
-}
-
+The sets $\Sigma, A$ and $P$ of $k$-coloring in infinite (3,2)-biregular graphs are defined as:
+\begin{align*}
+  \Sigma &= \{1, 2, \dotsc, k\}, \\
+  A &= \{\{1,1,1\},\{2,2,2\},\dotsc,\{k,k,k\}\}, \\
+  P &= \{\{a, b\}\mid a,b,\in \Sigma \text{ and } a \neq b\}.
+\end{align*}
+An active node has a color between 1 and $k$.
+All label configurations of active nodes correspond to a single color.
+The label configurations of passive nodes ensure that the neighbours of an passive node do not share a color.
+For an example, see Figure~\ref{fig:biregular_graph1}.
 
 \begin{figure}[H]
   \subcaptionbox{
-    A part of a infinite (3,2)-biregular treePN network $N_0$ with loops.
+    An infinite $(3,2)$-biregular tree.
+    Orange nodes are active nodes, and smaller blue nodes are passive nodes.
+    The labels seen in the graph are part of a solution to maximal independent set problem.
     \label{fig:biregular_graph1:a}
   }%
-    [.45\linewidth] {
+    [0.60\linewidth] {
     \centering
-    \includegraphics[scale=0.30]{diagrams/biregular_graph.pdf}
+    \includegraphics[scale=0.45]{diagrams/biregular_graph_LCL_MIS.pdf}
   }
   \hfill
   \subcaptionbox{
-    A PN network $N_1$ with multiple connections.
+    Same graph as in \ref{fig:biregular_graph1:a}, but the passive nodes are seen as 2-uniform hyperedges, or just as edges, and the nodes are now colored.
+    %The nodes with label 1 map to nodes in \ref{fig:biregular_graph2:a} with node label $\{1,1,1\}$ and nodes with label 0 map to nodes in \ref{fig:biregular_graph2:a} with node label $\{P,0,0\}$.
     \label{fig:biregular_graph1:b}
   }%
-    [.45\linewidth] {
+    [.35\linewidth] {
     \centering
-    \includegraphics[scale=0.10]{diagrams/biregular_graph.pdf}
+    \includegraphics[scale=0.40]{diagrams/biregular_graph_LCL_MIS2.pdf}
   }
-  % \hfill
-  % \subcaptionbox{
-  %   A simple PN network $N_2$.
-  %   \label{fig:biregular_graph1:c}
-  % }%
-  %   [.30\linewidth] {
-  %   \centering
-  %   \includegraphics[scale=0.46]{diagrams/biregular_graph.pdf}
-  % }
   \caption{
-    There is a covering map $\phi_0$ from $N_1$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2\}$.
-    Similarly there is a covering map $\phi_1$ from $N_2$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2, 3\}$.
+    3-coloring in infinite $(3,2)$-biregular tree.
   }
   \label{fig:biregular_graph1}
 \end{figure}
 
+The sets $\Sigma, A$ and $P$ of maximal independent set in infinite (3,2)-biregular graphs are defined \cite{HirvonenSuomelaDistAlg2020} as :
+\begin{align*}
+  \Sigma &= \mathrm{\{I,O,P\}}, \\
+  A &= \mathrm{\{\{I,I,I\},\{P,O,O\}\}}, \\
+  P &= \mathrm{\{\{I,P\},\{I,O\},\{O,O\}\}}.
+\end{align*}
+An active node with label configuration $\mathrm{\{I,I,I\}}$ is considered to be in the maximal independent set and label configuration $\mathrm{\{P,O,O\}}$ means that the node is not in the set.
+The label configurations of passive nodes ensure that the output of active nodes is an independent set, and the label $\mathrm{P}$ ensures that the set is maximal \cite{HirvonenSuomelaDistAlg2020}.
+For an example, see Figure~\ref{fig:biregular_graph2}.
 
+\begin{figure}[H]
+  \subcaptionbox{
+    An infinite $(3,2)$-biregular tree.
+    Orange nodes are active nodes, and smaller blue nodes are passive nodes.
+    The labels seen in the graph are part of a solution to maximal independent set problem.
+    \label{fig:biregular_graph2:a}
+  }%
+    [0.60\linewidth] {
+    \centering
+    \includegraphics[scale=0.45]{diagrams/biregular_graph_LCL_3Coloring.pdf}
+  }
+  \hfill
+  \subcaptionbox{
+    A visualization of the coloring in graph \ref{fig:biregular_graph2:a}.
+    The graphs are identical, but the passive nodes are seen as 2-uniform hyperedges, or just as edges.
+    \label{fig:biregular_graph2:b}
+  }%
+    [.35\linewidth] {
+    \centering
+    \includegraphics[scale=0.40]{diagrams/biregular_graph_LCL_3Coloring_2.pdf}
+  }
+  \caption{
+    Maximal independent set in infinite $(3,2)$-biregular tree.
+  }
+  \label{fig:biregular_graph2}
+\end{figure}
 
+\todo{Address the fact that this definition is for infinite hypertrees. Can we use it with finite graphs?}
 
-\todo{(a,b)-biregular LCL problems}
-\todo{(a,b)-biregular LCL problems with examples}
-
-
-Examples:
-Maximal independent set
-Vertex coloring,
-\todo{continue from here} %TODO continue from here
 
 \subsection{Boolean satisfiability problem}
 \todo{Explain
