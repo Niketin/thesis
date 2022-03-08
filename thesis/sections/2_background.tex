@@ -1,22 +1,21 @@
 %!tex root = ../main.tex
 
 \section{Background} \label{sec:background}
-\todo{This top level section is outdated and needs to be revised after the subsections have been finalized.}
-%TODO Fix Background top level section so that it is dated.
 In this section, we introduce relevant terminology and concepts to prepare the reader for the Sections \ref{sec:research_question}--\ref{sec:implementation}.
-
-
+%
+We will be using many definitions from graph theory.
+The Section Section \ref{sec:graphs} will introduce all needed concepts of graph theory.
+%
 In Section \ref{sec:distributed_computing}, we discuss about the essential concepts in the theory of distributed computing.
 The section aims to explain the meaning of distributed computing and gives an introduction to the main model of distributed computing, \emph{message passing model}, from which many of the researched models inherit from.
-
-%TODO there are more sections than these two.
-The Sections \ref{} and \ref{} discuss the port number model and LOCAL model, respectively.
-These are widely used models in the field and they are strongly related to this work.
-
-In this work, we are trying to find lower bound proofs for LCL problems, therefore it is essential to include a section entirely for them.
-The Section \ref{sec:lcl_problems} is dedicated to LCL problems.
-
-Finally, in Section \ref{sec:prior_work}, we talk about previous research in the field and research that are more related to this thesis.
+%
+In Sections \ref{sec:port_number_model} and \ref{sec:formalized_pn_model}, we introduce the port number model, and in Section \ref{sec:local_model} we introduce the LOCAL model.
+These are widely used models in the field of distributed computing and they are strongly related to this work.
+%
+Section \ref{sec:covering_map} introduces a topological concept called \emph{covering map} that reveals a limitation of port number model.
+%
+We are focusing on a certain family of graph problems called \emph{Locally checkable labelling} problems.
+The Sections \ref{sec:lcl_problems} and \ref{sec:lcl_problems:biregular} are dedicated to them.
 
 
 \subsection{Graphs} \label{sec:graphs}
@@ -810,7 +809,7 @@ For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} imp
 \todo{Continue from here with an example problem and an algorithm that solves it in some graph family given some other problem or omit it.}
 
 
-\subsection{Covering map}
+\subsection{Covering map} \label{sec:covering_map}
 There exists a limitation to what problems can be solved in a deterministic PN model.
 The limitation comes from an underlying graph of a PN network being symmetric~%
 \cite{DBLP:conf/focs/Linial87}~%

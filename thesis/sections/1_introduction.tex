@@ -2,108 +2,20 @@
 
 \section{Introduction}  \label{sec:introduction}
 
-Distributed computing is any kind of computing that is performed on a spatially distributed system
-\cite{DBLP:books/el/leeuwen90/LamportL90}.
+Large problems often require large computational capacity.
+Distributed computing is often considered when high amounts of computation power are required.
 Distributed computing is used to solve large scale problems that would otherwise be impractical to solve in a centralized system.
+Distributed computing is \emph{any kind} of computing that is performed on a spatially distributed system
+\cite{DBLP:books/el/leeuwen90/LamportL90}.
 
-
+In this thesis, we will be studying the theoretical foundations of distributed computing.
+Our main focus is on locally checkable labelling (LCL) problems...
 %The idea of distributed computing is to locally solve a part of a global solution by communicating with other
 
-The topic of this thesis is related to the theoretical foundations of distributed computing.
 
 
 \subsection{Objectives}
 In this thesis, we aim to implement a tool that can automatically find lower bounds for LCL problems.
-
-\subsection{Thesis structure}
-
-
-
-\section*{Introduction (Old)}
-% According to thesistemplate, this section should be 2-4 pages long.
-% It should contain following things:
-% – Tutkimuksen taustaa ja tutkimusaiheen yleisluonteinen esittely
-% – Tutkimuksen tavoitteet
-% – Pääkysymys ja osaongelmat
-% – Tutkimuksen rajaus ja keskeiset käsitteet.
-%TODO Revise this section
-%TODO Add subsection about thesis structure briefly describing each main sections contents
-
-
-
-
-
-Often when computational problems become too large to solve efficiently with a centralized system, one utilizes distributed computing.
-
-
-
-Traditionally computation has been executed 
-
-The topic of this thesis is related to the field of distributed computing.
-It is a field in computer science that studies computation performed in a distributed fashion.
-Distributed computing is any kind of computing that is performed on a spatially distributed system
-\cite{DBLP:books/el/leeuwen90/LamportL90}.
-
-
-Distributed algorithms are designed to solve distributed computing problems.
-There are many different problems in distributed computing.
-These problems are either possible or impossible to solve.
-A problem can be solvable in one distributed computation model and non-solvable in others.
-To show that a problem is possible or impossible to solve we need to have a proof.
-It can be really tiresome to find proofs manually, therefore it is desirable to develope tools to automate proving.
-
-If a problem is solvable, then there must exist an algorithm that solves the problem in any distributed network.
-On the other hand if the problem is impossible to solve, then there exists no algorithm that solves the problem in all distributed networks.
-In this work we are interested in the latter case, proving impossibility i.e. proving negative results.
-
-A distributed network is modelled as an undirected graph where each node represents a computer and each edge represents a connection between two computers.
-Nodes are always connected to a fixed number of other nodes and the connections do not change.
-\cite{DBLP:journals/siamcomp/NaorS95}
-
-An algorithm is a program that is given to each node in the network for execution.
-Nodes may also be given different inputs but the programs are identical in every node.
-The performance of an algorithm is usually measured by the amount of communication rounds used by the program.
-The reason for this is that the nodes have only a limited information available about its neighbourhood and in order to increase this information they will need to communicate.
-Communication between nodes takes a considerable amount of time in comparison to the processing capabilities of a node, therefore the reasonable unit of measurement is time in communication rounds.
-Communication round is a synchronised event in which each node can communicate with each of their neighbor.
-A node that executes for constant time $t$ has to base its output solely on the information it has gathered from its own $t$-radius
-\cite{DBLP:journals/siamcomp/NaorS95}.
-
-Informally, locally checkable labelling (LCL) problems are a family of graph problems for which the validity of a solution can be verified by checking the solution of each node's $\mathcal{O}(1)$-radius neighbourhood (local neighbourhood).
-In case all local neighbourhoods are valid, then the whole solution is globally valid.
-\cite{DBLP:conf/podc/BrandtHKLOPRSU17}
-%\footnote{This paragraph does not contain the formal definition of LCL problems.}
-
-Vertex graph coloring is an example of an LCL problem.
-In a vertex coloring problem each vertex $v \in V$ of a graph $G = (V, E)$ has a label $l(v): V \rightarrow \mathbb{N}$.
-The problem itself is that for each $(v, w) \in E$ it must hold that $l(v) \neq l(w)$ i.e. labels must be assigned so that no two adjacent vertices have the same label.
-It is an LCL problem because the solution can be verified locally.
-Let the graph represent a distributed network.
-Now each node can verify the solution by gathering information about its local neighbourhood of radius 1 and after that, simply check that it does not share a label with any of its neighbors.
-
-Researchers are interested in automating the detection of LCL-problem's constant time solvability in LOCAL model (please see Section \ref{sec:local_model} for the definition of LOCAL model).
-There already exists a tool called \emph{round eliminator} \cite{DBLP:conf/podc/Olivetti20} which uses a \emph{round elimination} \cite{DBLP:conf/podc/Brandt19} technique to automatically find lower bounds of LCL problems.
-Round eliminator can tell if an LCL problem is solvable in constant time in LOCAL model and this can be done fairly fast if the constant is small.% (as far as I know).
-There can be multiple reasons for an LCL problem to not be solvable in constant time.
-One such reason is that the problem is not solvable at all in PN (port number) model.
-\footnote{Some how there is a connection between constant time solvability in LOCAL model and solvability in PN model.}.
-We would like to detect this particular case.
-
-
-\subsection{Objective} %TODO Change to 'Objectives' and explain all of the objectives.
-% Advisor's comment: It would be good if this section or some other section below this contains a brief overview of the techniques that you use. The challenges that you face etc.
-The objective is to develope a tool (computer program) which tells if an LCL (locally checkable labelling) problem is not solvable in PN (port number) model.
-The idea is to find a network where there exists no valid labellings implying that the problem is impossible to solve.
-The tool should work fast, therefore optimizations are one of the main focuses of the work.
-
-At first the tool will have a command line interface.
-Later on the tool is planned to have a browser user interface.
-
-The input should be given in the same format as the Round eliminator uses to represent LCL problems.
-This is important because we can use the same input format in both tools.
-
-Preferably the proof of non-solvability of the problem should be visualized.
-This can be done for example by rendering the network that cannot have any viable configurations.
 
 \subsection{Thesis structure}
 The section \ref{sec:background} gives a succint theoretical background to the topic of this work.
