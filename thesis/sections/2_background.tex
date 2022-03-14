@@ -4,13 +4,13 @@
 In this section, we introduce relevant terminology and concepts to prepare the reader for the Sections \ref{sec:research_question}--\ref{sec:implementation}.
 %
 We will be using many definitions from graph theory.
-The Section Section \ref{sec:graphs} will introduce all needed concepts of graph theory.
+Section \ref{sec:graphs} will introduce all needed concepts of graph theory.
 %
-In Section \ref{sec:distributed_computing}, we discuss about the essential concepts in the theory of distributed computing.
+In Section \ref{sec:distributed_computing}, we discuss the essential concepts in the theory of distributed computing.
 The section aims to explain the meaning of distributed computing and gives an introduction to the main model of distributed computing, \emph{message passing model}, from which many of the researched models inherit from.
 %
 In Sections \ref{sec:port_number_model} and \ref{sec:formalized_pn_model}, we introduce the port number model, and in Section \ref{sec:local_model} we introduce the LOCAL model.
-These are widely used models in the field of distributed computing and they are strongly related to this work.
+These are widely used models in the field of distributed computing, and they are strongly related to this work.
 %
 Section \ref{sec:covering_map} introduces a topological concept called \emph{covering map} that reveals a limitation of port number model.
 %
@@ -20,7 +20,7 @@ The Sections \ref{sec:lcl_problems} and \ref{sec:lcl_problems:biregular} are ded
 
 \subsection{Graphs} \label{sec:graphs}
 In the real world, there are many objects that are somehow related to each other.
-Such things can often be visualized by a diagrams that consists of points, and lines that connect a pair of points.
+Such things can often be visualized by a diagram that consists of points, and lines that connect a pair of points.
 A graph is a mathematical concept that abstracts the relations of these objects.
 In the literature, the points are called vertices and the lines are called edges
 \cite{DBLP:books/others/BondyM76}.
@@ -92,22 +92,21 @@ Visualization of this graph $G=(\{1,2,3\}, E)$ can be seen in the Figure \ref{fi
 For the purpose of this work, we need only undirected graphs.
 
 The definitions of graphs shown earlier do not restrict an edge to start and end in itself ($e=(v, v)$).
-This kind of an edge is called a \emph{loop}.
+This kind of edge is called a \emph{loop}.
 The definitions however restricts \emph{multiple edges} (identical parallel edges).
 In order to allow multiple edges, the edge set has to be defined as a \emph{multiset}.
 A graph that contains multiple edges is called a \emph{multigraph}.
 Depending on the author or context, multigraphs either allow or disallow loops.
-In this work, we consider multigraphs to exist without loops.
 
 A graph that has no loops or multiple edges is called a \emph{simple graph}.
-Simple graphs can either be directed or undirected and it should be explicitly mentioned when defining graphs, unless the context implies it.
+Simple graphs can either be directed or undirected, and it should be explicitly mentioned when defining graphs, unless the context implies it.
 As we do not need directedness of edges, let us assume that further expressions of graphs are always undirected in this work.
 
 Suppose there is an edge $e=\{v,w\}$.
 We say that vertex $v$ is \emph{incident} to $e$ and $e$ is incident to $v$.
 We also say that vertex $v$ is \emph{adjacent} to $w$ and vice versa.
-Similarly when two edges share a vertex, we say that the edges are \emph{adjacent}.
-We can also say that $w$ is a \emph{neighbour} of $v$ and vice versa.
+Similarly, when two edges share a vertex, we say that the edges are \emph{adjacent}.
+We can also say that $w$ is a \emph{neighbor} of $v$ and vice versa.
 
 In a graph, the degree of a vertex is the number of edges it is incident to.
 We will use the notation $\deg_G(v)$ to denote the degree of vertex $v \in V$ in graph $G=(V,E)$.
@@ -207,7 +206,7 @@ A \emph{distance} between two nodes $u, v\in V$ is the length of the shortest pa
 We use the notation $\operatorname{dist}(u, v)$ for the distance between $u$ and $v$.
 The maximum of all shortest paths in a graph $G$ is called the \emph{diameter} of $G$.
 A \emph{subgraph} $H$ of a graph $G=(V, E)$ is a graph formed from a subset $V'$ of vertices of $V$ and a subset $E'$ of edges of $E$ such that each endpoint of $e' \in E'$ must be in $V'$.
-A $r$-radius \emph{ball} of node $u$ of graph $G$ is a subgraph $H=(V', E')$ of $G$ containing:
+An $r$-radius \emph{ball} of node $u$ of graph $G$ is a subgraph $H=(V', E')$ of $G$ containing:
 \begin{itemize}
   \item every vertex $v\in V$ such that the distance from $u$ to $v$ is at most $r$,
   \item every edge $(u', v') \in E$ such that $u'$ and $v'$ are also in $V'$.
@@ -246,7 +245,7 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
     \end{tikzpicture}
   }
   \hfill
-  \subcaptionbox{A shortest path between nodes 1 and 5 in a graph $G$.
+  \subcaptionbox{The shortest path between nodes 1 and 5 in a graph $G$.
   The length of the path is 2, thus $\operatorname{dist}(u,v)=2$.
   \label{fig:graph4:b}}
     [.30\linewidth] {
@@ -442,7 +441,7 @@ According to Lamport \cite{DBLP:books/el/leeuwen90/LamportL90}, in the area of d
 There are multiple different computation models used in distributed computing \cite{DBLP:books/el/leeuwen90/LamportL90}.
 The most important category of distributed computation models is \emph{process models} \cite{DBLP:books/el/leeuwen90/LamportL90}.
 In process models, the work or activities are represented as concurrently executed processes that execute their instructions sequentially \cite{DBLP:books/el/leeuwen90/LamportL90}.
-A standard way to distinguish different process models from each other is to categorise them by the method they use to communicate with each other (\emph{interprocess communication}) \cite{DBLP:books/el/leeuwen90/LamportL90}.
+A standard way to distinguish different process models from each other is to categorize them by the method they use to communicate with each other (\emph{interprocess communication}) \cite{DBLP:books/el/leeuwen90/LamportL90}.
 
 
 %\subsubsection{Message passing model} \label{sec:message_passing_model}
@@ -457,17 +456,17 @@ We will dive deeper into the most relevant message passing models for this work 
 An algorithm that is executed in a distributed fashion in a distributed network, is called as a distributed algorithm.
 Each node in a network is started simultaneously and will always execute the same algorithm.
 Initially the nodes are on the same state and there can be finitely or infinitely many states.
-Initially the nodes are aware of only themselves and of the connections to their neighbours.
+Initially the nodes are aware of only themselves and of the connections to their neighbors.
 One might question that if every node starts with the same state, would not they also end up in the same state?
-Well yes, this happens inevitably in a case where the nodes were not given any additional symmetry breaking inputs and if every node sees the same amount of neighbours \cite{HirvonenSuomelaDistAlg2020}.
+Well yes, this happens inevitably in a case where the nodes were not given any additional symmetry breaking inputs and if every node sees the same amount of neighbors \cite{HirvonenSuomelaDistAlg2020}.
 
 %For example, we have a chain like network $W$ where each node $w$ has exactly two neighbours.
 %The task is to execute an algorithm that finds the number of nodes in the network.
 
 
-In practice, every computer node on a network has an UUID (Universally unique identifier) that can be used to break the symmetry, and nodes are usually given some input data that they process, and nodes can always randomize data as they are never completely synchronized together, so this is not necessarily a problem.
-In theory, we explicitly have to assume that there exists these kind of symmetry breaking elements.
-In this works, distributed algorithms are deterministic unless otherwise mentioned.
+In practice, every computer node on a network has a UUID (Universally unique identifier) that can be used to break the symmetry, and nodes are usually given some input data that they process, and nodes can always randomize data as they are never completely synchronized together, so this is not necessarily a problem.
+In theory, we explicitly have to assume that there exists these kinds of symmetry breaking elements.
+Distributed algorithms are deterministic in this work unless otherwise mentioned.
 In other research there might be randomizing involved.
 
 
@@ -521,7 +520,7 @@ As in the previous section, this section is based on the textbook \cite{Hirvonen
 
 PN network is a 3-element tuple $N = (V, P, p)$, where $V$ and $P$ are the sets of vertices and ports respectively, and $p\colon P \rightarrow P$ is a function that maps a port to another port, forming a communication channel.
 A port, an element of $P$, is a pair $(v, i)$ where $v \in V$ and $i \in \{1, 2, \dotsc\}$.
-Additionally we assume that $p$ is an involution, that is, for all ports $x \in P$ we have $p(p(x)) = x, $ i.e. each edge of the ``underlying graph'' is undirected.
+Additionally, we assume that $p$ is an involution, that is, for all ports $x \in P$ we have $p(p(x)) = x, $ i.e. each edge of the ``underlying graph'' is undirected.
 See Figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples of valid and invalid PN networks.
 
 \begin{figure}[H]
@@ -567,7 +566,7 @@ For example there are two loops, $p((a, 1)) = (a, 2)$ and $p((c,2)) = (c,2)$, in
 There are multiple connections between two distinct nodes $v$ and $w$ if $p((v, i_1)) = (w, j_1)$, $p((v, i_2)) = (w, j_2)$, $i_1 \neq j_1$ and $i_2 \neq j_2$.
 For example there are connections $p((b, 2)) = (d, 1)$ and $p((b, 3)) = (d, 2)$ in Figure \ref{fig:formal_pn2:c}.
 
-If a PN network has neither loops or multiple connections, it is called a \emph{simple} PN network.
+If a PN network has neither loops nor multiple connections, it is called a \emph{simple} PN network.
 For example the network is simple in Figure \ref{fig:formal_pn2:a}.
 
 
@@ -600,7 +599,7 @@ For example the network is simple in Figure \ref{fig:formal_pn2:a}.
     \centering
     \includegraphics[scale=0.55]{diagrams/formalizing_pn_network_diagram3.pdf}
   }
-  \caption{Examples of simple and non simple PN networks.}
+  \caption{Examples of simple and non-simple PN networks.}
   \label{fig:formal_pn2}
 \end{figure}
 
@@ -668,7 +667,7 @@ For example:
 
 In the first three problems it seems like we are looking for only one subset of vertices $V' \subseteq V$.
 Indeed, but we also have the subset of vertices $V \backslash V'$, thus $n=2$.
-Therefore we can define $X_1 = V'$ and $X_2 = V \backslash V'$.
+Therefore, we can define $X_1 = V'$ and $X_2 = V \backslash V'$.
 In the problem $k$-coloring, we are looking for $k$ subsets of vertices $X_1, X_2, \dotsc, X_k$, therefore $n=k$.
 
 \begin{figure}[H]
@@ -700,7 +699,7 @@ In the problem $k$-coloring, we are looking for $k$ subsets of vertices $X_1, X_
   }
   \caption{Example solutions to different graph problems.
   In Figures \ref{fig:distributed_graph_problems1:a} and \ref{fig:distributed_graph_problems1:b}, the blue nodes form a node labeling that denote a solution.
-  In Figure \ref{fig:distributed_graph_problems1:c} there are two additional labels, yellow and green in order there to be 3 labels for 3 colors.
+  In Figure \ref{fig:distributed_graph_problems1:c} there are two additional labels, yellow and green, in order there to be 3 labels for 3 colors.
   }
   \label{fig:distributed_graph_problems1}
 \end{figure}
@@ -739,7 +738,7 @@ The first function, $$\alginit_{A,d}\colon \algin_A \rightarrow \algstates_A$$ i
 %The degree $d$ is also parameterized into the function meaning that the function can operate differently with different degree nodes.
 Each node calls the function $\alginit_{A,d}$ as its first function call.
 
-After initialization, each node constructs messages for each of their neighbour by calling the second function:
+After initialization, each node constructs messages for each of their neighbor by calling the second function:
 $$\algsend_{A,d}\colon \algstates_A \rightarrow \algmsg_A^d$$
 A node gives its current local state as an input to the function and the returning value is a $d$-element tuple of messages.
 
@@ -800,10 +799,10 @@ We assume that $N=(V, P, p)$ is a simple PN network, the underlying graph $G$ of
 We say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given problem $\Pi'$, if the execution of $A$ on $(N, f)$ stops and yields an output $g \in \Pi(N)$.
 We say that $A$ solves the problem in time $T$, if $A$ stops in time $T(|V|)$ where $T\colon \mathbb{N} \rightarrow \mathbb{N}$.
 
-The input problem $\Pi'$ is often omited.
+The input problem $\Pi'$ is often omitted.
 Then we say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$.
 
-Often when we discuss about some algorithms solving some problems, we state $\mathcal{F}, \Pi, \Pi'$ and $T$ implicitly.
+Often when we discuss some algorithms solving some problems, we state $\mathcal{F}, \Pi, \Pi'$ and $T$ implicitly.
 For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} implies that $\mathcal{F}$ is bipartite graphs, $\Pi$ is the problem of finding a vertex cover and problem $\Pi'$ is omitted.
 
 \todo{Continue from here with an example problem and an algorithm that solves it in some graph family given some other problem or omit it.}
@@ -815,9 +814,9 @@ The limitation comes from an underlying graph of a PN network being symmetric~%
 \cite{DBLP:conf/focs/Linial87}~%
 \cite{DBLP:journals/siamcomp/Linial92}.
 
-In this section we discuss about a topological concept that can help us formalizing symmetries in a PN network.
-The concept is called \emph{covering map}
-\footnote{Note that this is not related to the vertex cover problem even though they share the word \emph{cover}.}.
+In this section we discuss a topological concept that can help us to formalize symmetries in a PN network.
+The concept is called \emph{covering map}%
+\footnote{Note that this is not related to the vertex cover problem even though they share the word ``cover''.}.
 Later in this work, we use the concept in proving Theorems \ref{thm:lcl_nonsolvability:2} and \ref{thm:lcl_nonsolvability:3}.
 %TODO Final check: are they all of the theorems where covering map is used?
 
@@ -842,7 +841,7 @@ We define now the covering map for PN networks similarly it is defined in the te
 
 \begin{definition} \label{def:covering_map}
   Let $N=(V, P, p)$ and $N'=(V', P', p')$ be PN networks and let $\phi\colon V \rightarrow V'$.
-  The function $\phi$ is a covering map from $N$ to $N'$ if all of the following hold:
+  The function $\phi$ is a covering map from $N$ to $N'$ if all the following hold:
   \begin{enumerate}
     \item $\phi$ is a surjection i.e. for every $v' \in V'$ there exists at least one $v \in V$ such that $\phi(v) = v'$.
     \item $\phi$ preserves the degrees of a node i.e. $\deg_N(v) = \deg_{N'}(\phi(v))$, for all $v \in V$.
@@ -964,7 +963,7 @@ The network $N_0$ has 2 loops, $p(p((a, 2))) = p((a, 3)) = (a, 2)$ and $p(p((b, 
 This symmetricity implies that each node ends up in an identical output state with its symmetrical equivalent given that the input problem $\Pi$ does not break the symmetry.
 % In this section we are discussing about a graph theoretic method that can show
 
-continue...........
+Continue...........
 
 \subsection{LOCAL model} \label{sec:local_model}
 The LOCAL model is another message passing model that is used in the field of distributed computation.
