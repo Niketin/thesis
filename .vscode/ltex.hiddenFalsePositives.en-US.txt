@@ -1,0 +1,3 @@
+{"rule":"COMMA_COMPOUND_SENTENCE","sentence":"^\\QIf your abstract does not contain special characters and it does not require paragraphs, you may take advantage of the abstracttext macro (see the comment below).\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QIf your abstract does not contain special characters and it does not require paragraphs, you may take advantage of the abstracttext macro (see the comment below).\\E$"}
+{"rule":"A_INFINITIVE","sentence":"^\\QA graph that contains multiple edges is called a multigraph.\\E$"}
