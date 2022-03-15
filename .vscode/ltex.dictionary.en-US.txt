@@ -19,3 +19,9 @@ biregular
 subgraph
 Lamport
 interprocess
+encodings
+satisfiability
+DIMACS
+unsolvability
+nonvalid
+surjective

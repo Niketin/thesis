@@ -6,7 +6,7 @@ In this section, we will introduce the basic idea of an essential algorithm that
 The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in PN model.
 Here we specifically allow PN networks to have multiple connections.
 Later in the Section \ref{sec:algorithm:theorems:a} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
-Finally in the Section \ref{sec:algorithm:theorems:b} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
+Finally, in the Section \ref{sec:algorithm:theorems:b} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 
 First we start with defining the meaning of solvability of an LCL problem.
 %TODO These definitions and theorems might have a better place under section 2 background.
@@ -27,7 +27,7 @@ The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapos
 \begin{proof}
     Let $\Pi$ be an LCL problem.
     Let $N$ be a PN network such that no PN algorithm $A$ can solve $\Pi$ in $N$.
-    Therefore no PN algorithm $A$ can find a solution to $\Pi$ in all PN networks.
+    Therefore, no PN algorithm $A$ can find a solution to $\Pi$ in all PN networks.
     According to the definition \ref{def:lcl_solvability:contrapositive}, this is equivalent with $\Pi$ being unsolvable.
 \end{proof}
 
@@ -40,7 +40,7 @@ To show that, it is enough to find an underlying graph $G$ of $N$ in which the p
 \todo{Complete proof} %TODO complete proof
 \end{proof}
 
-Using this fact, we can come up with an algorithm that automatically tries to find an counterexample graph.
+Using this fact, we can come up with an algorithm that automatically tries to find a counterexample graph.
 
 \begin{algorithm}[H]
     \caption{Counterexample graph finder algorithm}
@@ -72,10 +72,10 @@ For each graph with $n$ vertices, we generate all possible $(d_a, d_p)$-biregula
 The reason for generating only these types of graphs comes from our definition of LCL problem from section \ref{sec:lcl_problems}, they are defined specifically for $(b,a)$-biregular (multi)graphs.
 %TODO make sure that it defines the LCL problems we are using here (LCL for (b,a)-biregular graphs)
 Now, for each graph $g \in G_n$ (row \ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ is unsolvable using the function $\textsc{IsUnsolvable}(\Pi, g)$ (row \ref{alg:counterexample_finder:is_unsolvable}).
-If it is unsolvable, we return the graph as an counterexample (row \ref{alg:counterexample_finder:return_g}).
+If it is unsolvable, we return the graph as a counterexample (row \ref{alg:counterexample_finder:return_g}).
 In the case there are no counterexamples in graphs with $n_{low}$ to $n_{high}$ vertices, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
 
-Up to this moment, we have not discussed about how the function $$\textsc{GenerateGraphs}(n, d_a, d_p)$$ from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed about how the function $$\textsc{IsUnsolvable}(\Pi, g)$$ from row \ref{alg:counterexample_finder:is_unsolvable} determines the unsolvability used in the Algorithm \ref{alg:counterexample_finder}.
+Up to this moment, we have not discussed how the function $$\textsc{GenerateGraphs}(n, d_a, d_p)$$ from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed how the function $$\textsc{IsUnsolvable}(\Pi, g)$$ from row \ref{alg:counterexample_finder:is_unsolvable} determines the unsolvability used in the Algorithm \ref{alg:counterexample_finder}.
 These functions are implementation specific and in this section we assume that they exist as black boxes.
 Later on the section \ref{sec:implementation} we introduce our implementations of these functions.
 %First we would like to discuss about the $\textsc{GenerateGraphs}(n)$.
@@ -111,7 +111,8 @@ The dependencies of theorems are shown in the Figure \ref{fig:algorithm:theorem_
     \caption{A dependency graph of the following theorems.\label{fig:algorithm:theorem_dependency}}
 \end{figure}
 
-\subsection{\todo{Theorems A}} \label{sec:algorithm:theorems:a}
+\subsection{Theorems A?} \label{sec:algorithm:theorems:a}
+\todo{Fix section title}
 In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
 We try to split this into couple of theorems and at the end utilize the shown theorems to show this to be true.
 
@@ -123,8 +124,8 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     Let problem $\Pi$ have no solution in some PN network $N$.
     Then any algorithm $A$ produces a result that is nonvalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
     Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$.
-    Theorem 7.1. \footnote{\todo{should I show the theorem or is this enough?}} from the text book \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$.
-    Hence if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
+    Theorem 7.1. \footnote{\todo{Should I show the theorem or is this enough?}} from the text book \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$
+    Hence, if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
 \end{proof}
 
 % Network with multiple connections ----k-lift--->  simple network
@@ -134,14 +135,14 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \begin{proof}
     Let $N_2=(V_2, P_2, p_2)$ be a PN network with multiple connections.
     Let $\operatorname{mul}(u, v)$ be the number of connections between any nodes $u, v \in V_2$.
-    Let $k=\max (\{ m(u, v) \mid u, v \in V_2\} )$ i.e. the highest count of multiple connections.
+    The highest count of multiple connections is $k=\max (\{ m(u, v) \mid u, v \in V_2\} )$.
     \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
     Let $\operatorname{M}(x+hk) = x$ for all $x = 1, ..., k$ and $h\in \mathbb{N}$, for example $\operatorname{M}(1 + hk) = 1$ and $\operatorname{M}(k + hk) = k$.
 
     Let there be another network $N_1=(V_1, P_1, p_1)$ such that:
     \begin{itemize}
         \item For each $v \in V_2$, there are $k$ clones in $V_1$, namely the nodes $v_1, v_2, ..., v_k \in V_1$.
-        Thus the sizes $|V_1|$ and $k|V_2|$ are equal.
+        Thus, the sizes $|V_1|$ and $k|V_2|$ are equal.
         %$V_1 = \{v_x: \forall v \in V_2, \forall x \in \{1, 2, ..., k\}\}$
         \item For each port $(v, i) \in P_2$, we have each port $(v_x, i) \in P_1$ where $x=1, 2, ..., k$.
         %% TODO remove these comments when this has been reviewed.
@@ -180,10 +181,10 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 
     We need to show that $N_1$ is a simple PN network i.e. it does not have multiple edges.
     %As we know, the non-multiple connections in $N_2$ are preserved in $N_1$ therefore we need to only look at the multiple connections of $N_2$ in more detail.
-    We know that there are connections $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)}))$.
+    There exists connections $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)}))$.
     We see that nodes $u_{\operatorname{M}(x+a-1)}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)})) \leq k$ and
     there are exactly k many "u" nodes in $V_1$, namely nodes $u_1, u_2, ..., u_k \in V_1$.
-    Thus for each node $v_x$, all connections from $v_x$ are mapped to distinct nodes, therefore $N_1$ is simple.
+    Thus, for each node $v_x$, all connections from $v_x$ are mapped to distinct nodes, therefore $N_1$ is simple.
 
     The network $N_2$ is connected by the assumption (Section \ref{sec:underlying_graph}) but it might not be clear that $N_1$ is connected, thus we show next that this is the case.
 
@@ -193,7 +194,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     This shows that we can traverse from any node $w_x\in P$ to any other node $w'_x\in P$ only using nodes with subscript $x$.
 
     There are at least some nodes $u, v \in P_2$ such that $\operatorname{mul}(u,v) = k$, therefore we can traverse from any $u_x \in P_1$ to any $v_y \in P_1$ for any $x, y \in \{1, 2, ..., k\}$.
-    Thus $N_1$ is connected.
+    Thus, $N_1$ is connected.
 \end{proof}
 
 %\begin{figure}[H]
@@ -208,16 +209,15 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
       A PN network $N_2$ with multiple connections.
       \label{fig:algorithm:k-lift_proof_simple1:a}
     }%
-      [.5\linewidth] {
+      [.3\linewidth] {
       \centering
       \includegraphics[scale=0.55]{diagrams/algorithm_k-lift_proof_simple_1.pdf}
-    }
-    \hfill
+    }%
     \subcaptionbox{
       A simple PN network $N_1$.
       \label{fig:algorithm:k-lift_proof_simple1:b}
     }%
-      [.5\linewidth] {
+      [.7\linewidth] {
       \centering
       \includegraphics[scale=0.55]{diagrams/algorithm_k-lift_proof_simple_2.pdf}
     }
@@ -249,11 +249,11 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     Let us assume that an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections.
     Theorem \ref{thm:lcl_nonsolvability:3} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
     Theorem \ref{thm:lcl_nonsolvability:2} shows that the problem $\Pi$ is also not solvable in network $N_1$.
-    Therefore the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
+    Therefore, the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{proof}
 
-\subsection{\todo{Theorems B}} \label{sec:algorithm:theorems:b}
-
+\subsection{Theorems B?} \label{sec:algorithm:theorems:b}
+\todo{Fix section title}
 
 \begin{theorem} \label{thm:lcl_nonsolvability:5}
     If a problem is not solvable in simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
