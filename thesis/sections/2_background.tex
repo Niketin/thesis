@@ -699,7 +699,7 @@ In the problem $k$-coloring, we are looking for $k$ subsets of vertices $X_1, X_
   }
   \caption{Example solutions to different graph problems.
   In Figures \ref{fig:distributed_graph_problems1:a} and \ref{fig:distributed_graph_problems1:b}, the blue nodes form a node labeling that denote a solution.
-  In Figure \ref{fig:distributed_graph_problems1:c} there are two additional labels, yellow and green, in order there to be 3 labels for 3 colors.
+  There are two additional labels in Figure \ref{fig:distributed_graph_problems1:c}, yellow and green, in order there to be 3 labels for 3 colors.
   }
   \label{fig:distributed_graph_problems1}
 \end{figure}
@@ -742,12 +742,12 @@ After initialization, each node constructs messages for each of their neighbor b
 $$\algsend_{A,d}\colon \algstates_A \rightarrow \algmsg_A^d$$
 A node gives its current local state as an input to the function and the returning value is a $d$-element tuple of messages.
 
-The third function allows nodes to receive messages from each of their neighbours.
+The third function allows nodes to receive messages from each of their neighbors.
 It is defined as:
 $$\algrecv_{A,d}\colon \algstates_A \times \algmsg_A^d \rightarrow \algstates_A$$
 The function is given a node's current state and a $d$-element tuple of received messages.
 In return, it gives a state value that represents the node's new state.
-Additionally whenever the current state is an output state $x \in \algout$, we require that the function $\algrecv_{A,d}$ returns the exact same state $x$.
+Additionally, whenever the current state is an output state $x \in \algout$, we require that the function $\algrecv_{A,d}$ returns the exact same state $x$.
 
 \subsubsection{Execution of PN algorithm}
 
@@ -762,10 +762,10 @@ Similarly, we use $x_t(u), u \in V$ when we refer to the state of the node $u$ a
 We define $$x_0(u) = \alginit_{A,d}(f(u))$$ where $u\in V$ and $d=\deg_N(u)$.
 The state vectors $x_1, x_2, \dotsc$ are defined recursively in the following paragraph.
 
-We assume that we have defined $x_{t-1}$ and we show how we define $x_{t}$ using the assumption of $x_{t-1}$.
+We assume that we have defined $x_{t-1}$, and we show how we define $x_{t}$ using the assumption of $x_{t-1}$.
 Let function $m_t\colon P \rightarrow \algmsg_A$ map a port to a message at time $t$.
 Let port $(v, j) \in P$, port $(u, i) = p((v, j))$, and degree $\deg_N(v) = d'$.
-Let $m_t((u, i))$ be $j$'th element of the vector $\algsend_{A, d'}(x_{t-1}(v))$.
+Let $m_t((u, i))$ be $j$th element of the vector $\algsend_{A, d'}(x_{t-1}(v))$.
 Here the element $m_t((u, i))$ is a message sent by node $v$ through communication port $(v, j)$.
 It is also the message received by node $u$ from port $(u, i)$.
 
@@ -795,7 +795,7 @@ A family of graphs is a set of graphs with same kind of properties.
 For example a set of all simple undirected graphs is a family of graphs.
 
 Let $\mathcal{F}$ be a family of simple undirected graphs.
-We assume that $N=(V, P, p)$ is a simple PN network, the underlying graph $G$ of $N$ is in the family $\mathcal{F}$ and finally the input $f$ to the algorithm $A$ is in $\Pi'(N)$.
+Let us assume that $N=(V, P, p)$ is a simple PN network, the underlying graph $G$ of $N$ is in the family $\mathcal{F}$ and finally the input $f$ to the algorithm $A$ is in $\Pi'(N)$.
 We say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given problem $\Pi'$, if the execution of $A$ on $(N, f)$ stops and yields an output $g \in \Pi(N)$.
 We say that $A$ solves the problem in time $T$, if $A$ stops in time $T(|V|)$ where $T\colon \mathbb{N} \rightarrow \mathbb{N}$.
 
@@ -857,8 +857,7 @@ We define now the covering map for PN networks similarly it is defined in the te
     [.5\linewidth] {
     \centering
     \includegraphics[scale=0.55]{diagrams/covering_map_1.pdf}
-  }
-  \hfill
+  }%
   \subcaptionbox{
     A PN network N'.
     \label{fig:covering_map1:b}
@@ -877,16 +876,15 @@ We define now the covering map for PN networks similarly it is defined in the te
     A PN network N.
     \label{fig:covering_map2:a}
   }%
-    [.5\linewidth] {
+    [.6\linewidth] {
     \centering
     \includegraphics[scale=0.55]{diagrams/covering_map_3.pdf}
-  }
-  \hfill
+  }%
   \subcaptionbox{
     A PN network N'.
     \label{fig:covering_map2:b}
   }%
-    [.5\linewidth] {
+    [.4\linewidth] {
     \centering
     \includegraphics[scale=0.55]{diagrams/covering_map_4.pdf}
   }
@@ -935,7 +933,7 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
   }
   \caption{
     There is a covering map $\phi_0$ from $N_1$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2\}$.
-    Similarly there is a covering map $\phi_1$ from $N_2$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2, 3\}$.
+    Similarly, there is a covering map $\phi_1$ from $N_2$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2, 3\}$.
   }
   \label{fig:covering_map3}
 \end{figure}
@@ -973,7 +971,7 @@ A solution to problem $\Pi'$ is a node labeling $\operatorname{id}\colon V \righ
 Sometimes the node labeling is defined $\operatorname{id}\colon V \rightarrow \{1,2,\dotsc,|V|^c\}$, where $c$ is a positive constant greater than 1 \cite{HirvonenSuomelaDistAlg2020}, but in this work we assume $c=1$.
 If a distributed algorithm $A$ solves a problem $\Pi$ on a graph family $\mathcal{F}$ given $\Pi'$, we say that $A$ solves $\Pi$ on graph family $\mathcal{F}$ in the LOCAL model \cite{HirvonenSuomelaDistAlg2020}.
 
-Earlier in Section \ref{def:covering_map} we discussed about the limitation in a deterministic PN model that comes from symmetry.
+Earlier in Section \ref{def:covering_map} we discussed the limitation in a deterministic PN model that comes from symmetry.
 In the LOCAL model, an algorithm can utilize these identifiers to break the symmetry and avoid the limitation of the PN model.
 
 A well-known property of the LOCAL model is the ability to compute \emph{every} function of a graph $G$ in time $\mathcal{O}(\operatorname{diameter}(G))$.
@@ -1000,7 +998,7 @@ Briefly, LCL problems are a family of graph problems where a global solution (no
 \newcommand{\Sigmaout}{\Sigma_{\text{out}}}
 
 
-Now we define LCL problems using the formalism from the paper \cite{DBLP:journals/siamcomp/NaorS95} and we also use the formalism from a more recent paper \cite{DBLP:journals/corr/abs-2105-05574}.
+Now we define LCL problems using the formalism from the paper \cite{DBLP:journals/siamcomp/NaorS95}, and we also use the formalism from a more recent paper \cite{DBLP:journals/corr/abs-2105-05574}.
 An LCL problem $\Pi$ consists of:
 \begin{itemize}
   \item a positive integer $r$, which is called the \emph{radius} of $\Pi$,
@@ -1024,7 +1022,7 @@ Each problem has radius 1.
 Listing the locally consistent labelings of each problem would result in substantially large sets of graphs, hence we give only a brief description of the elements.
 \begin{description}
   \item[$k$-coloring] The set of output labels $\Sigmaout$ contains all $k$ colors, e.g. $1, 2, \dotsc, k$.
-  The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of vertex colorings with $k$-colors.
+  The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible vertex coloring combinations with $k$-colors.
   \item[Maximal independent set]
   The set of output labels $\Sigmaout$ contains labels 0 and 1.
   The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of output labels such that if and only if the node $s$ (the center node) is $1$, then all adjacent nodes are labelled with $0$.
@@ -1037,7 +1035,7 @@ Listing the locally consistent labelings of each problem would result in substan
 \end{description}
 
 It is clear that defining the whole set $C$ explicitly in this formalism would be a substantial amount of work, at least when radius $r$ is high.
-Therefore we depend on another formalism of LCL problems that provides a more compact representation of the problems.
+Therefore, we depend on another formalism of LCL problems that provides a more compact representation of the problems.
 \todo{Aren't there more reasons?}
 
 
@@ -1060,7 +1058,7 @@ The label configurations in $A$ have a length of $\Delta$ and the label configur
 The task of each node is to label each of its incident hyperedge with a label from $\Sigma$ \cite{DBLP:journals/sigact/Suomela20}.
 Each node will label $\Delta$ incident hyperedges, thus each hyperedge will be labeled with $\delta$ labels.
 The labels given by a node to its incident hyperedges form a label configuration.
-Similarly the labels given to a hyperedge form a label configuration.
+Similarly, the labels given to a hyperedge form a label configuration.
 Label configurations of a node have a length of $\Delta$ and label configurations of a hyperedge have a length of $\delta$.
 We require from a solution that:
 \begin{enumerate}
@@ -1076,7 +1074,7 @@ We say that the original nodes of the graph are called \emph{active nodes}, and 
 In this setting the passive nodes do not output anything.
 Only the active nodes output their labels.
 
-We showed some examples of LCL problems in Section \ref{sec:lcl_problems}.
+We showed earlier examples of LCL problems in Section \ref{sec:lcl_problems}.
 Now we show some of the problems in the alternative formalism.
 
 The sets $\Sigma, A$ and $P$ of $k$-coloring in infinite (3,2)-biregular graphs are defined as:
@@ -1087,7 +1085,7 @@ The sets $\Sigma, A$ and $P$ of $k$-coloring in infinite (3,2)-biregular graphs 
 \end{align*}
 An active node has a color between 1 and $k$.
 All label configurations of active nodes correspond to a single color.
-The label configurations of passive nodes ensure that the neighbours of an passive node do not share a color.
+The label configurations of passive nodes ensure that the neighbors of a passive node do not share a color.
 For an example, see Figure~\ref{fig:biregular_graph1}.
 
 \begin{figure}[H]

@@ -1,3 +1,18 @@
 {"rule":"COMMA_COMPOUND_SENTENCE","sentence":"^\\QIf your abstract does not contain special characters and it does not require paragraphs, you may take advantage of the abstracttext macro (see the comment below).\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QIf your abstract does not contain special characters and it does not require paragraphs, you may take advantage of the abstracttext macro (see the comment below).\\E$"}
 {"rule":"A_INFINITIVE","sentence":"^\\QA graph that contains multiple edges is called a multigraph.\\E$"}
+{"rule":"DT_JJ_NO_NOUN","sentence":"^\\Q[.30] A 3-coloring.\\E$"}
+{"rule":"MASS_AGREEMENT","sentence":"^\\QA vertex cover.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QnodeSBlue =[circle, fill=strongBlue, draw] nodeSOrange=[circle, fill=strongOrange, draw] nodeSPurple=[circle, fill=strongPurple, draw]\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QnodeBlue =[circle, fill=blue_fill, draw=blue_stroke] nodeOrange=[circle, fill=orange_fill, draw=orange_stroke] nodeYellow=[circle, fill=yellow_fill, draw=yellow_stroke] nodeGreen =[circle, fill=green_fill, draw=green_stroke]\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QmoreSpace =[minimum size=1cm,inner sep=0pt]\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QaaltoRed ”\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QCopyright Copyright\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Qfor each S[FOR]ForEach[1] #1\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q[3][1=red, 2=TODO]#2 #3\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QaaltoRed ”\\E$"}
+{"rule":"COMMA_PARENTHESIS_WHITESPACE","sentence":"^\\QaaltoRed ”\\E$"}
+{"rule":"SOME_OF_THE","sentence":"^\\QNow we show some of the problems in the alternative formalism.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QLet \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q be \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Qth element of the vector \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"ATD_VERBS_TO_COLLOCATION","sentence":"^\\QPrior work.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qfrom the text book \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q shows that the nodes of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q will have exactly the same state as their counterparts at \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q for each time unit \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
