@@ -25,3 +25,7 @@ DIMACS
 unsolvability
 nonvalid
 surjective
+CoRR
+PODC
+ISTCS
+SIGACT

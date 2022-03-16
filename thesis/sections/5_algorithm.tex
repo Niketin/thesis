@@ -75,7 +75,7 @@ Now, for each graph $g \in G_n$ (row \ref{alg:counterexample_finder:g}) we check
 If it is unsolvable, we return the graph as a counterexample (row \ref{alg:counterexample_finder:return_g}).
 In the case there are no counterexamples in graphs with $n_{low}$ to $n_{high}$ vertices, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
 
-Up to this moment, we have not discussed how the function $$\textsc{GenerateGraphs}(n, d_a, d_p)$$ from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed how the function $$\textsc{IsUnsolvable}(\Pi, g)$$ from row \ref{alg:counterexample_finder:is_unsolvable} determines the unsolvability used in the Algorithm \ref{alg:counterexample_finder}.
+Up to this moment, we have not discussed how the function \[ \textsc{GenerateGraphs}(n, d_a, d_p) \] from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed how the function \[ \textsc{IsUnsolvable}(\Pi, g) \] from row \ref{alg:counterexample_finder:is_unsolvable} determines the unsolvability used in the Algorithm \ref{alg:counterexample_finder}.
 These functions are implementation specific and in this section we assume that they exist as black boxes.
 Later on the section \ref{sec:implementation} we introduce our implementations of these functions.
 %First we would like to discuss about the $\textsc{GenerateGraphs}(n)$.
