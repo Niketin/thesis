@@ -26,7 +26,7 @@ In the literature, the points are called vertices and the lines are called edges
 \cite{DBLP:books/others/BondyM76}.
 
 \begin{definition}
-A graph is a tuple $$G = (V, E),$$ where $V$ is the set of vertices and $E$ is the set of edges.
+A graph is a tuple \[  G = (V, E), \] where $V$ is the set of vertices and $E$ is the set of edges.
 %Each vertex $v \in V$
 An edge $e \in E$ is a pair (2-tuple or 2-element ordered list) $e=(v, w), v, w \in V$, where vertices $v$ and $w$ are the endpoints of the edge $e$.
 \end{definition}
@@ -734,17 +734,17 @@ The components of $A$ are:
 \end{enumerate}
 
 The algorithm always consists of 3 functions, each defined for each degree $d \in \mathbb{N}$.
-The first function, $$\alginit_{A,d}\colon \algin_A \rightarrow \algstates_A$$ initializes the state of the calling node using the given input data.
+The first function, \[ \alginit_{A,d}\colon \algin_A \rightarrow \algstates_A, \] initializes the state of the calling node using the given input data.
 %The degree $d$ is also parameterized into the function meaning that the function can operate differently with different degree nodes.
 Each node calls the function $\alginit_{A,d}$ as its first function call.
 
 After initialization, each node constructs messages for each of their neighbor by calling the second function:
-$$\algsend_{A,d}\colon \algstates_A \rightarrow \algmsg_A^d$$
+\[ \algsend_{A,d}\colon \algstates_A \rightarrow \algmsg_A^d. \]
 A node gives its current local state as an input to the function and the returning value is a $d$-element tuple of messages.
 
 The third function allows nodes to receive messages from each of their neighbors.
 It is defined as:
-$$\algrecv_{A,d}\colon \algstates_A \times \algmsg_A^d \rightarrow \algstates_A$$
+\[ \algrecv_{A,d}\colon \algstates_A \times \algmsg_A^d \rightarrow \algstates_A. \]
 The function is given a node's current state and a $d$-element tuple of received messages.
 In return, it gives a state value that represents the node's new state.
 Additionally, whenever the current state is an output state $x \in \algout$, we require that the function $\algrecv_{A,d}$ returns the exact same state $x$.
@@ -759,7 +759,7 @@ The execution of $A$ on $(N, f)$ is a sequence of state vectors $x_0, x_1, \dots
 When we use the notation $x_t, t \in \mathbb{Z}_{\geq 0}$, we refer to the state vector at time $t$.
 Similarly, we use $x_t(u), u \in V$ when we refer to the state of the node $u$ at time $t$.
 
-We define $$x_0(u) = \alginit_{A,d}(f(u))$$ where $u\in V$ and $d=\deg_N(u)$.
+We define \[ x_0(u) = \alginit_{A,d}(f(u)) \] where $u\in V$ and $d=\deg_N(u)$.
 The state vectors $x_1, x_2, \dotsc$ are defined recursively in the following paragraph.
 
 We assume that we have defined $x_{t-1}$, and we show how we define $x_{t}$ using the assumption of $x_{t-1}$.
@@ -769,11 +769,11 @@ Let $m_t((u, i))$ be $j$th element of the vector $\algsend_{A, d'}(x_{t-1}(v))$.
 Here the element $m_t((u, i))$ is a message sent by node $v$ through communication port $(v, j)$.
 It is also the message received by node $u$ from port $(u, i)$.
 
-We define the message vector $$r_t(u)=(m_t((u, 1)), m_t((u, 2)), \dotsc, m_t((u, \deg_N(u))))$$ for each $u\in V$.
+We define the message vector \[ r_t(u)=(m_t((u, 1)), m_t((u, 2)), \dotsc, m_t((u, \deg_N(u)))) \] for each $u\in V$.
 The message vector contains every message node $u$ receives at time~$t$.
 
 Now we give the final definition for $x_t(u)$:
-$$x_t(u) = \algrecv_{A,d}(x_{t-1}(u, r_t(u)))$$
+\[ x_t(u) = \algrecv_{A,d}(x_{t-1}(u, r_t(u))). \]
 
 Next we define when the execution is considered as stopped, using the definition of execution.
 Algorithm \emph{$A$ stops in time $T$}, if $x_T(u) \in \algout_A$ for each $u \in V$, that is, each node $u$ is in output state at time $T$.

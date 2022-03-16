@@ -16,3 +16,6 @@
 {"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QLet \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q be \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Qth element of the vector \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
 {"rule":"ATD_VERBS_TO_COLLOCATION","sentence":"^\\QPrior work.\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qfrom the text book \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q shows that the nodes of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q will have exactly the same state as their counterparts at \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q for each time unit \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QSIAM J. Comput.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QLocally Checkable Labelings with Small Messages\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QDiscret.\\E$"}
