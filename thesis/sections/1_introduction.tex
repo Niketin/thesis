@@ -9,17 +9,21 @@ Distributed computing is \emph{any kind} of computing that is performed on a spa
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
 
 In this thesis, we will be studying the theoretical foundations of distributed computing.
-The theoretical foundations 
-
-Our main focus is on locally checkable labelling (LCL) problems...
-%The idea of distributed computing is to locally solve a part of a global solution by communicating with other
-
-\todo{fix}
-%
+Commonly the research in the field focuses on complexity classes of computational problems in distributed systems.
+Different computation models are used as an abstraction of these distributed systems.
+Our main focus is on locally checkable labelling (LCL) problems in the port numbering (PN) model and in the local model.
+%LCL problems are interesting, because given a labelled graph, each node can check locally if the labelling is a valid solution to the problem.
+We find LCL problems interesting, because a global result of a computation can be checked locally by each node.
+If all nodes agree that their local neighborhood of nodes are looking valid, then the result is also a globally valid solution.
 
 \subsection{Objectives}
+To gain more knowledge about complexities of LCL problems in the models, we will be focusing on finding lower bounds for them.
+Finding these lower bounds require some kind of proof, and proving manually can be tiresome, so instead we want to automate the process.
 In this thesis, we aim to implement a tool that can automatically find lower bounds for LCL problems.
-\todo{fix}
+
+Finding new classification to LCL problems can help us figure out some more general way of determining the complexity class of a wider class of problems blablabla...
+Classifying these problems can potentially result
+\todo{reason why we want to do this}
 
 \subsection{Thesis structure}
 We structure the thesis so that one can read the sections in sequential order.
