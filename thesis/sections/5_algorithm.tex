@@ -5,8 +5,8 @@
 In this section, we will introduce the basic idea of an essential algorithm that is used in the actual implementation discussed in section \ref{sec:implementation}.
 The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in PN model.
 Here we specifically allow PN networks to have multiple connections.
-Later in the Section \ref{sec:algorithm:theorems:a} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
-Finally, in the Section \ref{sec:algorithm:theorems:b} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
+Later in Section \ref{sec:algorithm:theorems:a} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
+Finally, in Section \ref{sec:algorithm:theorems:b} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 
 First we start with defining the meaning of solvability of an LCL problem.
 %TODO These definitions and theorems might have a better place under section 2 background.
@@ -77,9 +77,9 @@ In the case there are no counterexamples in graphs with $n_{low}$ to $n_{high}$ 
 
 Up to this moment, we have not discussed how the function \[ \textsc{GenerateGraphs}(n, d_a, d_p) \] from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed how the function \[ \textsc{IsUnsolvable}(\Pi, g) \] from row \ref{alg:counterexample_finder:is_unsolvable} determines the unsolvability used in the Algorithm \ref{alg:counterexample_finder}.
 These functions are implementation specific and in this section we assume that they exist as black boxes.
-Later on the section \ref{sec:implementation} we introduce our implementations of these functions.
+Later on Section \ref{sec:implementation} we introduce our implementations of these functions.
 %First we would like to discuss about the $\textsc{GenerateGraphs}(n)$.
-%As we know from the section \ref{}, %TODO refer to LCL section and make sure that it defines the LCL problems we are using here (LCL for (b,a)-biregular graphs).
+%As we know from Section \ref{}, %TODO refer to LCL section and make sure that it defines the LCL problems we are using here (LCL for (b,a)-biregular graphs).
 %the LCL problems used in this thesis are defined for $(b,a)$-biregular graphs.
 %Therefore we should not generate \emph{all} graphs but only the graphs of type $(b,a)$-biregular, where the degrees $b$ and $a$ are taken from the LCL problem $\Pi$.
 

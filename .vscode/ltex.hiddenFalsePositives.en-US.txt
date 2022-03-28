@@ -19,3 +19,4 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QSIAM J. Comput.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QLocally Checkable Labelings with Small Messages\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QDiscret.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QWhat new nonsolvable LCL problems can we find in the PN model?\\E$"}
