@@ -1,7 +1,8 @@
 %!tex root = ../main.tex
 
 \section{Background} \label{sec:background}
-In this section, we introduce relevant terminology and concepts to prepare the reader for the Sections \ref{sec:research_question}--\ref{sec:implementation}.
+In this section, we introduce relevant terminology and concepts to prepare the reader for Sections \ref{sec:research_question}--\ref{sec:implementation}.
+\todo{Check that these are the correct sections.}
 %
 We will be using many definitions from graph theory.
 Section \ref{sec:graphs} will introduce all needed concepts of graph theory.
@@ -9,13 +10,13 @@ Section \ref{sec:graphs} will introduce all needed concepts of graph theory.
 In Section \ref{sec:distributed_computing}, we discuss the essential concepts in the theory of distributed computing.
 The section aims to explain the meaning of distributed computing and gives an introduction to the main model of distributed computing, \emph{message passing model}, from which many of the researched models inherit from.
 %
-In Sections \ref{sec:port_number_model} and \ref{sec:formalized_pn_model}, we introduce the port number model, and in Section \ref{sec:local_model} we introduce the LOCAL model.
+In Sections \ref{sec:port-numbering_model} and \ref{sec:formalized_pn_model}, we introduce the port-numbering model, and in Section \ref{sec:local_model} we introduce the LOCAL model.
 These are widely used models in the field of distributed computing, and they are strongly related to this work.
 %
-Section \ref{sec:covering_map} introduces a topological concept called \emph{covering map} that reveals a limitation of port number model.
+Section \ref{sec:covering_map} introduces a topological concept called \emph{covering map} that reveals a limitation of port-numbering model.
 %
 We are focusing on a certain family of graph problems called \emph{Locally checkable labelling} problems.
-The Sections \ref{sec:lcl_problems} and \ref{sec:lcl_problems:biregular} are dedicated to them.
+Sections \ref{sec:lcl_problems} and \ref{sec:lcl_problems:biregular} are dedicated to them.
 
 
 \subsection{Graphs} \label{sec:graphs}
@@ -451,7 +452,7 @@ In the model, processes communicate by adding a message to a message queue, and 
 Different message passing models are widely used in the research field of distributed computing.
 The models can vary in different details, such as in the size of the message queues \cite{DBLP:books/el/leeuwen90/LamportL90}, in the size of the messages \cite{peleg2000distributed} and on how the nodes get identified \cite{DBLP:conf/focs/Linial87}, if they are identified at all \cite{DBLP:conf/istcs/MayerNS95}.
 %As the message passing models itself can be defined in multiple ways \cite{DBLP:books/el/leeuwen90/LamportL90}, we will use a definition from which the relevant models commonly inherit from.
-We will dive deeper into the most relevant message passing models for this work in Sections \ref{sec:port_number_model} and \ref{sec:local_model}.
+We will dive deeper into the most relevant message passing models for this work in Sections \ref{sec:port-numbering_model} and \ref{sec:local_model}.
 
 An algorithm that is executed in a distributed fashion in a distributed network, is called as a distributed algorithm.
 Each node in a network is started simultaneously and will always execute the same algorithm.
@@ -480,14 +481,14 @@ In other research there might be randomizing involved.
 
 
 
-%The following two sections (\ref{sec:port_number_model} and \ref{sec:local_model} ) talk about different forms of message passing models that are highly relative to this paper.
+%The following two sections (\ref{sec:port-numbering_model} and \ref{sec:local_model} ) talk about different forms of message passing models that are highly relative to this paper.
 
-\subsection{Port number model} \label{sec:port_number_model}
+\subsection{Port-numbering model} \label{sec:port-numbering_model}
 This section is based on the excellent textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
-Port number model (PN model) is a rather weak model of computation that inherits from the message passing model.
+Port-numbering model (PN model) is a rather weak model of computation that inherits from the message passing model.
 In the model, nodes do not have identification.
-A distributed algorithm that executes in a port number model is called as a PN-algorithm.
+A distributed algorithm that executes in a port-numbering model is called as a PN-algorithm.
 
 %We can basically take any network $N$ that has the same structure as a simple undirected graph $G$.
 %Each vertex of $G$ can be one-to-one mapped (bijection) to the nodes of $N$ and vice-versa.
@@ -513,8 +514,8 @@ When all nodes have stopped, the algorithm is considered as stopped.
 The running time of the algorithm $A$ is the total communication rounds that took place.
 
 
-\subsection{Formalized port number model} \label{sec:formalized_pn_model}
-In Section \ref{sec:port_number_model} we briefly and informally introduced the PN model.
+\subsection{Formalized port-numbering model} \label{sec:formalized_pn_model}
+In Section \ref{sec:port-numbering_model} we briefly and informally introduced the PN model.
 Now in this section and in the following subsections we give a more formal definition to the PN model.
 As in the previous section, this section is based on the textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
@@ -983,7 +984,7 @@ Because of this, researchers are usually interested in complexity classes below 
 
 \subsection{Locally checkable labeling problems} \label{sec:lcl_problems}
 In this section we define \emph{Locally checkable labeling (LCL)} problems generally.
-This section is intended as an introduction for the Section \ref{sec:lcl_problems:biregular} where we introduce an alternative definition of LCL problems that we will be using in this work.
+This section is intended as an introduction to Section \ref{sec:lcl_problems:biregular} where we introduce an alternative definition of LCL problems that we will be using in this work.
 Briefly, LCL problems are a family of graph problems where a global solution (node labeling) can be verified locally by the individual nodes.
 
 
@@ -1154,18 +1155,4 @@ For an example, see Figure~\ref{fig:biregular_graph2}.
 
 \todo{Address the fact that this definition is for infinite hypertrees. Can we use it with finite graphs?}
 
-
-\subsection{Boolean satisfiability problem}
-\todo{Explain
-\begin{itemize}
-  \item SAT problems, %TODO
-  \item DIMACS CNF, %TODO
-  \item SAT solvers, %TODO
-\end{itemize}
-I am not sure if these are even needed.
-I could just assume that the reader knows the basics.
-}
-
-
 \clearpage
-

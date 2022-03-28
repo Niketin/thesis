@@ -2,11 +2,11 @@
 
 %\section{Automatically proving lower bounds for LCL problems} \label{sec:implementation}
 \section{Implementation} \label{sec:implementation}
-In this section we will cover all the important topics that are used in the actual implementation of the Algorithm \ref{alg:counterexample_finder} from the section \ref{sec:algorithm}.
+In this section we will cover all the important topics that are used in the actual implementation of the Algorithm \ref{alg:counterexample_finder} from Section \ref{sec:algorithm}.
 This includes the previously declared functions $\textsc{IsUnsolvable}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, d_a, d_p)$, which were given without defining how their algorithms work.
 The implementation itself is a computer program, that attempts to automatically find a proof of unsolvability for a given LCL problem in PN model.
 We keep the explanations independent of any programming language, so that the reader can understand these upcoming topics without needing such knowledge.
-% (see section \ref{sec:port_number_model} for more information about PN model).
+% (see section \ref{sec:port-numbering_model} for more information about PN model).
 
 The function $\textsc{IsUnsolvable}(\Pi, g)$ checks if an LCL problem $\Pi$ is unsolvable in some $(d_a, d_p)$-biregular multigraph $g$.
 To perform the checking, it is enough to show that there exists no valid labeling of $\Pi$ in $g$.
@@ -58,6 +58,15 @@ We repeat the routine for each multigraph, as shown in the Algorithm \ref{alg:co
 \subsection{Generating multigraphs}
 
 \subsection{Generating LCL-problems}
+
+\subsection{Boolean satisfiability problem}
+\todo{Explain
+\begin{itemize}
+  \item SAT problems, %TODO
+  \item DIMACS CNF, %TODO
+  \item SAT solvers, %TODO
+\end{itemize}
+}
 
 \subsection{SAT solvers} % talk about sats generally before talkign specifically how we encode the problems
 
