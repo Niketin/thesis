@@ -16,7 +16,7 @@ Our main focus is on a certain class of distributed graph problems, locally chec
 A distributed algorithm is a program that is executed in a distributed system.
 Different computation models are used as an abstraction of these distributed systems.
 The models we are particularly interested in are the port-numbering (PN) model and the LOCAL model.
-\todo{this paragraph somehow needs polishing}
+\todo{This paragraph somehow needs polishing}
 
 %We find LCL problems interesting, because a global result of a computation can be checked locally by each node.
 %If all nodes agree that their local neighborhood of nodes are looking valid, then the result is also a globally valid solution.
@@ -28,14 +28,15 @@ Finding a lower bound requires some kind of proof of existence, and proving it m
 
 \subsection{Objective}
 In this thesis, we will prove a theorem that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
-Using this theorem, we will implement a tool that can automatically find a proof of unsolvability of an LCL problem in the PN model.
+We will also implement a tool that can automatically find a proof of unsolvability of an LCL problem in the PN model.
+Together with the theorem and the tool, we can derive lower bounds in LOCAL.
 We especially want this tool to work efficiently, leveraging parallelism.
-To conclude, our objective is to find new lower bounds for LCL problems efficiently.
+To conclude, our objective is to find automatically new lower bounds for LCL problems in the LOCAL model.
 
 \subsection{Thesis structure}
 We structure this thesis so that the reading order is sequential.
 Section~\ref{sec:background} gives a succinct theoretical background to the topic of this work.
-After the theoretical background, we present our research question in more detail in Section~\ref{sec:research_question}.
+After the theoretical background, we present our research questions in more detail in Section~\ref{sec:research_question}.
 In Section~\ref{sec:prior_work}, we overview the prior work related to this thesis.
 We introduce our algorithm and also prove the theorem in Section~\ref{sec:algorithm}.
 The algorithm is used in our implementation, which we discuss in Section~\ref{sec:implementation}.

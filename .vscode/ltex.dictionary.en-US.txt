@@ -29,4 +29,3 @@ CoRR
 PODC
 ISTCS
 SIGACT
-nonsolvable
