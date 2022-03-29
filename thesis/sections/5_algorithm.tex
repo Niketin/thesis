@@ -21,7 +21,7 @@ An LCL problem $\Pi$ is not solvable in PN model, if and only if there does not 
 
 The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter one might be more difficult to understand, but the way it is phrased, easily leads us to the following Theorem:
 
-\begin{theorem} \label{thm:lcl_nonsolvability}
+\begin{theorem} \label{thm:lcl_unsolvability}
     An LCL problem $\Pi$ is not solvable in PN model, if there exists a PN network $N$ such that no PN algorithm $A$ can solve the $\Pi$ in $N$.
 \end{theorem}
 \begin{proof}
@@ -31,9 +31,9 @@ The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapos
     According to the definition \ref{def:lcl_solvability:contrapositive}, this is equivalent with $\Pi$ being unsolvable.
 \end{proof}
 
-As the Theorem \ref{thm:lcl_nonsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
+As the Theorem \ref{thm:lcl_unsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
 To show that, it is enough to find an underlying graph $G$ of $N$ in which the problem $\Pi$ cannot be solved.
-\begin{theorem} \label{thm:problem_nonsolvability_in_graphs}
+\begin{theorem} \label{thm:problem_unsolvability_in_graphs}
     If a problem $\Pi$ is not solvable in graph $G$, then $\Pi$ is also not solvable in any PN network $N$ that has $G$ as its underlying graph.
 \end{theorem}
 \begin{proof}
@@ -98,10 +98,10 @@ The dependencies of theorems are shown in the Figure \ref{fig:algorithm:theorem_
     \centering
     % https://tex.stackexchange.com/a/499577
     \begin{tikzpicture}[]
-        \node (1) [] {Theorem \ref{thm:lcl_nonsolvability:2}};
-        \node (2) [right = of 1] {Theorem \ref{thm:lcl_nonsolvability:3}};
-        \node (3) [below = of $(1)!0.5!(2)$] {Theorem \ref{thm:lcl_nonsolvability:4}};
-        \node (4) [below = of 3] {Theorem \ref{thm:lcl_nonsolvability:5}};
+        \node (1) [] {Theorem \ref{thm:lcl_unsolvability:2}};
+        \node (2) [right = of 1] {Theorem \ref{thm:lcl_unsolvability:3}};
+        \node (3) [below = of $(1)!0.5!(2)$] {Theorem \ref{thm:lcl_unsolvability:4}};
+        \node (4) [below = of 3] {Theorem \ref{thm:lcl_unsolvability:5}};
         %\node (4) [right = of mat2-2-1] {$\deg_G(4)=2$};
         %\node (5) [right = of mat2-3-1] {$\deg_G(5)=2$};
         \draw[<-] (1) edge (3);
@@ -116,20 +116,20 @@ The dependencies of theorems are shown in the Figure \ref{fig:algorithm:theorem_
 In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
 We try to split this into couple of theorems and at the end utilize the shown theorems to show this to be true.
 
-% Pi is nonsolvable in multiple connection PN network N -> Pi is nonsolvable in lift of N
-\begin{theorem} \label{thm:lcl_nonsolvability:2}
+% Pi is unsolvable in multiple connection PN network N -> Pi is unsolvable in lift of N
+\begin{theorem} \label{thm:lcl_unsolvability:2}
 If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not solvable in any PN network $N'$ that is a lift of $N$.
 \end{theorem}
 \begin{proof}
     Let problem $\Pi$ have no solution in some PN network $N$.
-    Then any algorithm $A$ produces a result that is nonvalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
+    Then any algorithm $A$ produces a result that is invalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
     Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$.
     Theorem 7.1. \footnote{\todo{Should I show the theorem or is this enough?}} from the text book \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$
     Hence, if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
 \end{proof}
 
 % Network with multiple connections ----k-lift--->  simple network
-\begin{theorem} \label{thm:lcl_nonsolvability:3}
+\begin{theorem} \label{thm:lcl_unsolvability:3}
     If there is a PN network $N_2$ with multiple connections with $k$ being the highest count of multiple connections between any two nodes, then there exists a $k$-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
 \end{theorem}
 \begin{proof}
@@ -200,7 +200,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 %\begin{figure}[H]
 % \centering
 % \includegraphics[]{example-image-duck}
-% \caption{\todo{Illustration of k-lift using Theorem \ref{thm:lcl_nonsolvability:3}}}
+% \caption{\todo{Illustration of k-lift using Theorem \ref{thm:lcl_unsolvability:3}}}
 % \label{fig:duck2}
 %\end{figure}
 
@@ -241,21 +241,21 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     %Let $\phi: V' \rightarrow V$ be a surjection such that for each node $v_i \in V'$ where $i=1, 2, ..., k$, $\phi(v_i) = v \in V$.
     %Next, we will swap the ends of connections such that the network becomes connected and
     %\todo{Complete this proof}
-% Pi is nonsolvable in multiple connection PN network N -> Pi is nonsolvable in simple PN network N' (lift of N)
-\begin{theorem} \label{thm:lcl_nonsolvability:4}
+% Pi is unsolvable in multiple connection PN network N -> Pi is unsolvable in simple PN network N' (lift of N)
+\begin{theorem} \label{thm:lcl_unsolvability:4}
     If an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections, then it is also not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{theorem}
 \begin{proof}
     Let us assume that an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections.
-    Theorem \ref{thm:lcl_nonsolvability:3} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
-    Theorem \ref{thm:lcl_nonsolvability:2} shows that the problem $\Pi$ is also not solvable in network $N_1$.
+    Theorem \ref{thm:lcl_unsolvability:3} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
+    Theorem \ref{thm:lcl_unsolvability:2} shows that the problem $\Pi$ is also not solvable in network $N_1$.
     Therefore, the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{proof}
 
 \subsection{Theorems B?} \label{sec:algorithm:theorems:b}
 \todo{Fix section title}
 
-\begin{theorem} \label{thm:lcl_nonsolvability:5}
+\begin{theorem} \label{thm:lcl_unsolvability:5}
     If a problem is not solvable in simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
     %TODO Make sure that the LOCAL model is explained under section 2. background.
     %TODO Make sure that the solving complexities (($\mathcal{O}(1)$) time) are explained under section 2. background.
