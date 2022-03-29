@@ -2,17 +2,27 @@
 
 \section{Research questions} \label{sec:research_question}
 
-There are LCL problems that cannot be solved in PN model.
-More specifically, there exists LCL problems such that no PN-algorithm can solve it in \emph{every} graph.
-One such case is that no
-for which no PN-algorithm can solve in every  in some simple graphs as there are no valid labellings for the graph.
+There are LCL problems that cannot be solved in the PN model.
+More specifically, there exist LCL problems such that no PN-algorithm can solve it in \emph{every} graph.
+There can be multiple reasons and one such a case is that there exists no valid labeling for a graph.
+Our first research question is \emph{how can we detect these cases automatically}?
 
-How can we determine the unsolvability of an LCL problem in PN model?
+This thesis' main theorem is that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
+Our second research question is \emph{how can we prove the theorem}?
 
-What new unsolvable LCL problems can we find in the PN model? \todo{Refer to the thesis of LCL-classifier}
+We assume that all LCL problems initially have a constant time lower bound in the LOCAL model.
+Our third research question is \emph{for which LCL problems can we determine new lower bounds}?
+\todo{What are 'all' LCL problems? A class of LCL problems could be (b,a)-degree and k-labels.}
+\todo{Refer to the thesis of LCL-classifier. U know, there already exists a database of classifications of LCL problems?}
 
-When an LCL problem is unsolvable in the 
+Our last research question is related to the efficiency side of the implementation;
+%\emph{how can we efficiently repeat the process of finding unsolvable LCL problems for multiple different LCL problems}?
+
+We want the tool to be fast, and the last research question is \emph{how can we make it fast}?
+\todo{add stuff}
+
 How can we efficiently repeat the process of finding lower bound proofs for multiple different LCL problems?
+\todo{think if we need to discuss this}
 
 %In this thesis, we will prove a theorem that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
 %We will also implement a tool that can automatically find a proof of unsolvability of an LCL problem in the PN model.
