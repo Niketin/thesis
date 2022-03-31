@@ -4,28 +4,26 @@
 
 There are LCL problems that cannot be solved in the PN model.
 More specifically, there exist LCL problems such that no PN-algorithm can solve it in \emph{every} graph.
-There can be multiple reasons and one such a case is that there exists no valid labeling for a graph.
-Our first research question is \emph{how can we detect these cases automatically}?
+There can be multiple reasons and one case we are aware of is that there exists no valid labeling for a graph.
+\begin{researchquestion} \label{research_question:1}
+Given an LCL problem and a graph, how can we automatically detect the non-existence of a valid labeling for the graph?
+\end{researchquestion}
 
 This thesis' main theorem is that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
-Our second research question is \emph{how can we prove the theorem}?
+We want to know if we can prove it.
+\begin{researchquestion} \label{research_question:2}
+Can we prove that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model?
+\end{researchquestion}
 
-We assume that all LCL problems initially have a constant time lower bound in the LOCAL model.
-Our third research question is \emph{for which LCL problems can we determine new lower bounds}?
-\todo{What are 'all' LCL problems? A class of LCL problems could be (b,a)-degree and k-labels.}
-\todo{Refer to the thesis of LCL-classifier. U know, there already exists a database of classifications of LCL problems?}
+In case we find answers to Research questions \ref{research_question:1} and \ref{research_question:2}, we want to implement a tool that can automatically detect the cases from Research question \ref{research_question:1}.
+With the proven theorem from Research question \ref{research_question:2}, the results from the tool can be derived to non-constant lower bounds in the LOCAL model.
+There also exists a database of upper and lower bounds of LCL problems \cite{Tereshchenko2021}, and these bounds have been computed using various tools called \emph{classifiers}.
+Our implementation would be one kind of classifier, and we want to know if it can find any new lower bounds i.e. lower bounds that are higher than what is currently known about these problems.
+\begin{researchquestion} \label{research_question:3}
+For which LCL problems can we determine new lower bounds in the LOCAL model, using our implementation?
+\end{researchquestion}
 
-Our last research question is related to the efficiency side of the implementation;
-%\emph{how can we efficiently repeat the process of finding unsolvable LCL problems for multiple different LCL problems}?
-
-We want the tool to be fast, and the last research question is \emph{how can we make it fast}?
-\todo{add stuff}
-
-How can we efficiently repeat the process of finding lower bound proofs for multiple different LCL problems?
-\todo{think if we need to discuss this}
-
-%In this thesis, we will prove a theorem that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
-%We will also implement a tool that can automatically find a proof of unsolvability of an LCL problem in the PN model.
-%Together with the theorem and the tool, we can derive lower bounds in LOCAL.
-%We especially want this tool to work efficiently, leveraging parallelism.
-%To conclude, our objective is to find automatically new lower bounds for LCL problems in the LOCAL model.
+We want the implementation to be optimized, with fast execution time.
+\begin{researchquestion} \label{research_question:4}
+How fast can we make our implementation?
+\end{researchquestion}
