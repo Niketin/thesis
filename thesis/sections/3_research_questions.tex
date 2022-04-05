@@ -4,26 +4,31 @@
 
 There are LCL problems that cannot be solved in the PN model.
 More specifically, there exist LCL problems such that no PN-algorithm can solve it in \emph{every} graph.
-There can be multiple reasons and one case we are aware of is that there exists no valid labeling for a graph.
+There can be multiple reasons for unsolvability, and one case we are aware of is that there exists no valid labeling for a graph.
 \begin{researchquestion} \label{research_question:1}
 Given an LCL problem and a graph, how can we automatically detect the non-existence of a valid labeling for the graph?
 \end{researchquestion}
+We answer to Research question \ref{research_question:1} in Section \ref{sec:algorithm}, where we present our algorithm that can automatically detect the non-existence of a valid labeling.
 
-This thesis' main theorem is that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
+In this thesis, we present a theorem that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
 We want to know if we can prove it.
 \begin{researchquestion} \label{research_question:2}
 Can we prove that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model?
 \end{researchquestion}
+We present the theorem as Theorem \ref{} in Section \ref{} and we answer to Research question \ref{research_question:2} by proving the theorem. \todo{Add ref to Theorem and Section} %TODO
 
-In case we find answers to Research questions \ref{research_question:1} and \ref{research_question:2}, we want to implement a tool that can automatically detect the cases from Research question \ref{research_question:1}.
-With the proven theorem from Research question \ref{research_question:2}, the results from the tool can be derived to non-constant lower bounds in the LOCAL model.
+We have implemented the algorithm that we give as an answer to Research question \ref{research_question:1} in Section \ref{sec:algorithm}, and we introduce details of the implementation in Section \ref{sec:implementation}.
+With the theorem from Research question \ref{research_question:2}, the results from the tool can be derived to non-constant lower bounds in the LOCAL model.
 There also exists a database of upper and lower bounds of LCL problems \cite{Tereshchenko2021}, and these bounds have been computed using various tools called \emph{classifiers}.
-Our implementation would be one kind of classifier, and we want to know if it can find any new lower bounds i.e. lower bounds that are higher than what is currently known about these problems.
+Our implementation is one kind of classifier, and we want to know if it can find any new lower bounds i.e. lower bounds that are higher than what is currently known about these problems.
 \begin{researchquestion} \label{research_question:3}
-For which LCL problems can we determine new lower bounds in the LOCAL model, using our implementation?
+Using our implementation, for which LCL problems can we determine new lower bounds in the LOCAL model?
 \end{researchquestion}
 
-We want the implementation to be optimized, with fast execution time.
+The algorithm can be run with a single problem, but we also want to target classes of problems, where the quantity of problems can be large.
+Thus, we want our implementation to be reasonable fast in order it to have use in practice.
 \begin{researchquestion} \label{research_question:4}
-How fast can we make our implementation?
+Can we make the implementation fast enough, so that we can classify interesting problem classes in practice?
 \end{researchquestion}
+
+As an answer to Research questions \ref{research_question:3} and \ref{research_question:4}, we present the results from our implementation in Section \ref{sec:results}.
