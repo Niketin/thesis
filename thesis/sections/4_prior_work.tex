@@ -2,55 +2,103 @@
 
 \section{Prior work} \label{sec:prior_work}
 In this section, we discuss the related studies that have been released prior to this work.
-First, we discuss the ... in Section \ref{sec:prior_work:title_a}.
+\todo{\(\leftarrow\) is this sentence needed?}
+In computer science, we are often interested in finding the best possible algorithm for some computational problem.
+First, in Section \ref{sec:prior_work:title_a}, we generally discuss the automation of finding information about the possible optimal algorithm, and briefly discuss what has been done outside the field of distributed computation as the subject is not only applied in the distributed computing.
+In Section \ref{sec:prior_work:title_b} we narrow our focus on the same subject in the distributed setting.
+Lastly, in Section \ref{sec:prior_work:title_c} we discuss different automated tools that have been developed prior this work, and the complexity classes that are relevant in the LOCAL model.
 
-\subsection{Meta computing and algorithm synthetization etc\todo{fix title}} \label{sec:prior_work:title_a}
+\subsection{Automation of proving} \label{sec:prior_work:title_a} %Algorithm synthetization
+\todo{Maybe start talking more generally, without mentioning anything about LOCAL or LCL, and explain that in computer science, we are looking for }
+In computer science, given that we have an interesting computational problem, our ultimate end goal is to find the best possible (or optimal) algorithm for the computational problem.
+We would like to learn something new about the computability of the problem in terms of computational complexity, in order to narrow the search for the best algorithm.
+There are usually two desirable results we would want to discover:
+\begin{itemize}
+    \item
+    The first desirable result is an efficient algorithm that solves the computational problem.
+    The existence of such algorithm would show that the problem is solvable with \emph{at least} at the efficiency of the algorithm.
+    \item
+    The second desirable result would be the information that such efficient algorithm does not exist at all.
+    If there are provably no algorithms with such efficiency, then possible algorithms have to be \emph{less} efficient.
+\end{itemize}
+We say that the former results, showing existence, an upper bound, or possibility, are \emph{positive} results.
+Similarly, the latter results, showing nonexistence, a lower bound, or impossibility, are \emph{negative} results.
+In our work, the objective is to find negative results, but we would also like to briefly discuss finding positive results as it is the other side of discovering new information about computational problems.
 
-Given that we have an interesting computational problem, we would like to learn something new about the computability of the problem in terms of computational complexity.
-There are usually two desirable results that we would want to discover.
-The first desirable result is an efficient algorithm that solves the computational problem.
-The existence of such algorithm would show that the problem is solvable with \emph{at least} at the speed of the algorithm.
-The second desirable result would be the information that such efficient algorithm does not exist at all.
-If there are provably no algorithms with such efficiency, then possible algorithms have to be less efficient.
-We say that the former results, showing existence, an upper bound, or possibility, are \emph{positive} results, and the latter results, showing nonexistence, a lower bound, or impossibility, are \emph{negative} results.
-In our work, the objective is to find negative results, but we would also like to discuss finding positive results as it is the other side of discovering new information about distributed computational problems.%, and discussing gives better overall view on the subject.
+Traditionally, positive and negative results for distributed computational problems have been found using the pen-and-paper method.
+\todo{These examples, but in nondistributed way?}
+For example, Linial showed in 1987 that there is a deterministic \(\mathcal{O}(\log^* n)\) algorithm for \(\mathcal{O}(\Delta^2)\)-coloring \cite{DBLP:conf/focs/Linial87}.
+In a more recent paper from 2010, Barenboim and Elkin showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring \cite{DBLP:conf/podc/BarenboimE10}, which is substantially better in terms of the quantity of colors, in comparison to the former paper \cite{DBLP:conf/focs/Linial87} from Linial.
 
-Traditionally, positive and negative results for distributed computational problems have been found using the pen-and-paper method, for example This showed that there is a O(asd)-algorithm for the Problem \cite{} \cite{}.
-The automation of finding these results is a more recent approach in the field \cite{} \cite{}.
+A more recent approach to finding positive or negative results is the automation of the whole process.
+%The automation of finding these results is a more recent approach in the field.
+We could automate the finding of positive or negative results, and the case of negative results is exactly one of our work's objectives.
+What about the automation of positive results?
+
+The automation of finding positive results involves creating a tool that takes a specification of desired behavior as an input, and outputs an algorithm that matches the specification, and this method is called \emph{algorithm synthesis} \cite{DBLP:phd/basesearch/Rybicki16}.
+
+\todo{continue from here, briefly discussing algorithm synthesis in distributed computing}
+\url{https://dblp.uni-trier.de/search?q=algorithm%20synthesis%20distributed}
+
+
+%"given a specification of the desired behavior, let the computer find an algorithm that matches the specification"\cite{DBLP:phd/basesearch/Rybicki16}
+
+
 %In this work we focus on the automation of new discoveries in the distributed computing.
-In addition, there has been considerable work 
+%In addition, there has been considerable work 
 
-Proofs 
-The first one, that we are targeting at in this thesis, is that we show the problem to not be solvable 
-When we are attempting to 
+%Proofs 
+%The first one, that we are targeting at in this thesis, is that we show the problem to not be solvable 
+%When we are attempting to 
+%
+%There has been a lot of effort in showing positive results in the foundations
+%
+%
+%When we look at the 
+%From the bird's eye view, our work is one 
+\subsection{Automation of proving in distributed computing} \label{sec:prior_work:title_b}
 
-There has been a lot of effort in showing positive results in the foundations
+Traditionally, positive and negative results for distributed computational problems have been found using the pen-and-paper method.
+For example, Linial showed in 1987 that there is a deterministic \(\mathcal{O}(\log^* n)\) algorithm for \(\mathcal{O}(\Delta^2)\)-coloring \cite{DBLP:conf/focs/Linial87}.
+In a more recent paper from 2010, Barenboim and Elkin showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring \cite{DBLP:conf/podc/BarenboimE10}, which is substantially better in terms of the quantity of colors, in comparison to the former paper \cite{DBLP:conf/focs/Linial87} from Linial.
+\subsection{Classifiers} \label{sec:prior_work:title_c}
 
-
-When we look at the 
-From the bird's eye view, our work is one 
-
-\subsection{Classifiers}
 
 A \emph{classifier} is a tool that can automatically determine a lower bound or an upper bound for an LCL problem.
 
+
+%\subsection{Relevant complexity classes and gaps (or Complexity landscape of LCL's?)}
+Generally, there are infinitely many complexity classes, but in the LOCAL model, infinitely many of them turns out to be redundant.
+There are 4 main complexity classes in the LOCAL model \url{https://jukkasuomela.fi/landscape-of-locality}
+\todo{table of classifiers used in the aleksandr's work and the following recent work:}
+\url{https://arxiv.org/abs/2202.08544}
+\url{https://github.com/jendas1/poly-classifier}
 \todo{round eliminator, other classifiers (from aleksandr's lcl-classifier?)}
 In our work, we focus only on showing negative results, i.e. we show that something is not possible to achieve, in a form of a lower bound.
 In particular, we do
 
+These classifiers generally output complexity classes of the following:
+\[1, log^*(n), log(n), n, ...\]
+\todo{}
+We use the common notations \(\mathcal(O), o, \Omega, \omega, \Theta \) to define lower and upper bounds.
+%\subsection{Relevant complexity classes and gaps (or Complexity landscape of LCL's?)}
+Generally, there are infinitely many complexity classes, but in the LOCAL model, infinitely many of them turns out to be redundant.
+There are 4 main complexity classes in the LOCAL model \url{https://jukkasuomela.fi/landscape-of-locality}.
 
-\subsection{Lower and upper bounds of LCL's}
+The gaps between these complexity classes are ... \todo{Say something about the gaps and cite some paper?}
+
+%\subsection{Lower and upper bounds of LCL's} \label{sec:prior_work:title_c}
+
+% %TODO I'll draft some sections here that I probably should consider writing about.
+% % Some might be really similar or even identical.
+% \subsection{\color{red}These sections are WIP, they do not necessarily stay this way, and each section probably does not stay under their own section}
+% \subsection{Lower and upper bounds of LCL's}
+% \subsection{Complexity classifications of LCL's}
+% \subsection{Computation of lower and upper bounds}
+% %TODO somewhere talk about the complexity classes, how there are infinitely many complexity classes, but in some models, range of complexity classes are equal. There are gaps in the complexity thingy.
+% \subsection{Computation in complexity theory}
+% \subsection{Complexity landscape of LCL's}
+% \subsection{Computer assisted something in complexity theory}
 
 
-0
-
-%TODO I'll draft some sections here that I probably should consider writing about.
-% Some might be really similar or even identical.
-\subsection{\color{red}These sections are WIP, they do not necessarily stay this way, and each section probably does not stay under their own section}
-\subsection{Lower and upper bounds of LCL's}
-\subsection{Complexity classifications of LCL's}
-\subsection{Computation of lower and upper bounds}
-%TODO somewhere talk about the complexity classes, how there are infinitely many complexity classes, but in some models, range of complexity classes are equal. There are gaps in the complexity thingy.
-\subsection{Computation in complexity theory}
-\subsection{Complexity landscape of LCL's}
-\subsection{Computer assisted something in complexity theory}
+%tietojenk'sittelytieteess' hjalutaan l;yt'' paras mahdollinen algoritmi jollekin laskennaliselle ongelmalle
