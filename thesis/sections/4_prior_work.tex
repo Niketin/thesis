@@ -23,22 +23,28 @@ There are usually two desirable results we would want to discover.
 \end{itemize}
 We say that the former results, showing existence, an upper bound, or possibility, are \emph{positive} results.
 Similarly, the latter results, showing nonexistence, a lower bound, or impossibility, are \emph{negative} results.
-In our work, the objective is to find negative results, but we would also like to briefly discuss finding positive results as it is the other side of discovering new information about computational problems.
+In our work, the objective is to find negative results, but we would also like to briefly discuss finding positive results as it is the other side of discovering new information about the computability of computational problems.
 
 Traditionally, positive and negative results for computational problems have been found using the pen-and-paper method.
 %\todo{These examples, but in nondistributed way?}
 For example, Linial showed in 1987 that there is a deterministic \(\mathcal{O}(\log^* n)\) algorithm for \(\mathcal{O}(\Delta^2)\)-coloring \cite{DBLP:conf/focs/Linial87}.
 In a more recent paper from 2010, Barenboim and Elkin showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring \cite{DBLP:conf/podc/BarenboimE10}, which is substantially better in terms of the quantity of colors, in comparison to the former paper \cite{DBLP:conf/focs/Linial87} from Linial.
 
-A more recent approach to finding positive or negative results is the \emph{automation} of the whole process.
+A more recent approach to finding positive or negative results is the \emph{automation} of the whole process
 %The automation of finding these results is a more recent approach in the field.
-One could automate the finding of positive or negative results, and the case of negative results is exactly one of our work's objectives.
-We will focus on the automation in the distributed  computing in Section \ref{sec:prior_work:title_b}
+One could automate the finding of positive or negative results by utilizing massive computational power of modern computers.
+The case of negative results is exactly one of our work's objectives and we will discuss the automation of finding these results in the distributed computing in Section \ref{sec:prior_work:title_b}.
 But first, what about the automation of finding positive results?
 
 The automation of finding positive results involves creating a tool that takes a specification of desired behavior as an input, and outputs an algorithm that matches the specification, and this method is called \emph{algorithm synthesis} \cite{DBLP:phd/basesearch/Rybicki16}.
 For example, in the work of Dramnesc and Jebelean from 2015, the authors manage to automatically synthesize various sorting algorithms including selection sort, insertion sort, quick sort, merge sort and a novel sorting algorithm they call \emph{unbalanced merge sort} \cite{DBLP:journals/jsc/DramnescJ15}.
 As another example, in the work of Gulwani et~al. from 2011, the authors present a tool that can efficiently synthesize highly nontrivial 10-20 line loop-free bit vector programs \cite{DBLP:conf/pldi/GulwaniJTV11}.
+
+Satisfiability solvers have been used in various synthesis problems to find positive results.
+We will discuss more about satisfiability solvers in Section \ref{}\footnote{\todo{Add reference to section where we explain SAT}} as they are also used in our implementation for finding negative results, but nevertheless we will next list some examples of previous research.
+
+
+
 
 %\todo{algorithm synthesis is by no means easy, it is often undecidable or bla bla bla, check the väikkäri}
 %"given a specification of the desired behavior, let the computer find an algorithm that matches the specification"\cite{DBLP:phd/basesearch/Rybicki16}
