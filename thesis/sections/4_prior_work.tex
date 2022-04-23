@@ -10,7 +10,7 @@ In addition, we will discuss relevant automated tools that have been developed p
 
 \subsection{Automation of proving} \label{sec:prior_work:title_a} %Algorithm synthetization
 %\todo{Maybe start talking more generally, without mentioning anything about LOCAL or LCL, and explain that in computer science, we are looking for }
-In computer science, given that we have an interesting computational problem, our ultimate end goal is to find the best possible (i.e. optimal) algorithm for the computational problem.
+Given that we have an interesting computational problem, our ultimate end goal is to find the best possible (i.e. optimal) algorithm for the computational problem.
 We would like to learn something new about the computability of the problem in terms of computational complexity, in order to narrow the search for the best algorithm.
 There are usually two desirable results we would want to discover.
 \begin{itemize}
@@ -30,7 +30,7 @@ Traditionally, positive and negative results for computational problems have bee
 For example, Linial showed in 1987 that there is a deterministic \(\mathcal{O}(\log^* n)\) algorithm for \(\mathcal{O}(\Delta^2)\)-coloring \cite{DBLP:conf/focs/Linial87}.
 In a more recent paper from 2010, Barenboim and Elkin showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring \cite{DBLP:conf/podc/BarenboimE10}, which is substantially better in terms of the quantity of colors, in comparison to the former paper \cite{DBLP:conf/focs/Linial87} from Linial.
 
-A more recent approach to finding positive or negative results is the \emph{automation} of the whole process
+A more recent approach to finding positive or negative results is the \emph{automation} of the whole process.
 %The automation of finding these results is a more recent approach in the field.
 One could automate the finding of positive or negative results by utilizing massive computational power of modern computers.
 The case of negative results is exactly one of our work's objectives and we will discuss the automation of finding these results in the distributed computing in Section \ref{sec:prior_work:title_b}.
@@ -38,13 +38,13 @@ But first, what about the automation of finding positive results?
 
 The automation of finding positive results involves creating a tool that takes a specification of desired behavior as an input, and outputs an algorithm that matches the specification, and this method is called \emph{algorithm synthesis} \cite{DBLP:phd/basesearch/Rybicki16}.
 For example, in the work of Dramnesc and Jebelean from 2015, the authors manage to automatically synthesize various sorting algorithms including selection sort, insertion sort, quick sort, merge sort and a novel sorting algorithm they call \emph{unbalanced merge sort} \cite{DBLP:journals/jsc/DramnescJ15}.
-As another example, in the work of Gulwani et~al. from 2011, the authors present a tool that can efficiently synthesize highly nontrivial 10-20 line loop-free bit vector programs \cite{DBLP:conf/pldi/GulwaniJTV11}.
+As another example, in the work of Gulwani et~al. from 2011, the authors present a tool that can efficiently synthesize highly nontrivial 10--20 line loop-free bit vector programs \cite{DBLP:conf/pldi/GulwaniJTV11}.
 
 Propositional satisfiability solvers (SAT solvers) have been used in various synthesis problems to find positive results.
 SAT solvers are also used in our implementation to find negative results and we will talk more about them in Section \ref{}\footnote{\todo{Add reference to section where we explain SAT}}, but nevertheless we will next list some examples of previous research.
 %We will discuss more about propositional satisfiability solvers in Section \ref{}\footnote{\todo{Add reference to section where we explain SAT}} as they are also used in our implementation for finding negative results, but nevertheless we will next list some examples of previous research.
 SAT solvers have been used especially in synthesis of circuits, where one goal is to find optimal Boolean circuits in terms of size.
-For example, in the paper from Järvisalo et al. \cite{DBLP:conf/sat/JarvisaloKKK12}, the authors present a method to encode an ensemble computation problem as a propositional formula.
+For example, in the paper from Järvisalo et al.\ \cite{DBLP:conf/sat/JarvisaloKKK12}, the authors present a method to encode an ensemble computation problem as a propositional formula.
 The encoding is then fed to a SAT solver to gain either a working circuit design for the ensemble computation problem or a proof of nonexistence.
 \todo{Add another example.}
 
@@ -85,32 +85,39 @@ There are 4 main complexity classes in the LOCAL model \url{https://jukkasuomela
 \todo{table of classifiers used in the aleksandr's work and the following recent work:}
 \url{https://arxiv.org/abs/2202.08544}
 \url{https://github.com/jendas1/poly-classifier}
-\begin{table}[h!]
+
+\begin{table}[h]
 \centering
-\begin{tabular}{l l l l }
-    \hline
-    Classifier & Labels & Rooted trees & Unrooted trees \\
-    \hline
-    \hline
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{l l l l l l}
+    \toprule
+    &&&& \multicolumn{2}{c}{Trees} \\
+    \cmidrule{5-6}
+    Classifier & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
     Round Eliminator \cite{DBLP:conf/podc/Olivetti20, OlivettiRoundEliminatorGithub, DBLP:conf/podc/Brandt19}
-    & {\color{red}Any?} & No & Yes \\ \hline
+    & {\color{red}Any?} & Yes & No &  No & Yes \\
     %
-    Automata-theoretic lens classifier \cite{}
-    & ? & ?   & ? \\ \hline
+    Automata-theoretic lens classifier \cite{CyclePathClassifier2020, DBLP:conf/sirocco/ChangSS21}
+    & Any & Yes & Yes & Partially\footnote{The implementation does not handle rooted trees, but the theory in the paper applies to some LCL problems in rooted trees.} & No \\
     %
     Tree-classifications (dataset) \cite{TreeClassifications2020}
-    & 2 & No  & Yes \\ \hline
+    & 2, 3 & ? & ? & No  & Yes \\
     %
     TLP Classifier \cite{RocherTlpClassifier2020, Rocher2020}
-    & 3 & No  & Yes \\ \hline
+    & 3 & ? & ? & No  & Yes \\
     %
     Rooted tree classifier \cite{RootedTreeClassifier2021, DBLP:conf/podc/Balliu0OSST21}
-    & ? & Yes & No \\ \hline
+    & ? & ? & ? & Yes & No \\
     %
     poly-classifier \cite{PolyClassifier2022, DBLP:journals/corr/abs-2202-08544}
-    &?&?&? \\ \hline
-\end{tabular}
-\caption{A list of all classifiers we are aware of.} \label{tbl:classifiers}
+    &?&?&?&?&? \\ \bottomrule
+\end{tabular}%
+}
+\caption{A list of all classifiers we are aware of prior this work.
+For each classifier, we list the graph families they target and the amount of labels they support.
+By support, we do not necessarily mean efficient.
+\todo{Fill all missing cells.}
+} \label{tbl:classifiers}
 \end{table}
 
 \todo{round eliminator, other classifiers (from aleksandr's lcl-classifier?)}
