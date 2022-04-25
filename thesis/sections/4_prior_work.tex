@@ -3,12 +3,12 @@
 \section{Prior work} \label{sec:prior_work}
 %In this section, we discuss the related studies that have been released prior to this work.
 %\todo{\(\leftarrow\) is this sentence needed?}
-In computer science, we are often interested in finding the best possible (optimal) algorithm for some computational problem.
-First, in Section \ref{sec:prior_work:title_a}, we generally discuss the \emph{automation of finding} information about the possible optimal algorithm, and briefly discuss what has been previously done related to the subject, in the field of computer science.
-In Section \ref{sec:prior_work:title_b} we narrow our focus on the subject to the field of distributed computing.
+In computer science, we are often interested in finding the best possible algorithm for some computational problem.
+First, in Section~\ref{sec:prior_work:automation_of_proving}, we generally discuss the \emph{automation of finding} information about the best possible algorithm, and we briefly discuss what has been previously done related to the subject, in the field of computer science.
+In Section~\ref{sec:prior_work:automation_of_proving_in_dist_comp} we narrow our focus on the subject to the field of distributed computing.
 In addition, we will discuss relevant automated tools that have been developed prior this work and the complexity classes that are relevant in the LOCAL model.
 
-\subsection{Automation of proving} \label{sec:prior_work:title_a} %Algorithm synthetization
+\subsection{Automation of proving} \label{sec:prior_work:automation_of_proving} %Algorithm synthetization
 %\todo{Maybe start talking more generally, without mentioning anything about LOCAL or LCL, and explain that in computer science, we are looking for }
 Given that we have an interesting computational problem, our ultimate end goal is to find the best possible (i.e. optimal) algorithm for the computational problem.
 We would like to learn something new about the computability of the problem in terms of computational complexity, in order to narrow the search for the best algorithm.
@@ -26,14 +26,12 @@ Similarly, the latter results, showing nonexistence, a lower bound, or impossibi
 In our work, the objective is to find negative results, but we would also like to briefly discuss finding positive results as it is the other side of discovering new information about the computability of computational problems.
 
 Traditionally, positive and negative results for computational problems have been found using the pen-and-paper method.
-%\todo{These examples, but in nondistributed way?}
-For example, Linial showed in 1987 that there is a deterministic \(\mathcal{O}(\log^* n)\) algorithm for \(\mathcal{O}(\Delta^2)\)-coloring \cite{DBLP:conf/focs/Linial87}.
-In a more recent paper from 2010, Barenboim and Elkin showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring \cite{DBLP:conf/podc/BarenboimE10}, which is substantially better in terms of the quantity of colors, in comparison to the former paper \cite{DBLP:conf/focs/Linial87} from Linial.
+For example, Linial\ \cite{DBLP:conf/focs/Linial87} showed in 1987 that there is a deterministic \(\mathcal{O}(\log^* n)\) algorithm for \(\mathcal{O}(\Delta^2)\)-coloring.
+In a more recent paper from 2010, Barenboim and Elkin\ \cite{DBLP:conf/podc/BarenboimE10} showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring, which is substantially better in terms of the quantity of colors, in comparison to the former paper \cite{DBLP:conf/focs/Linial87} from Linial.
 
 A more recent approach to finding positive or negative results is the \emph{automation} of the whole process.
-%The automation of finding these results is a more recent approach in the field.
 One could automate the finding of positive or negative results by utilizing massive computational power of modern computers.
-The case of negative results is exactly one of our work's objectives and we will discuss the automation of finding these results in the distributed computing in Section \ref{sec:prior_work:title_b}.
+The case of negative results is exactly one of our work's objectives, and we will discuss the automation of finding these results in the distributed computing in Section \ref{sec:prior_work:automation_of_proving_in_dist_comp}.
 But first, what about the automation of finding positive results?
 
 The automation of finding positive results involves creating a tool that takes a specification of desired behavior as an input, and outputs an algorithm that matches the specification, and this method is called \emph{algorithm synthesis} \cite{DBLP:phd/basesearch/Rybicki16}.
@@ -41,51 +39,40 @@ For example, in the work of Dramnesc and Jebelean from 2015, the authors manage 
 As another example, in the work of Gulwani et~al. from 2011, the authors present a tool that can efficiently synthesize highly nontrivial 10--20 line loop-free bit vector programs \cite{DBLP:conf/pldi/GulwaniJTV11}.
 
 Propositional satisfiability solvers (SAT solvers) have been used in various synthesis problems to find positive results.
-SAT solvers are also used in our implementation to find negative results and we will talk more about them in Section \ref{}\footnote{\todo{Add reference to section where we explain SAT}}, but nevertheless we will next list some examples of previous research.
-%We will discuss more about propositional satisfiability solvers in Section \ref{}\footnote{\todo{Add reference to section where we explain SAT}} as they are also used in our implementation for finding negative results, but nevertheless we will next list some examples of previous research.
+SAT solvers are also used in our implementation to find negative results, and we will talk more about them in Section \ref{} (\todo{Add reference to section where we explain SAT}), but nevertheless we will next show an examples of a previous research.
 SAT solvers have been used especially in synthesis of circuits, where one goal is to find optimal Boolean circuits in terms of size.
-For example, in the paper from Järvisalo et al.\ \cite{DBLP:conf/sat/JarvisaloKKK12}, the authors present a method to encode an ensemble computation problem as a propositional formula.
+As the example, in the paper from Järvisalo et al.\ \cite{DBLP:conf/sat/JarvisaloKKK12}, the authors present a method to encode an ensemble computation problem as a propositional formula.
 The encoding is then fed to a SAT solver to gain either a working circuit design for the ensemble computation problem or a proof of nonexistence.
-\todo{Add another example.}
-
-
-
-
-
 
 %\todo{algorithm synthesis is by no means easy, it is often undecidable or bla bla bla, check the väikkäri}
 %"given a specification of the desired behavior, let the computer find an algorithm that matches the specification"\cite{DBLP:phd/basesearch/Rybicki16}
 
-
-%In this work we focus on the automation of new discoveries in the distributed computing.
-%In addition, there has been considerable work 
-
-%Proofs 
-%The first one, that we are targeting at in this thesis, is that we show the problem to not be solvable 
-%When we are attempting to 
-%
-%There has been a lot of effort in showing positive results in the foundations
-%
-%
-%When we look at the 
-%From the bird's eye view, our work is one 
-\subsection{Automation of proving in distributed computing} \label{sec:prior_work:title_b}
+\subsection{Automation of proving in distributed computing (or in the LOCAL model?)} \label{sec:prior_work:automation_of_proving_in_dist_comp}
 
 
-The tools that automate the proving of positive or negative results in distributed computing are called \emph{classifiers}.
+The tools that automate the finding of positive or negative results in distributed computing are called \emph{classifiers}.
 A \emph{classifier} can automatically determine a lower bound or an upper bound for an LCL problem.
 Currently, we are aware of only small number of different classifiers, and we will list them below in Table \ref{tbl:classifiers}.
-%\subsection{Classifiers} \label{sec:prior_work:title_c}
+These classifiers work in the LOCAL model meaning that the results outputted by the classifiers apply to the model.
 
+Generally, there are infinitely many complexity classes because there are infinitely many functions.
+In the LOCAL model, infinitely many of them turns out to be redundant.
+Gap theorems show that there are ranges of complexities where there are no algorithms with tight complexities, for example... \cite{}.
+This results in 4 main complexity classes in the deterministic LOCAL model \cite{}.
+Due this fact, classifiers in the LOCAL model generally output these complexities for LCL problems.
 
+% Below we have tight complexities:
+\[\mathcal{O}(1), \Theta(\log^* n), \Theta(\log n), \Theta(n)\]
+\todo{}
 
 %\subsection{Relevant complexity classes and gaps (or Complexity landscape of LCL's?)}
-Generally, there are infinitely many complexity classes, but in the LOCAL model, infinitely many of them turns out to be redundant.
-There are 4 main complexity classes in the LOCAL model \url{https://jukkasuomela.fi/landscape-of-locality}
-\todo{table of classifiers used in the aleksandr's work and the following recent work:}
+ \url{https://jukkasuomela.fi/landscape-of-locality}
+\todo{Table of classifiers used in the Aleksandr's work and the following recent work:}
 \url{https://arxiv.org/abs/2202.08544}
 \url{https://github.com/jendas1/poly-classifier}
 
+
+\todo{Go through these works, check each fact. Leave some parts empty if necessary (if no information about some part is not available.)}
 \begin{table}[h]
 \centering
 \resizebox{\columnwidth}{!}{%
@@ -120,7 +107,7 @@ By support, we do not necessarily mean efficient.
 } \label{tbl:classifiers}
 \end{table}
 
-\todo{round eliminator, other classifiers (from aleksandr's lcl-classifier?)}
+\todo{Round eliminator, other classifiers (from Aleksandr's lcl-classifier?)}
 In our work, we focus only on showing negative results, i.e. we show that something is not possible to achieve, in a form of a lower bound.
 In particular, we do
 
