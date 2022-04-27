@@ -5,7 +5,7 @@
 %\todo{\(\leftarrow\) is this sentence needed?}
 In computer science, we are often interested in finding the best possible algorithm for some computational problem.
 First, in Section~\ref{sec:prior_work:automation_of_proving}, we generally discuss the \emph{automation of finding} information about the best possible algorithm, and we briefly discuss what has been previously done related to the subject, in the field of computer science.
-In Section~\ref{sec:prior_work:automation_of_proving_in_dist_comp} we narrow our focus on the subject to the field of distributed computing.
+In Section~\ref{sec:prior_work:automation_of_proving_in_local_model} we narrow our focus on the subject to the field of distributed computing.
 In addition, we will discuss relevant automated tools that have been developed prior this work and the complexity classes that are relevant in the LOCAL model.
 
 \subsection{Automation of proving} \label{sec:prior_work:automation_of_proving} %Algorithm synthetization
@@ -31,7 +31,7 @@ In a more recent paper from 2010, Barenboim and Elkin\ \cite{DBLP:conf/podc/Bare
 
 A more recent approach to finding positive or negative results is the \emph{automation} of the whole process.
 One could automate the finding of positive or negative results by utilizing massive computational power of modern computers.
-The case of negative results is exactly one of our work's objectives, and we will discuss the automation of finding these results in the distributed computing in Section \ref{sec:prior_work:automation_of_proving_in_dist_comp}.
+The case of negative results is exactly one of our work's objectives, and we will discuss the automation of finding these results in the distributed computing in Section \ref{sec:prior_work:automation_of_proving_in_local_model}.
 But first, what about the automation of finding positive results?
 
 The automation of finding positive results involves creating a tool that takes a specification of desired behavior as an input, and outputs an algorithm that matches the specification, and this method is called \emph{algorithm synthesis} \cite{DBLP:phd/basesearch/Rybicki16}.
@@ -47,80 +47,71 @@ The encoding is then fed to a SAT solver to gain either a working circuit design
 %\todo{algorithm synthesis is by no means easy, it is often undecidable or bla bla bla, check the väikkäri}
 %"given a specification of the desired behavior, let the computer find an algorithm that matches the specification"\cite{DBLP:phd/basesearch/Rybicki16}
 
-\subsection{Automation of proving in distributed computing (or in the LOCAL model?)} \label{sec:prior_work:automation_of_proving_in_dist_comp}
+\subsection{Automation of proving in the LOCAL model} \label{sec:prior_work:automation_of_proving_in_local_model}
 
 
-The tools that automate the finding of positive or negative results in distributed computing are called \emph{classifiers}.
-A \emph{classifier} can automatically determine a lower bound or an upper bound for an LCL problem.
+A tool that automates the finding of positive or negative results in distributed computing is called \emph{classifier}.
+A classifier can automatically determine a lower bound or an upper bound for an LCL problem.
 Currently, we are aware of only small number of different classifiers, and we will list them below in Table \ref{tbl:classifiers}.
-These classifiers work in the LOCAL model meaning that the results outputted by the classifiers apply to the model. \todo{This sound weird}
+These classifiers work in the LOCAL model, meaning that the results outputted by the classifiers are time complexities in the LOCAL model.
 
 Generally, there are infinitely many complexity classes because there are infinitely many functions.
-In the LOCAL model, infinitely many of them turns out to be redundant.
+However, in the LOCAL model, infinitely many of them turns out to be redundant.
 \emph{Gap theorems} show that there are ranges of complexities where there exists no optimal algorithms for LCL problems.
-For example, Balliu et al.\ \cite{DBLP:conf/podc/BalliuHOS19} showed that the deterministic complexity of an optimal algorithm is either at most \(\mathcal{O}(1)\) or requires at least \(\Omega(\log^* n)\) rounds.
-As another example, \todo{}ASD et al. \ \cite{} showed that there is a gap between \(\Omega(\log n)\) and \(\mathcal{O}(\log^* n)\).
-Currently, the main complexities we care about, in the deterministic LOCAL model, are:
-\[\mathcal{O}(1), \Theta(\log^* n), \Theta(\log n), \Theta(n).\]
+For example, Balliu et~al.~\cite{DBLP:conf/podc/BalliuHOS19} showed that the deterministic complexity of an optimal algorithm is either at most \(\mathcal{O}(1)\) or requires at least \(\Omega(\log^* n)\) rounds.
+As another example, Chang et~al.~\cite{DBLP:conf/focs/ChangKP16} showed that there is a gap between \(\mathcal{O}(\log^* n)\) and \(\Omega(\log n)\).
+Currently, the main complexities we care about, in the deterministic LOCAL model, are the following:
+\[\mathcal{O}(1), \Theta(\log^* n), \Theta(\log n), n^{\Theta(1)}.\]
 This is the reason why the output complexity for an LCL problem, from a classifier, is typically one of these 4 complexities.
 
-This results in 4 main complexity classes in the deterministic LOCAL model \cite{}.
-Due this fact, classifiers in the LOCAL model generally output these complexities for LCL problems.
-
-
-%\subsection{Relevant complexity classes and gaps (or Complexity landscape of LCL's?)}
- \url{https://jukkasuomela.fi/landscape-of-locality}
-\todo{Table of classifiers used in the Aleksandr's work and the following recent work:}
-\url{https://arxiv.org/abs/2202.08544}
-\url{https://github.com/jendas1/poly-classifier}
-
-
-\todo{Go through these works, check each fact. Leave some parts empty if necessary (if no information about some part is not available.)}
-\begin{table}[h]
+\begin{table}[H]
 \centering
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{l l l l l l}
+\begin{threeparttable}[t]
+\begin{adjustbox}{width={\textwidth},keepaspectratio}%
+\begin{tabular}{l l l l l l l}
     \toprule
-    &&&& \multicolumn{2}{c}{Trees} \\
-    \cmidrule{5-6}
-    Classifier & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
-    Round Eliminator \cite{DBLP:conf/podc/Olivetti20, OlivettiRoundEliminatorGithub, DBLP:conf/podc/Brandt19}
-    & {\color{red}Any?} & Yes & No &  No & Yes \\
-    %
-    Automata-theoretic lens classifier \cite{CyclePathClassifier2020, DBLP:conf/sirocco/ChangSS21}
-    & Any & Yes & Yes & Partially\footnote{The implementation does not handle rooted trees, but the theory in the paper applies to some LCL problems in rooted trees.} & No \\
-    %
-    Tree-classifications (dataset) \cite{TreeClassifications2020}
-    & 2, 3 & ? & ? & No  & Yes \\
-    %
-    TLP Classifier \cite{RocherTlpClassifier2020, Rocher2020}
-    & 3 & ? & ? & No  & Yes \\
-    %
-    Rooted tree classifier \cite{RootedTreeClassifier2021, DBLP:conf/podc/Balliu0OSST21}
-    & ? & ? & ? & Yes & No \\
+    &&&&& \multicolumn{2}{c}{Trees} \\
+    \cmidrule{6-7}
+    Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
     %
     poly-classifier \cite{PolyClassifier2022, DBLP:journals/corr/abs-2202-08544}
-    &?&?&?&?&? \\ \bottomrule
+    & Yes\tnote{1} & Any & No & No & Yes\tnote{2} & Yes\tnote{2} \\
+    %
+    Rooted tree classifier \cite{RootedTreeClassifier2021, DBLP:conf/podc/Balliu0OSST21}
+    & Yes\todo & Any & No & No & Yes\tnote{2} & No \\
+    %
+    Automata-theoretic lens classifier \cite{CyclePathClassifier2020, DBLP:conf/sirocco/ChangSS21}
+    & Yes & Any & Yes & Yes & No\tnote{3} & No \\
+    %
+    Round Eliminator \cite{DBLP:conf/podc/Olivetti20, OlivettiRoundEliminatorGithub, DBLP:conf/podc/Brandt19}
+    & No & Any\tnote{4} & Yes & No &  No & Yes \\
+    %
+    Tree-classifications (dataset) \cite{TreeClassifications2020}
+    & No & 2, 3 & No & No & No  & Yes \\
+    %
+    TLP Classifier \cite{RocherTlpClassifier2020, Rocher2020}
+    & No & 3 & Yes & No & No  & Yes \\ \bottomrule
+    %
 \end{tabular}%
-}
-\caption{A list of all classifiers we are aware of prior this work.
-For each classifier, we list the graph families they target and the amount of labels they support.
-By support, we do not necessarily mean efficient.
-\todo{Fill all missing cells.}
-} \label{tbl:classifiers}
+\end{adjustbox}
+\begin{tablenotes}[normal,flushleft]
+    \footnotesize
+    \item[1] Complete only in rooted trees.
+    \item[2] Only in binary trees. In theory, it applies to all regular trees.
+    \item[3] The paper~\cite{DBLP:conf/sirocco/ChangSS21} shows that it applies to some LCL problems in rooted trees.
+    \item[4] Up to \(\frac{64}{\Delta}\).
+\end{tablenotes}
+\end{threeparttable}
+\caption{A list of all classifiers we are aware of prior this work.} \label{tbl:classifiers}
 \end{table}
 
-\todo{Round eliminator, other classifiers (from Aleksandr's lcl-classifier?)}
-In our work, we focus only on showing negative results, i.e. we show that something is not possible to achieve, in a form of a lower bound.
-In particular, we do
-
-These classifiers generally output complexity classes of the following:
-\[1, log^*(n), log(n), n, ...\]
-\todo{}
-We use the common notations \(\mathcal{O}, o, \Omega, \omega, \Theta \) to define lower and upper bounds.
-%\subsection{Relevant complexity classes and gaps (or Complexity landscape of LCL's?)}
-Generally, there are infinitely many complexity classes, but in the LOCAL model, infinitely many of them turns out to be redundant.
-There are 4 main complexity classes in the LOCAL model \url{https://jukkasuomela.fi/landscape-of-locality}.
-
-The gaps between these complexity classes are ... \todo{Say something about the gaps and cite some paper?}
-%TODO somewhere talk about the complexity classes, how there are infinitely many complexity classes, but in some models, range of complexity classes are equal. There are gaps in the complexity thingy.
+In Table \ref{tbl:classifiers}, we list for each classifier the graph families they target to, the amount of labels they support and the completeness.
+We define classifier as \emph{complete} if it can output a tight complexity class for any input problem in the problem class it targets to.
+There are multiple reasons for a classifier to be \emph{incomplete}, including:
+\begin{itemize}
+    \item it only outputs either upper or lower bound,
+    \item it outputs ``no result'' i.e. it does not know the complexity class,
+    \item it does not terminate.
+\end{itemize}
+Our classifier works only with unrooted trees and is incomplete in the sense that it gives only lower bounds, and only for some LCL problems.
+\todo{Address the label count and the efficiency when label count increases}
