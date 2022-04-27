@@ -53,17 +53,20 @@ The encoding is then fed to a SAT solver to gain either a working circuit design
 The tools that automate the finding of positive or negative results in distributed computing are called \emph{classifiers}.
 A \emph{classifier} can automatically determine a lower bound or an upper bound for an LCL problem.
 Currently, we are aware of only small number of different classifiers, and we will list them below in Table \ref{tbl:classifiers}.
-These classifiers work in the LOCAL model meaning that the results outputted by the classifiers apply to the model.
+These classifiers work in the LOCAL model meaning that the results outputted by the classifiers apply to the model. \todo{This sound weird}
 
 Generally, there are infinitely many complexity classes because there are infinitely many functions.
 In the LOCAL model, infinitely many of them turns out to be redundant.
-Gap theorems show that there are ranges of complexities where there are no algorithms with tight complexities, for example... \cite{}.
+\emph{Gap theorems} show that there are ranges of complexities where there exists no optimal algorithms for LCL problems.
+For example, Balliu et al.\ \cite{DBLP:conf/podc/BalliuHOS19} showed that the deterministic complexity of an optimal algorithm is either at most \(\mathcal{O}(1)\) or requires at least \(\Omega(\log^* n)\) rounds.
+As another example, \todo{}ASD et al. \ \cite{} showed that there is a gap between \(\Omega(\log n)\) and \(\mathcal{O}(\log^* n)\).
+Currently, the main complexities we care about, in the deterministic LOCAL model, are:
+\[\mathcal{O}(1), \Theta(\log^* n), \Theta(\log n), \Theta(n).\]
+This is the reason why the output complexity for an LCL problem, from a classifier, is typically one of these 4 complexities.
+
 This results in 4 main complexity classes in the deterministic LOCAL model \cite{}.
 Due this fact, classifiers in the LOCAL model generally output these complexities for LCL problems.
 
-% Below we have tight complexities:
-\[\mathcal{O}(1), \Theta(\log^* n), \Theta(\log n), \Theta(n)\]
-\todo{}
 
 %\subsection{Relevant complexity classes and gaps (or Complexity landscape of LCL's?)}
  \url{https://jukkasuomela.fi/landscape-of-locality}
