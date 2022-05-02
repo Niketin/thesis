@@ -3,10 +3,9 @@
 \section{Introduction}  \label{sec:introduction}
 
 Large problems often require large computational capacity.
-Distributed computing is often considered when high amounts of computation power are required.
+Distributed computing is often considered when high amounts of computation power is required.
 It is used to solve large scale problems that would otherwise be impractical to solve in a centralized system.
-Distributed computing is \emph{any kind} of computing that is performed on a spatially distributed system
-\cite{DBLP:books/el/leeuwen90/LamportL90}.
+Distributed computing is \emph{any kind} of computing that is performed on a spatially distributed system~\cite{DBLP:books/el/leeuwen90/LamportL90}.
 
 In this thesis, we will be studying the theoretical foundations of distributed computing.
 Commonly, the research in the field focuses on distributed algorithms and complexity classes of distributed graph problems.
@@ -16,7 +15,6 @@ Our main focus is on a certain class of distributed graph problems, locally chec
 A distributed algorithm is a program that is executed in a distributed system.
 Different computation models are used as an abstraction of these distributed systems.
 The models we are particularly interested in are the port-numbering (PN) model and the LOCAL model.
-\todo{This paragraph somehow needs polishing}
 
 %We find LCL problems interesting, because a global result of a computation can be checked locally by each node.
 %If all nodes agree that their local neighborhood of nodes are looking valid, then the result is also a globally valid solution.
@@ -29,8 +27,8 @@ Finding a lower bound requires some kind of proof of existence, and proving it m
 \subsection{Objective}
 In this thesis, we will prove a theorem that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
 We will also implement a tool that can automatically find a proof of unsolvability of an LCL problem in the PN model.
-Together with the theorem and the tool, we can derive lower bounds in LOCAL.
-We especially want this tool to work efficiently, leveraging parallelism.
+Together with the theorem and the tool, we can derive lower bounds in the LOCAL model.
+We especially want this tool to be usable in practice, therefore it needs to give results reasonably fast.
 To conclude, our objective is to find automatically new lower bounds for LCL problems in the LOCAL model.
 
 \subsection{Thesis structure}

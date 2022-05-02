@@ -78,7 +78,7 @@ This is the reason why the output complexity for an LCL problem, from a classifi
     & Yes\tnote{1} & Any & No & No & Yes\tnote{2} & Yes\tnote{2} \\
     %
     Rooted tree classifier \cite{RootedTreeClassifier2021, DBLP:conf/podc/Balliu0OSST21}
-    & Yes\todo & Any & No & No & Yes\tnote{2} & No \\
+    & Yes & Any & No & No & Yes\tnote{2} & No \\
     %
     Automata-theoretic lens classifier \cite{CyclePathClassifier2020, DBLP:conf/sirocco/ChangSS21}
     & Yes & Any & Yes & Yes & No\tnote{3} & No \\
@@ -106,7 +106,7 @@ This is the reason why the output complexity for an LCL problem, from a classifi
 \end{table}
 
 In Table \ref{tbl:classifiers}, we list for each classifier the graph families they target to, the amount of labels they support and the completeness.
-We define classifier as \emph{complete} if it can output a tight complexity class for any input problem in the problem class it targets to.
+We define classifier as \emph{complete} if it can output a tight complexity class, from the previous list of 4 main complexities, for any input problem in the problem class it targets to.
 There are multiple reasons for a classifier to be \emph{incomplete}, including:
 \begin{itemize}
     \item it only outputs either upper or lower bound,
@@ -114,4 +114,4 @@ There are multiple reasons for a classifier to be \emph{incomplete}, including:
     \item it does not terminate.
 \end{itemize}
 Our classifier works only with unrooted trees and is incomplete in the sense that it gives only lower bounds, and only for some LCL problems.
-\todo{Address the label count and the efficiency when label count increases}
+In the table, we list the number of labels each classifier supports, and by `Any' we mean that a classifier supports reasonably high quantity of labels.
