@@ -90,14 +90,14 @@ For example $E=\{\{1, 2\}, \{1, 2\}, \{3, 2\}, \{2, 3\}, \{1, 3\}\}=\{\{1,2\},\{
 Visualization of this graph $G=(\{1,2,3\}, E)$ can be seen in the Figure \ref{fig:graph1:b}.
 For the purpose of this work, we need only undirected graphs.
 
-The definitions of graphs shown earlier do not restrict an edge to start and end in itself ($e=(v, v)$).
+The definitions of graphs shown earlier do not restrict an edge to start and end in itself ($e=\{v, v\}$).
 This kind of edge is called a \emph{loop}.
 The definitions however restricts \emph{multiple edges} (identical parallel edges).
-In order to allow multiple edges, the edge set has to be defined as a \emph{multiset}.
-A graph that contains multiple edges is called a \emph{multigraph}.
+In order to allow multiple edges, the set of edges has to be defined as a \emph{multiset}.
+A graph that is allowed to contain multiple edges is called a \emph{multigraph}.
 Depending on the author or context, multigraphs either allow or disallow loops.
 
-A graph that has no loops or multiple edges is called a \emph{simple graph}.
+A graph that disallows loops and multiple edges is called a \emph{simple graph}.
 Simple graphs can either be directed or undirected, and it should be explicitly mentioned when defining graphs, unless the context implies it.
 As we do not need directedness of edges, let us assume that further expressions of graphs are always undirected in this work.
 
@@ -374,7 +374,7 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
 \subsection{Distributed computing} \label{sec:distributed_computing}
 Executing a computer program in several identical or different computers is called distributed computing
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
-It is similar to running a computer program that contains multiple concurrent tasks, in a computer, but in distributed computing there are higher level tasks that are distributed to different computer nodes.
+It is similar to running a computer program that contains multiple concurrent tasks, in a single computer, but in distributed computing there are higher level tasks that are distributed to multiple different computers.
 
 Computers are called nodes, and they are connected to each other with communication channels.
 These communication channels carry data from a node to another node.
@@ -482,7 +482,7 @@ In other research there might be randomizing involved.
 %The following two sections (\ref{sec:port-numbering_model} and \ref{sec:local_model} ) talk about different forms of message passing models that are highly relative to this paper.
 
 \subsection{Port-numbering model} \label{sec:port-numbering_model}
-This section is based on the excellent textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
+This section is based on the textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
 Port-numbering model (PN model) is a rather weak model of computation that inherits from the message passing model.
 In the model, nodes do not have identification.
@@ -581,7 +581,7 @@ For example the network is simple in Figure \ref{fig:formal_pn2:a}.
   }
   \hfill
   \subcaptionbox{
-    An alternative representation of the PN network from Figure \ref{fig:formal_pn2:b}
+    An alternative representation of the PN network from Figure~\ref{fig:formal_pn2:a}
     \label{fig:formal_pn2:b}
   }%
     [.3\linewidth] {
@@ -591,7 +591,7 @@ For example the network is simple in Figure \ref{fig:formal_pn2:a}.
   \hfill
   \subcaptionbox{
     A PN network with loops and parallel connections.
-    This kind of network cannot be shown in the alternative representation unlike the network on Figure \ref{fig:formal_pn2:a}.
+    This kind of network cannot be shown in the alternative representation, because it does not support a loop that connects to the same port twice.
     \label{fig:formal_pn2:c}
   }%
     [.3\linewidth] {
@@ -614,7 +614,7 @@ Throughout this work, we assume that the introduced networks are connected.
 
 \begin{figure}[H]
   \subcaptionbox{
-    An underlying simple graph of the simple PN network from Figure \ref{fig:formal_pn2:a} and Figure \ref{fig:formal_pn2:b}.
+    An underlying simple graph of the simple PN network from Figure~\ref{fig:formal_pn2:a} and Figure~\ref{fig:formal_pn2:b}.
     \label{fig:underlying_graphs1:a}
   }%
     [.45\linewidth] {
@@ -623,7 +623,7 @@ Throughout this work, we assume that the introduced networks are connected.
   }
   \hfill
   \subcaptionbox{
-    An underlying multigraph of the PN network with multiple connections in Figure \ref{fig:formal_pn1:a}.
+    An underlying multigraph of the PN network with multiple connections in Figure~\ref{fig:formal_pn1:a}.
     \label{fig:underlying_graphs1:b}
   }%
     [.45\linewidth] {
@@ -659,7 +659,7 @@ For example:
   \item[Independent set] of a graph $G$ is a subset $V' \subseteq V$ of nodes where no two nodes are adjacent. That is, for each $u, v, \in V' s.t. u \neq v$, an edge $(u, v)$ is not in $E$.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
   \item[Maximal independent set] of a graph $G$ is an independent subset $V' \subseteq V$ of nodes such that there is no additional vertex $w \in V \backslash V'$ that can be included in $V'$ such that it stays as an independent set.
-  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
+  A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a maximal independent set of nodes of the underlying graph $G$ of $N$.
   \item[$k$-coloring] of a graph $G$ is partition of $V$ with $k$ subsets $X_1, X_2, \dotsc, X_k$ where each subset is an independent set.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a $k$-coloring of the underlying graph $G$ of $N$.
 \end{description}
@@ -705,9 +705,9 @@ In the problem $k$-coloring, we are looking for $k$ subsets of vertices $X_1, X_
 
 In Figure \ref{fig:distributed_graph_problems1} we can see two examples of graph problem encodings.
 The node labeling in Figure \ref{fig:distributed_graph_problems1:a} is a vertex cover.
-However, the node labeling in Figure \ref{fig:distributed_graph_problems1:b} is not a vertex cover, because there is an edge $(d, f)$ and neither of the nodes are in the solution set $\{c, e\}$.
+However, the node labeling in Figure \ref{fig:distributed_graph_problems1:b} is not a vertex cover, because there is an edge $\{d, f\}$ and neither of the nodes are in the solution set $\{c, e\}$.
 The node labeling in Figure \ref{fig:distributed_graph_problems1:b} is a maximal independent set.
-On the other hand, the node labeling in Figure \ref{fig:distributed_graph_problems1:a} is not an independent set, because there is an edge $(e, f)$ and both $e$ and $f$ are in the solution set.
+On the other hand, the node labeling in Figure \ref{fig:distributed_graph_problems1:a} is not an independent set, because there is an edge $\{e, f\}$ and both $e$ and $f$ are in the solution set.
 
 
 
@@ -759,7 +759,7 @@ When we use the notation $x_t, t \in \mathbb{Z}_{\geq 0}$, we refer to the state
 Similarly, we use $x_t(u), u \in V$ when we refer to the state of the node $u$ at time $t$.
 
 We define \[ x_0(u) = \alginit_{A,d}(f(u)) \] where $u\in V$ and $d=\deg_N(u)$.
-The state vectors $x_1, x_2, \dotsc$ are defined recursively in the following paragraph.
+The state vectors $x_1, x_2, \dotsc$ are defined recursively in the following paragraphs.
 
 We assume that we have defined $x_{t-1}$, and we show how we define $x_{t}$ using the assumption of $x_{t-1}$.
 Let function $m_t\colon P \rightarrow \algmsg_A$ map a port to a message at time $t$.
@@ -772,7 +772,7 @@ We define the message vector \[ r_t(u)=(m_t((u, 1)), m_t((u, 2)), \dotsc, m_t((u
 The message vector contains every message node $u$ receives at time~$t$.
 
 Now we give the final definition for $x_t(u)$:
-\[ x_t(u) = \algrecv_{A,d}(x_{t-1}(u, r_t(u))). \]
+\[ x_t(u) = \algrecv_{A,d}(x_{t-1}(u), r_t(u)). \]
 
 Next we define when the execution is considered as stopped, using the definition of execution.
 Algorithm \emph{$A$ stops in time $T$}, if $x_T(u) \in \algout_A$ for each $u \in V$, that is, each node $u$ is in output state at time $T$.
@@ -782,10 +782,6 @@ Algorithm \emph{$A$ stops}, if $A$ stops in some finite time $T$.
 Now that we know when $A$ stops, we define what is considered as the output of $A$.
 Assuming that $A$ stops in time $T$, we define the \emph{output} of $A$ as $g=x_T$.
 With the same assumption, we define the \emph{local output} of node $u$ as $x_t(u)$.
-
-
-
-\todo{Add an example execution of an example problem if necessary.} %TODO Add an example execution of an example problem if necessary.
 
 \subsubsection{Solving graph problems in PN}
 As this thesis focuses strongly on graph problems, it is necessary to define what it means for a distributed algorithm to solve a graph problem.
@@ -810,8 +806,7 @@ For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} imp
 \subsection{Covering map} \label{sec:covering_map}
 There exists a limitation to what problems can be solved in a deterministic PN model.
 The limitation comes from an underlying graph of a PN network being symmetric~%
-\cite{DBLP:conf/focs/Linial87}~%
-\cite{DBLP:journals/siamcomp/Linial92}.
+\mcite{DBLP:conf/focs/Linial87, DBLP:journals/siamcomp/Linial92}.
 
 In this section we discuss a topological concept that can help us to formalize symmetries in a PN network.
 The concept is called \emph{covering map}%
@@ -894,9 +889,7 @@ We define now the covering map for PN networks similarly it is defined in the te
 
 There are two examples of covering maps on Figure \ref{fig:covering_map1} and \ref{fig:covering_map2}.
 In these examples we can see that the sizes of covering networks are integer multiplications of the sizes of original networks.
-This actually
-\footnote{\todo{Do I need to show this?}}
-applies to every covering map, i.e. if we have a covering map $\phi\colon V \rightarrow V'$, then $|V| = k|V'|$ for some $k \in \mathbb{N}_{>0}$ \cite{DBLP:journals/dm/GrossT77}.
+This actually applies to every covering map, i.e. if we have a covering map $\phi\colon V \rightarrow V'$, then $|V| = k|V'|$ for some $k \in \mathbb{N}_{>0}$ \cite{DBLP:journals/dm/GrossT77}.
 We often call covering networks as \emph{lifts}.
 A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size of $N'$.
 
@@ -919,7 +912,7 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
   }%
     [.30\linewidth] {
     \centering
-    \includegraphics[scale=0.48]{diagrams/covering_map_5b.pdf}
+    \includegraphics[scale=0.48]{diagrams/covering_map_5b2.pdf}
   }
   \hfill
   \subcaptionbox{
@@ -928,7 +921,7 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
   }%
     [.30\linewidth] {
     \centering
-    \includegraphics[scale=0.46]{diagrams/covering_map_5c.pdf}
+    \includegraphics[scale=0.46]{diagrams/covering_map_5c2.pdf}
   }
   \caption{
     There is a covering map $\phi_0$ from $N_1$ to $N_0$ that maps each $x_i$ to $x$ for all $x \in \{a, b, c\}$ and for all $i \in \{1, 2\}$.
@@ -938,29 +931,10 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
 \end{figure}
 
 In the Figure \ref{fig:covering_map3} we can see that the network $N_1$ is a 2-lift of the network $N_0$ and the network $N_2$ is a 3-lift of the network $N_0$.
-The network $N_0$ has 2 loops, $p(p((a, 2))) = p((a, 3)) = (a, 2)$ and $p(p((b, 2))) = p((b, 3)) = (b, 2)$.
-
-
-
-%\todo{explain lift}
-%\begin{figure}[H]
-%  \centering
-%  \includegraphics[]{example-image-duck}
-%  \caption{Show lift from N' to N}
-%  \label{fig:duck2}
-%\end{figure}
-%%%This implies that the graphs $H$ and $G$ are indistinguishable from a PN algorithm's perspective.
-%%%\cite{DBLP:conf/stoc/Angluin80}
-
-% Let $H=(V', E')$ and $G=(V, E)$ be some graphs in the graph family $\mathcal{F}$.
-% A covering map is a function $\Phi: V' \rightarrow V$ that maps the vertices $v' \in V'$ to vertices $v \in V$ in such a way that if
-
-%The function that maps $H$ to $G$ is called a \emph{covering map}.
-
-This symmetricity implies that each node ends up in an identical output state with its symmetrical equivalent given that the input problem $\Pi$ does not break the symmetry.
-% In this section we are discussing about a graph theoretic method that can show
-
-Continue...........
+The network $N_0$ has a loop $p(p((a, 2))) = p((a, 3)) = (a, 2)$.
+The networks $N_1$ and $N_2$ do not have loops, but instead they connect to other symmetrical equivalent parts of their networks (denoted by subscripts \(1, 2, 3\)), i.e. in the network $N_1$ we have connections $p(p((a_2, 2))) = p((a_1, 3)) = (a_2, 2)$ and $p(p((a_2, 3))) = p((a_1, 2)) = (a_2, 3)$.
+This symmetricity implies that each node ends up in an identical state with its symmetrical equivalent after each communication round, assuming the input problem $\Pi$ does not break the symmetry.
+For example, when node $a_2$ from network $N_1$ uses its port 2, it cannot determine whether it is communicating with node $a_1$ or with itself, as $a_1$ and $a_2$ are always in identical states.
 
 \subsection{LOCAL model} \label{sec:local_model}
 The LOCAL model is another message passing model that is used in the field of distributed computation.
@@ -977,8 +951,6 @@ A well-known property of the LOCAL model is the ability to compute \emph{every} 
 This amount of time is enough for any node in $G$ to gather complete information of both the graph and the unique labels from function $\operatorname{id}$, because a message can travel from a node to any other node at most in $\operatorname{diameter}(G)$ time.
 With the complete information of everything, each node can compute the whole solution and output its own part of the solution.
 Because of this, researchers are usually interested in complexity classes below the $\mathcal{O}(\operatorname{diameter}(G))$.
-
-\todo{Discuss more about LOCAL? }
 
 \subsection{Locally checkable labeling problems} \label{sec:lcl_problems}
 In this section we define \emph{Locally checkable labeling (LCL)} problems generally.
@@ -1035,8 +1007,6 @@ Listing the locally consistent labelings of each problem would result in substan
 
 It is clear that defining the whole set $C$ explicitly in this formalism would be a substantial amount of work, at least when radius $r$ is high.
 Therefore, we depend on another formalism of LCL problems that provides a more compact representation of the problems.
-\todo{Aren't there more reasons?}
-
 
 \subsection{LCL problems in biregular graphs} \label{sec:lcl_problems:biregular}
 In this section, we will introduce an alternative formalism of LCL problems used in this work, that originates from paper \cite{DBLP:conf/podc/Brandt19}, and recently it has been seen in the papers including \cite{DBLP:conf/podc/Olivetti20} and \cite{DBLP:journals/sigact/Suomela20}.
@@ -1151,6 +1121,7 @@ For an example, see Figure~\ref{fig:biregular_graph2}.
   \label{fig:biregular_graph2}
 \end{figure}
 
-\todo{Address the fact that this definition is for infinite hypertrees. Can we use it with finite graphs?}
+One might wonder why are we interested in infinite $(\Delta, \delta)$-biregular trees and not finite trees?
+The reason for it is that irregularities in these trees, e.g. a leaf node, potentially makes the problems easier to solve~\cite{DBLP:conf/wdag/Balliu0EHMOS20}, and we do not want that.
 
 \clearpage
