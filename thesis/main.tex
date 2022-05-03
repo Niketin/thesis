@@ -381,6 +381,11 @@ text must be identical to the text on the abstract page.
 %%Uncomment when checking for overfull things. This highlights all overfull lines with black bars.
 %\overfullrule=1cm
 
+% Sometimes citations with multiple arguments have a unwanted linebreak.
+% This new command fixes it.
+\newcommand{\mcite}[1]{\mbox{\cite{#1}}}
+
+
 %\DeclareMathOperator{\deg}{deg} % This was already declared
 
 \begin{document}
