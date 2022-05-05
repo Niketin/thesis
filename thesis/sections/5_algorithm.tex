@@ -2,11 +2,35 @@
 
 \section{Algorithm} \label{sec:algorithm}
 
+%% Draft how this whole section should look like.
+%% Then after that, spread these comments to their correct positions.
+%%
+% - Tell about this section 5
+% - First, we want to answer to RQ1,  or how we can autom. detect the unsolvability of an LCL problem.
+%   - For this, we first define what is solvability
+%   - Then we define what is unsolvability (its complement)
+%   - Lemma: LCL is not solvable in PN, if there exists a network that no algorithm can solve
+%     - !Mention! that this is only one case where problem is unsolvable. There does not really have to be one network that is not solvable with any algorithm. The other option would be that for each algorithm, there is some network in which the problem is not solvable.
+%   - Lemma: If LCL is not solvable in graph G, then the problem is also not solvable in any PN network N that has G as its underlying graph
+%     - Proof: We proof by contradiction. We assume that PI is not solvable in G, and PI is solvable in some N that has G as its underlying graph. This means that there exists a valid labeling for N, therefore there must exist a valid labeling for G. This is contradicting with the assumption that PI is not solvable in G.
+%   - We show the algorithm that finds graphs (counterexamples) and explain the algorithm.
+% - Second, we show our theorem: if an LCL problem is unsolvable in the PN model, then the problem is also not solvable in constant time in the LOCAL model.
+%   - We introduce some lemmas in the following subsections
+%   - 
+
+%
+%
+%
+
+
+
+
+\todo{I could say something about Research questions \ref{research_question:1} and \ref{research_question:2}}
 In this section, we will introduce the basic idea of an essential algorithm that is used in the actual implementation discussed in section \ref{sec:implementation}.
-The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in PN model.
+The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in the PN model.
 Here we specifically allow PN networks to have multiple connections.
-Later in Section \ref{sec:algorithm:theorems:a} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
-Finally, in Section \ref{sec:algorithm:theorems:b} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
+Later in Section \ref{sec:algorithm:from_multiple_to_simple} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
+Finally, in Section \ref{sec:algorithm:from_pn_to_local} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 
 First we start with defining the meaning of solvability of an LCL problem.
 %TODO These definitions and theorems might have a better place under section 2 background.
@@ -21,21 +45,21 @@ An LCL problem $\Pi$ is not solvable in PN model, if and only if there does not 
 
 The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter one might be more difficult to understand, but the way it is phrased, easily leads us to the following Theorem:
 
-\begin{theorem} \label{thm:lcl_unsolvability}
+\begin{lemma} \label{lem:lcl_unsolvability}
     An LCL problem $\Pi$ is not solvable in PN model, if there exists a PN network $N$ such that no PN algorithm $A$ can solve the $\Pi$ in $N$.
-\end{theorem}
+\end{lemma}
 \begin{proof}
     Let $\Pi$ be an LCL problem.
     Let $N$ be a PN network such that no PN algorithm $A$ can solve $\Pi$ in $N$.
     Therefore, no PN algorithm $A$ can find a solution to $\Pi$ in all PN networks.
-    According to the definition \ref{def:lcl_solvability:contrapositive}, this is equivalent with $\Pi$ being unsolvable.
+    According to Definition \ref{def:lcl_solvability:contrapositive}, this is equivalent with $\Pi$ being unsolvable.
 \end{proof}
 
-As the Theorem \ref{thm:lcl_unsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
+As the Theorem \ref{lem:lcl_unsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
 To show that, it is enough to find an underlying graph $G$ of $N$ in which the problem $\Pi$ cannot be solved.
-\begin{theorem} \label{thm:problem_unsolvability_in_graphs}
+\begin{lemma} \label{thm:problem_unsolvability_in_graphs}
     If a problem $\Pi$ is not solvable in graph $G$, then $\Pi$ is also not solvable in any PN network $N$ that has $G$ as its underlying graph.
-\end{theorem}
+\end{lemma}
 \begin{proof}
 \todo{Complete proof} %TODO complete proof
 \end{proof}
@@ -89,8 +113,15 @@ Later on Section \ref{sec:implementation} we introduce our implementations of th
 %TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
 %TODO Do we need to talk about trees and how these biregular multigraphs relate to them? 'Informally, the idea is to prove negative results for the case in which "we are in the middle of a very large tree, far away from the leaves".'
 
+
+\todo{Check if this is good place for the theorem.}%TODO
+\todo{Also modify other text so that it fits here.}%TODO
+\begin{theorem} \label{thm:lcl_unsolvability}
+    If an LCL problem is unsolvable in the PN model, then the problem is also not solvable in constant time in the LOCAL model.
+\end{theorem}
+
 In the following sections, we will prove that if an LCL problem $\Pi$ is not solvable in PN network $N$ with multiple connections, then it is not solvable in constant time in the LOCAL model.
-We have divided the proofs into multiple theorems and grouped them under two different sections, Section \ref{sec:algorithm:theorems:a} and Section \ref{sec:algorithm:theorems:b}.
+We have divided the proofs into multiple theorems and grouped them under two different sections, Section \ref{sec:algorithm:from_multiple_to_simple} and Section \ref{sec:algorithm:from_pn_to_local}.
 The dependencies of theorems are shown in the Figure \ref{fig:algorithm:theorem_dependency}.
 \footnote{Where should I put these theorems? Do they fit under Section \ref{sec:algorithm}?}
 
@@ -111,7 +142,7 @@ The dependencies of theorems are shown in the Figure \ref{fig:algorithm:theorem_
     \caption{A dependency graph of the following theorems.\label{fig:algorithm:theorem_dependency}}
 \end{figure}
 
-\subsection{Theorems A? From multiple connections to simple networks} \label{sec:algorithm:theorems:a}
+\subsection{Theorems A? From multiple connections to simple networks} \label{sec:algorithm:from_multiple_to_simple}
 \todo{Fix section title}
 In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
 We try to split this into couple of theorems and at the end utilize the shown theorems to show this to be true.
@@ -252,7 +283,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     Therefore, the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{proof}
 
-\subsection{Theorems B? From PN to LOCAL} \label{sec:algorithm:theorems:b}
+\subsection{Theorems B? From PN to LOCAL} \label{sec:algorithm:from_pn_to_local}
 \todo{Fix section title}
 
 \begin{theorem} \label{thm:lcl_unsolvability:5}
@@ -262,4 +293,13 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \end{theorem}
 \begin{proof}
     \todo{Complete this proof} %TODO Complete this proof
+\end{proof}
+
+
+\subsection{Proving the theorem} \label{sec:algorithm:prooving_the_theorem}
+Now that all the groundwork has been done in the prior sections, we can prove Theorem \ref{thm:lcl_unsolvability}.
+The proof is also our answer to Research Question \ref{research_question:2}.
+\begin{proof}[Proof of Theorem \ref{thm:lcl_unsolvability}]
+    Here is the proof.
+    \todo{}
 \end{proof}
