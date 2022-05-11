@@ -25,14 +25,17 @@
 
 
 
-\todo{I could say something about Research questions \ref{research_question:1} and \ref{research_question:2}}
-In this section, we will introduce the basic idea of an essential algorithm that is used in our implementation discussed in section \ref{sec:implementation}.
-The algorithm's purpose is to find a proof that a given LCL problem $\Pi$ is impossible to solve in the PN model.
-Here we specifically allow PN networks to have multiple connections.
-Later in Section \ref{sec:algorithm:from_multiple_to_simple} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
-Finally, in Section \ref{sec:algorithm:from_pn_to_local} we show that the unsolvability of $\Pi$ in \emph{simple} PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
+In this section, we will introduce the basic idea of an essential algorithm that is used in our implementation (discussed in section \ref{sec:implementation}).
+The purpose of the algorithm is to find a proof that a given LCL problem $\Pi$ is impossible to solve in the PN model.
+The result from the algorithm is a multigraph, in case it finds the problem unsolvable.
+We need to prove that this multigraph is enough to show that the problem is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
+The proof is split into multiple parts under this section.
+%Here we specifically allow PN networks to have multiple connections.
+In Section \ref{sec:algorithm:from_multiple_to_simple} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
+Later in Section \ref{sec:algorithm:from_finite_to_infinite} we show that unsolvability of an LCL problem in finite networks implies the unsolvability of the problem in infinite trees.
+Finally, in Section \ref{sec:algorithm:from_pn_to_local} we show that the unsolvability of $\Pi$ in PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 
-First we start with defining the meaning of solvability of an LCL problem.
+First, we start with defining the meaning of solvability of an LCL problem.
 %TODO These definitions and theorems might have a better place under section 2 background.
 \begin{definition} \label{def:lcl_solvability}
     An LCL problem $\Pi$ is solvable in PN model, if and only if there exists a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
@@ -42,8 +45,6 @@ We can define an alternative version of the Definition \ref{def:lcl_solvability}
 \begin{definition} \label{def:lcl_solvability:contrapositive}
 An LCL problem $\Pi$ is not solvable in PN model, if and only if there does not exist a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
 \end{definition}
-
-
 
 The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter definition might be more difficult to understand because of the contraposition, but we find it necessary to be shown as we find more fitting to discuss unsolvability rather than solvability.
 
@@ -97,7 +98,7 @@ The problem $\Pi'$ is also unsolvable, but this time \emph{no algorithm} can sol
     }
 \end{table}
 
-Not every unsolvable LCL problem necessarily fall within the case shown in Table \ref{tbl:unsolvable_lcl:2}.
+Not every unsolvable LCL problem necessarily fall within the case shown in Table~\ref{tbl:unsolvable_lcl:2}.
 Nevertheless, we are interested in it, because it seems more feasible to find a single network where all algorithms fail, in comparison to finding a network for each algorithm separately.
 The special case is written as the following lemma:
 
@@ -170,20 +171,19 @@ Later on Section \ref{sec:implementation} we introduce our implementations of th
 %the LCL problems used in this thesis are defined for $(b,a)$-biregular graphs.
 %Therefore we should not generate \emph{all} graphs but only the graphs of type $(b,a)$-biregular, where the degrees $b$ and $a$ are taken from the LCL problem $\Pi$.
 
-As we said, we use the LCL formalism from Section \ref{sec:lcl_problems:biregular}.
+As we said before, we use the LCL formalism from Section \ref{sec:lcl_problems:biregular}.
 The formalism uses infinite $(\Delta, \delta)$-biregular trees, but the algorithm generates finite $(\Delta, \delta)$-biregular multigraphs.
-In Section \ref{sec:algorithm:from_finite_to_infinite}, we show that if an LCL problem is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G$ with cycles, then it is also unsolvable in some infinite $(\Delta, \delta)$-biregular tree $G'$.
-Graphs that are $(\Delta, \delta)$-biregular, are always with cycles, when both $\Delta$ and $\delta$ are greater than 1, and this is in practice always the case, because we are not interested in biregular graphs with $\Delta=1$ or $\delta=1$ as they are trivial.
-In Section \ref{sec:algorithm:from_multiple_to_simple}, we show that it is enough to find $(\Delta, \delta)$-biregular network where the problem is unsolvable, because it implies that it is also unsolvable in some simple $(\Delta, \delta)$-biregular network.
-This can be derived to work with graphs with Corollary \ref{lem:problem_unsolvability_in_graphs}.
-
+In Section~\ref{sec:algorithm:from_multiple_to_simple}, we show that it is enough to find $(\Delta, \delta)$-biregular network with multiple connections, where the problem is unsolvable, because it implies that it is also unsolvable in some simple $(\Delta, \delta)$-biregular network.
+This can be derived to work with graphs with Corollary~\ref{lem:problem_unsolvability_in_graphs}.
+In Section~\ref{sec:algorithm:from_finite_to_infinite}, we show that if an LCL problem is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G$ with cycles, then it is also unsolvable in some infinite $(\Delta, \delta)$-biregular tree $G'$.
+Finite $(\Delta, \delta)$-biregular graphs are always with cycles, when both $\Delta$ and $\delta$ are greater than 1, and this is in practice always the case, because we are not interested in biregular graphs with $\Delta=1$ or $\delta=1$ as they are trivial.
 
 %TODO talk about graphs, why they are actually (b, a)-biregular multigraphs. Maybe this is explained by the fact that our LCL problems are defined for (b, a)-biregular.
 %TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
 %TODO Do we need to talk about trees and how these biregular multigraphs relate to them? 'Informally, the idea is to prove negative results for the case in which "we are in the middle of a very large tree, far away from the leaves".'
 
-After Sections \ref{sec:algorithm:from_finite_to_infinite} and \ref{sec:algorithm:from_multiple_to_simple}, we have completed discussing our algorithm, therefore after them, we have completed answering to Research question \ref{research_question:1}.
-Then, in Section \ref{from_pn_to_local}, we answer to Research question \ref{research_question:2}.
+%After Sections \ref{sec:algorithm:from_finite_to_infinite} and \ref{sec:algorithm:from_multiple_to_simple}, we have completed discussing our algorithm, therefore after them, we have completed answering to Research question \ref{research_question:1}.
+%Then, in Section \ref{from_pn_to_local}, we answer to Research question \ref{research_question:2}.
 
 %We have divided the proofs into multiple theorems and grouped them under two different sections, Section \ref{sec:algorithm:from_multiple_to_simple} and Section \ref{sec:algorithm:from_pn_to_local}.
 %The dependencies of theorems are shown in the Figure \ref{fig:algorithm:theorem_dependency}.
@@ -192,9 +192,9 @@ Then, in Section \ref{from_pn_to_local}, we answer to Research question \ref{res
 %    \centering
 %    % https://tex.stackexchange.com/a/499577
 %    \begin{tikzpicture}[]
-%        \node (1) [] {Lemma \ref{lem:lcl_unsolvability:2}};
-%        \node (2) [right = of 1] {Lemma \ref{lem:lcl_unsolvability:3}};
-%        \node (3) [below = of $(1)!0.5!(2)$] {Lemma \ref{lem:lcl_unsolvability:4}};
+%        \node (1) [] {Lemma \ref{lem:lcl_unsolvability:from_multiple_to_lift}};
+%        \node (2) [right = of 1] {Lemma \ref{lem:lcl_unsolvability:from_klift_to_simple}};
+%        \node (3) [below = of $(1)!0.5!(2)$] {Lemma \ref{lem:lcl_unsolvability:from_multiple_to_simple}};
 %        \node (4) [below = of 3] {Lemma \ref{lem:lcl_unsolvability:5}};
 %        \node (5) [below = of 4] {Theorem \ref{thm:lcl_unsolvability}};
 %        %\node (4) [right = of mat2-2-1] {$\deg_G(4)=2$};
@@ -207,47 +207,27 @@ Then, in Section \ref{from_pn_to_local}, we answer to Research question \ref{res
 %    \caption{A dependency graph of the following theorems.\todo{Check that the picture is correct. Also check if it is even needed.}} \label{fig:algorithm:theorem_dependency}
 %\end{figure}
 %
-\subsection{From finite to infinite} \label{sec:algorithm:from_finite_to_infinite}
-The trees are infinite, so any naive approach of encoding these graphs would not suffice.
-Instead of generating infinite $(\Delta, \delta)$-biregular trees and finding some finite encoding for them, we can generate finite sized connected $(\Delta, \delta)$-biregular graphs with cycles.
-
-\begin{lemma} \label{lem:from_finite_to_infinite}
-    If an LCL problem $\Pi$ is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G$ with cycles, then it is also unsolvable in some infinite $(\Delta, \delta)$-biregular tree $G'$.
-\end{lemma}
-\begin{proof}
-    Let us have a problem $\Pi$ that is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G=(V, E)$ with cycles.
-    We construct an infinite $(\Delta, \delta)$-biregular tree $G'=(V', E')$.
-    Let $v \in V$ be a seed node.
-    We consider all possible non-backtracking walks from node $v$.
-    Each walk is considered as a node of $G'$, and \emph{adjacent} walks are considered as adjacent nodes in $G'$.
-    For example $v-a-b-c-a$ and $v-a-b-c-a-b$ are considered as adjacent walks, therefore they represent adjacent nodes in $G'$.
-    Graph $G$ has cycles, therefore there are infinite walks of infinite length.
-    Walks are non-backtracking, therefore the constructed graph $G'$ must be $(\Delta, \delta)$-biregular.
-    We can see that $G'$ is a covering graph of $G$.
-    Using Lemma \ref{lem:lcl_unsolvability:2}, we deduct that the problem $\Pi$ must also be unsolvable in $G'$.
-\end{proof}
-
-With Lemma \ref{lem:from_finite_to_infinite}, we can focus on finding finite connected $(\Delta, \delta)$-biregular graphs with cycles.
 
 \subsection{From multiple connection networks to simple networks} \label{sec:algorithm:from_multiple_to_simple}
 
 In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
-We try to split this into couple of theorems and at the end utilize the shown theorems to show this to be true.
+%We try to first prove a couple of related lemmas and at the end utilize the shown lemmas to show the theorem to be true.
+\todo{Explain or show a figure of dependency of these lemmas???}
 
 % Pi is unsolvable in multiple connection PN network N -> Pi is unsolvable in lift of N
-\begin{lemma} \label{lem:lcl_unsolvability:2}
+\begin{lemma} \label{lem:lcl_unsolvability:from_multiple_to_lift}
 If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not solvable in any PN network $N'$ that is a lift of $N$.
 \end{lemma}
 \begin{proof}
     Let problem $\Pi$ have no solution in some PN network $N$.
     Then any algorithm $A$ produces a result that is invalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
     Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$.
-    Theorem 7.1. \footnote{\todo{Should I show the theorem or is this enough?}} from the text book \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$
+    Theorem 7.1. from the textbook \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$
     Hence, if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
 \end{proof}
 
 % Network with multiple connections ----k-lift--->  simple network
-\begin{lemma} \label{lem:lcl_unsolvability:3}
+\begin{lemma} \label{lem:lcl_unsolvability:from_klift_to_simple}
     If there is a PN network $N_2$ with multiple connections with $k$ being the highest count of multiple connections between any two nodes, then there exists a $k$-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
 \end{lemma}
 \begin{proof}
@@ -318,7 +298,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 %\begin{figure}[H]
 % \centering
 % \includegraphics[]{example-image-duck}
-% \caption{\todo{Illustration of k-lift using Theorem \ref{lem:lcl_unsolvability:3}}}
+% \caption{\todo{Illustration of k-lift using Theorem \ref{lem:lcl_unsolvability:from_klift_to_simple}}}
 % \label{fig:duck2}
 %\end{figure}
 
@@ -342,7 +322,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     \caption{The network $N_1$ is a 3-lift of the network $N_2$.
     }
     \label{fig:algorithm:k-lift_proof_simple1}
-  \end{figure}
+\end{figure}
 
 
 %% This is more like an instruction on how to build the network, not a proof or is it?
@@ -360,26 +340,60 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     %Next, we will swap the ends of connections such that the network becomes connected and
     %\todo{Complete this proof}
 % Pi is unsolvable in multiple connection PN network N -> Pi is unsolvable in simple PN network N' (lift of N)
-\begin{lemma} \label{lem:lcl_unsolvability:4}
+\begin{lemma} \label{lem:lcl_unsolvability:from_multiple_to_simple}
     If an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections, then it is also not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{lemma}
 \begin{proof}
     Let us assume that an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections.
-    Theorem \ref{lem:lcl_unsolvability:3} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
-    Theorem \ref{lem:lcl_unsolvability:2} shows that the problem $\Pi$ is also not solvable in network $N_1$.
-    Therefore, the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
+    Theorem \ref{lem:lcl_unsolvability:from_klift_to_simple} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
+    Theorem \ref{lem:lcl_unsolvability:from_multiple_to_lift} shows that the problem $\Pi$ is also not solvable in network $N_1$.
+    Therefore, we deduce that the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{proof}
+
+\subsection{From finite to infinite} \label{sec:algorithm:from_finite_to_infinite}
+Our algorithm outputs a finite connected $(\Delta, \delta)$-biregular multigraph with cycles, but in the LCL formalism, graphs are infinite $(\Delta, \delta)$-biregular trees.
+With Lemma \ref{lem:lcl_unsolvability:from_multiple_to_simple}, we get simple networks from multiple connections, but we also need to show how unsolvability in finite graphs with cycles imply unsolvability in infinite trees.
+%In the LCL formalism, the trees are infinite, so any naive approach of encoding these graphs would not suffice.
+%Instead of generating infinite $(\Delta, \delta)$-biregular trees and finding some finite encoding for them, we can generate finite sized connected $(\Delta, \delta)$-biregular graphs with cycles.
+
+\begin{lemma} \label{lem:from_finite_to_infinite}
+    If an LCL problem $\Pi$ is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G$ with cycles, then it is also unsolvable in some infinite $(\Delta, \delta)$-biregular tree $G'$.
+\end{lemma}
+\begin{proof}
+    Let us have a problem $\Pi$ that is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G=(V, E)$ with cycles.
+    We construct an infinite $(\Delta, \delta)$-biregular tree $G'=(V', E')$.
+    Let $v \in V$ be a seed node.
+    We consider all possible non-backtracking walks from node $v$.
+    Each walk is considered as a node of $G'$, and \emph{adjacent} walks are considered as adjacent nodes in $G'$.
+    For example $v-a-b-c-a$ and $v-a-b-c-a-b$ are considered as adjacent walks, therefore they represent adjacent nodes in $G'$.
+    Graph $G$ has cycles, therefore there are infinite walks of infinite length.
+    Walks are non-backtracking, therefore the constructed graph $G'$ must be $(\Delta, \delta)$-biregular.
+    We can see that $G'$ is a covering graph of $G$.
+    Using Lemma \ref{lem:lcl_unsolvability:from_multiple_to_lift}, we deduct that the problem $\Pi$ must also be unsolvable in $G'$.
+\end{proof}
+
+%With Lemma \ref{lem:from_finite_to_infinite}, we can focus on finding finite connected $(\Delta, \delta)$-biregular graphs with cycles.
+
+Now with Lemmas \ref{lem:lcl_unsolvability:from_multiple_to_simple} and \ref{lem:from_finite_to_infinite}, the output graphs from our algorithm imply the unsolvability in infinite $(\Delta, \delta)$-biregular trees.
+
+\todo{How does this reflect to networks? The result is for graphs? Maybe refer to the Corollary \ref{lem:problem_unsolvability_in_graphs} and deduce unsolvability in networks. Actually, in the prior section "multi to simple", we have already networks. Take it into account.}
+
 
 \subsection{From PN to LOCAL} \label{sec:algorithm:from_pn_to_local}
 
 We begin by introducing the main theorem of this thesis:
+\todo{
+    Is it still the main theorem? It doesn't seem so.
+    Maybe I should still leave it as it is as it would save me some time in the end.
+    Changes take more time.
+}
 
 \begin{theorem} \label{thm:lcl_unsolvability}
     If an LCL problem is unsolvable in the PN model, then the problem is also not solvable in constant time in the LOCAL model.
 \end{theorem}
 
 \begin{lemma} \label{lem:lcl_unsolvability:5}
-    If a problem is not solvable in simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
+    If a problem is not solvable in infinite $(\Delta, \delta)$-biregular simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
     %TODO Make sure that the LOCAL model is explained under section 2. background.
     %TODO Make sure that the solving complexities (($\mathcal{O}(1)$) time) are explained under section 2. background.
 \end{lemma}
