@@ -25,9 +25,9 @@
 
 
 
-In this section, we will introduce the basic idea of an essential algorithm that is used in our implementation (discussed in section \ref{sec:implementation}).
+In this section, we will introduce the basic idea of an essential algorithm that we use in our implementation (discussed in section \ref{sec:implementation}).
 The purpose of the algorithm is to find a proof that a given LCL problem $\Pi$ is impossible to solve in the PN model.
-The result from the algorithm is a multigraph, in case it finds the problem unsolvable.
+In case the algorithm detects the problem unsolvable, it outputs a multigraph as a result.
 We need to prove that this multigraph is enough to show that the problem is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
 The proof is split into multiple parts under this section.
 %Here we specifically allow PN networks to have multiple connections.
@@ -401,6 +401,16 @@ We begin by introducing the main theorem of this thesis:
 Now we prove Theorem \ref{thm:lcl_unsolvability}:
 \begin{proof}
     \todo{Complete this proof} %TODO Complete this proof
+
+    Let us have an LCL problem $\Pi$ and a PN network $N$.
+    Let us assume that the underlying graph of $N$ is infinite ($\Delta, \delta$)-biregular tree $G$, where problem $\Pi$ is not solvable.
+
+    Theorem 3.3. from the paper \ref{DBLP:journals/siamcomp/NaorS95} shows that if there is a constant... \todo{}.
+
+    \cite{DBLP:journals/siamcomp/NaorS95} "uses Ramsey theory arguments to prove that $\mathcal{O}(1)$-time LOCAL algorithms can be turned into ``order invariant'' $\mathcal{O}(1)$-time algorithms."
+
+    This \cite{DBLP:journals/dc/GoosHS17} shows that ``Order invariant'' in trees are not stronger than PN algorithms in trees (Lemma 4) (Proof in Appendix A.2). PO is ``Port numbering + orientation'' which is very close to PN in biregular trees. Passive nodes have port numbering, therefore they can give an orientation of the edges.
+
 \end{proof}
 
 

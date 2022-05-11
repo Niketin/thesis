@@ -3,46 +3,48 @@
 \section{Prior work} \label{sec:prior_work}
 %In this section, we discuss the related studies that have been released prior to this work.
 %\todo{\(\leftarrow\) is this sentence needed?}
-In computer science, we are often interested in finding the best possible algorithm for some computational problem.
-First, in Section~\ref{sec:prior_work:automation_of_proving}, we generally discuss the \emph{automation of finding} information about the best possible algorithm, and we briefly discuss what has been previously done related to the subject, in the field of computer science.
+%In computer science, we are often interested in finding the best possible algorithm for some computational problem.
+In Section~\ref{sec:prior_work:automation_of_proving}, we generally discuss the \emph{automation of finding} information about the best possible algorithm for a problem, and we briefly discuss what has been previously done on this topic in general.
 In Section~\ref{sec:prior_work:automation_of_proving_in_local_model} we narrow our focus on the subject to the field of distributed computing.
-In addition, we will discuss relevant automated tools that have been developed prior this work and the complexity classes that are relevant in the LOCAL model.
+In addition, we also discuss relevant automated tools that have been developed prior to this work and the complexity classes that are relevant in the LOCAL model.
 
 \subsection{Automation of proving} \label{sec:prior_work:automation_of_proving} %Algorithm synthetization
 %\todo{Maybe start talking more generally, without mentioning anything about LOCAL or LCL, and explain that in computer science, we are looking for }
-Given that we have an interesting computational problem, our ultimate end goal is to find the best possible (i.e. optimal) algorithm for the computational problem.
-We would like to learn something new about the computability of the problem in terms of computational complexity, in order to narrow the search for the best algorithm.
-There are usually two desirable results we would want to discover.
+Given any computational problem, we want to find the best possible (i.e. optimal) algorithm for the problem.
+We like to learn something new about the computability of the problem in terms of computational complexity, in order to narrow the search for the best algorithm.
+There are usually two things that we would want to discover about a problem.
 \begin{itemize}
     \item
-    The first desirable result is an efficient algorithm that solves the computational problem.
-    The existence of such algorithm would show that the problem is solvable with \emph{at least} at the efficiency of the algorithm.
+    An efficient algorithm that solves the problem.
+    The existence of such algorithm would immediately give us an upper bound on the complexity of the problem.
     \item
-    The second desirable result would be the information that such efficient algorithm does not exist at all.
-    If there are provably no algorithms with such efficiency, then possible algorithms have to be \emph{less} efficient.
+    An efficient algorithm does not exist at all.
+    Then we want to obtain a proof of nonexistence.
+    This would give us a lower bound on the complexity of the problem.
 \end{itemize}
-We say that the former results, showing existence, an upper bound, or possibility, are \emph{positive} results.
-Similarly, the latter results, showing nonexistence, a lower bound, or impossibility, are \emph{negative} results.
+Results, showing existence, an upper bound, or possibility, are called \emph{positive} results.
+Similarly, the results, showing nonexistence, a lower bound, or impossibility, are called \emph{negative} results.
 In our work, the objective is to find negative results, but we would also like to briefly discuss finding positive results as it is the other side of discovering new information about the computability of computational problems.
 
-Traditionally, positive and negative results for computational problems have been found using the pen-and-paper method.
+Traditionally, positive and negative results for computational problems are found using the pen-and-paper method.
 For example, Linial\ \cite{DBLP:conf/focs/Linial87} showed in 1987 that there is a deterministic \(\mathcal{O}(\log^* n)\) algorithm for \(\mathcal{O}(\Delta^2)\)-coloring.
-In a more recent paper from 2010, Barenboim and Elkin\ \cite{DBLP:conf/podc/BarenboimE10} showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring, which is substantially better in terms of the quantity of colors, in comparison to the former paper \cite{DBLP:conf/focs/Linial87} from Linial.
+In a more recent paper from 2010, Barenboim and Elkin\ \cite{DBLP:conf/podc/BarenboimE10} showed that there is a deterministic \emph{polylogarithmic} time algorithm for \(\Delta^{1 + o(1)}\)-coloring, which is substantially better in terms of the number of colors, in comparison to the former one \cite{DBLP:conf/focs/Linial87} from Linial.
 
 A more recent approach to finding positive or negative results is the \emph{automation} of the whole process.
 One could automate the finding of positive or negative results by utilizing massive computational power of modern computers.
 The case of negative results is exactly one of our work's objectives, and we will discuss the automation of finding these results in the distributed computing in Section \ref{sec:prior_work:automation_of_proving_in_local_model}.
-But first, what about the automation of finding positive results?
+But first, let us discuss the automation of finding positive results.
 
-The automation of finding positive results involves creating a tool that takes a specification of desired behavior as an input, and outputs an algorithm that matches the specification, and this method is called \emph{algorithm synthesis} \cite{DBLP:phd/basesearch/Rybicki16}.
-For example, in the work of Dramnesc and Jebelean from 2015, the authors manage to automatically synthesize various sorting algorithms including selection sort, insertion sort, quick sort, merge sort and a novel sorting algorithm they call \emph{unbalanced merge sort} \cite{DBLP:journals/jsc/DramnescJ15}.
-As another example, in the work of Gulwani et~al. from 2011, the authors present a tool that can efficiently synthesize highly nontrivial 10--20 line loop-free bit vector programs \cite{DBLP:conf/pldi/GulwaniJTV11}.
+The automation of finding positive results involves creating a tool that takes a specification of desired behavior of an algorithm as an input, and outputs an algorithm that matches the specification.
+This method is called \emph{algorithm synthesis}~\cite{DBLP:phd/basesearch/Rybicki16}.
+For example, Dramnesc and Jebelean\ \cite{DBLP:journals/jsc/DramnescJ15} manage to automatically synthesize various sorting algorithms including selection sort, insertion sort, quick sort, merge sort and a novel sorting algorithm they call \emph{unbalanced merge sort}.
+In another work, Gulwani et~al.\ \cite{DBLP:conf/pldi/GulwaniJTV11} present a tool that can efficiently synthesize highly nontrivial 10--20 line loop-free bit vector programs.
 
 Propositional satisfiability solvers (SAT solvers) have been used in various synthesis problems to find positive results.
-SAT solvers are also used in our implementation to find negative results, and we will talk more about them in Section \ref{} (\todo{Add reference to section where we explain SAT}), but nevertheless we will next show an examples of a previous research.
 SAT solvers have been used especially in synthesis of circuits, where one goal is to find optimal Boolean circuits in terms of size.
-As the example, in the paper from Järvisalo et al.\ \cite{DBLP:conf/sat/JarvisaloKKK12}, the authors present a method to encode an ensemble computation problem as a propositional formula.
-The encoding is then fed to a SAT solver to gain either a working circuit design for the ensemble computation problem or a proof of nonexistence.
+For example, Järvisalo et~al.\ \cite{DBLP:conf/sat/JarvisaloKKK12} present a method to encode an ensemble computation problem as a propositional formula.
+The encoding is then fed to a SAT solver to obtain either a working circuit design for the ensemble computation problem or a proof of nonexistence.
+We use SAT solvers in our implementation to find negative results, and we will talk more about them in Section \ref{} (\todo{Add reference to section where we explain SAT})
 
 %\todo{algorithm synthesis is by no means easy, it is often undecidable or bla bla bla, check the väikkäri}
 %"given a specification of the desired behavior, let the computer find an algorithm that matches the specification"\cite{DBLP:phd/basesearch/Rybicki16}
@@ -52,17 +54,16 @@ The encoding is then fed to a SAT solver to gain either a working circuit design
 
 A tool that automates the finding of positive or negative results in distributed computing is called \emph{classifier}.
 A classifier can automatically determine a lower bound or an upper bound for an LCL problem.
-Currently, we are aware of only small number of different classifiers, and we will list them below in Table \ref{tbl:classifiers}.
-These classifiers work in the LOCAL model, meaning that the results outputted by the classifiers are time complexities in the LOCAL model.
+Currently, we are aware of only small number of classifiers in the LOCAL model, and we list them below in Table \ref{tbl:classifiers}.
 
 Generally, there are infinitely many complexity classes because there are infinitely many functions.
-However, in the LOCAL model, infinitely many of them turns out to be redundant.
+However, in the LOCAL model, many of them turns out to be redundant.
 \emph{Gap theorems} show that there are ranges of complexities where there exists no optimal algorithms for LCL problems.
-For example, Balliu et~al.~\cite{DBLP:conf/podc/BalliuHOS19} showed that the deterministic complexity of an optimal algorithm is either at most \(\mathcal{O}(1)\) or requires at least \(\Omega(\log^* n)\) rounds.
-As another example, Chang et~al.~\cite{DBLP:conf/focs/ChangKP16} showed that there is a gap between \(\mathcal{O}(\log^* n)\) and \(\Omega(\log n)\).
-Currently, the main complexities we care about, in the deterministic LOCAL model, are the following:
+For example, Balliu et~al.~\cite{DBLP:conf/podc/BalliuHOS19} showed that the deterministic complexity of an optimal algorithm in the LOCAL model is either at most \(\mathcal{O}(1)\) or requires at least \(\Omega(\log^* n)\) rounds.
+In another work, Chang et~al.~\cite{DBLP:conf/focs/ChangKP16} showed that there is a gap between \(\mathcal{O}(\log^* n)\) and \(\Omega(\log n)\).
+Currently, the complexity classes we care about, in the deterministic LOCAL model, are the following:
 \[\mathcal{O}(1), \Theta(\log^* n), \Theta(\log n), n^{\Theta(1)}.\]
-This is the reason why the output complexity for an LCL problem, from a classifier, is typically one of these 4 complexities.
+%This is the reason why the output complexity for an LCL problem, from a classifier, is typically one of these 4 complexities.
 
 \begin{table}[H]
 \centering
@@ -105,8 +106,8 @@ This is the reason why the output complexity for an LCL problem, from a classifi
 \caption{A list of all classifiers we are aware of prior this work.} \label{tbl:classifiers}
 \end{table}
 
-In Table \ref{tbl:classifiers}, we list for each classifier the graph families they target to, the amount of labels they support and the completeness.
-We define classifier as \emph{complete} if it can output a tight complexity class, from the previous list of 4 main complexities, for any input problem in the problem class it targets to.
+In Table \ref{tbl:classifiers}, we list for each classifier along with the graph families they target to, the amount of labels they support and the completeness.
+We define a classifier to be \emph{complete} if it can output a tight complexity class, from the previous list of 4 main complexities, for any input problem in the problem class it targets to.
 There are multiple reasons for a classifier to be \emph{incomplete}, including:
 \begin{itemize}
     \item it only outputs either upper or lower bound,
