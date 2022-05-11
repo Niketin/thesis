@@ -3,40 +3,40 @@
 \section{Research questions} \label{sec:research_question}
 
 There are LCL problems that cannot be solved in the PN model.
-More specifically, there exist LCL problems such that no PN algorithm can solve it in \emph{every} PN network.
-Therefore, if an LCL problem is unsolvable in the PN model, then there exists no valid labeling to the problem for some PN network.
+More specifically, there exist LCL problems such that no PN algorithm can solve it in every PN network.
 We are interested in detecting the unsolvability of an LCL problem automatically.
 
 \begin{researchquestion} \label{research_question:1}
-Given an LCL problem, how can we automatically detect the unsolvability of the problem in the PN model?
+Can we automatically detect the unsolvability of an LCL problem in the PN model?
 \end{researchquestion}
 
-We answer to Research question \ref{research_question:1} in Section \ref{sec:algorithm}, where we present our algorithm that can automatically detect the unsolvability of an LCL problem in the PN model.
+We answer this question in Section \ref{sec:algorithm}, where we present our algorithm that can automatically detect the unsolvability of an LCL problem in the PN model.
 
-In Section \ref{sec:algorithm}, we present Theorem \ref{thm:lcl_unsolvability}, which says that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
-We want to know if we can prove it.
+%In Section \ref{sec:algorithm}, we present Theorem \ref{thm:lcl_unsolvability}, which says that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model.
+%We want to know if we can prove it.
+We also explore whether showing unsolvability in the PN model has some interesting implication in the LOCAL model.
 
 \begin{researchquestion} \label{research_question:2}
 Can we prove that an unsolvability of an LCL problem in the PN model implies that the problem is also not solvable in constant time in the LOCAL model?
 \end{researchquestion}
 
 As our answer to Research question \ref{research_question:2}, we prove Theorem \ref{thm:lcl_unsolvability} in Section \ref{sec:algorithm:from_pn_to_local}.
-The proof relies on multiple lemmas that we introduce in Sections \ref{sec:algorithm:from_multiple_to_simple} and \ref{sec:algorithm:from_pn_to_local}.
+The proof relies on multiple lemmas that we introduce in Sections \ref{sec:algorithm:from_multiple_to_simple}, \ref{sec:algorithm:from_finite_to_infinite}, and \ref{sec:algorithm:from_pn_to_local}.
+With the theorem, all results from the algorithm can be derived to non-constant lower bounds in the LOCAL model.
 
-We have implemented the algorithm from Section \ref{sec:algorithm} that we give as an answer to Research question \ref{research_question:1}, and we introduce details of the implementation in Section \ref{sec:implementation}.
-With Theorem \ref{thm:lcl_unsolvability}, the results from the tool can be derived to non-constant lower bounds in the LOCAL model.
+We have implemented the algorithm in Section~\ref{sec:algorithm} that detects the unsolvability of an LCL problem in the PN model, and we introduce details of the implementation in Section~\ref{sec:implementation}.
 There also exists a database of upper and lower bounds of LCL problems \cite{Tereshchenko2021}, and these bounds have been computed using various tools called \emph{classifiers}.
-Our implementation is one kind of classifier, and we want to know if it can find any new lower bounds i.e. lower bounds that are higher than what is currently known about these problems.
+Our implementation is one kind of classifier, and we want to know if it can find any new lower bounds i.e. lower bounds that are better than the current known bounds for these problems.
 
 \begin{researchquestion} \label{research_question:3}
-Using our implementation, for which LCL problems can we determine new lower bounds in the LOCAL model?
+Can we automate the detection of a new lower bound for an LCL problem in the LOCAL model?
 \end{researchquestion}
 
-The algorithm can be run with a single problem, but we also want to target classes of problems, where the quantity of problems can be large.
+The algorithm given in Section \ref{sec:algorithm} can be run with a single problem, but ideally we want an algorithm that works for large classes of problems.
 Thus, we want our implementation to be reasonable fast in order it to have use in practice.
 
 \begin{researchquestion} \label{research_question:4}
-Can we make the implementation fast enough, so that we can classify interesting problem classes in practice?
+Can we make the implementation fast enough to classify large classes of problems?
 \end{researchquestion}
 
 As an answer to Research questions \ref{research_question:3} and \ref{research_question:4}, we present the results from our implementation in Section \ref{sec:results}.
