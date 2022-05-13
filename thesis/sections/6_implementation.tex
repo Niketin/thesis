@@ -3,7 +3,7 @@
 %\section{Automatically proving lower bounds for LCL problems} \label{sec:implementation}
 \section{Implementation} \label{sec:implementation}
 In this section we will cover all the important topics that are used in the actual implementation of the Algorithm \ref{alg:counterexample_finder} from Section \ref{sec:algorithm}.
-This includes the previously declared functions $\textsc{IsUnsolvable}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, d_a, d_p)$, which were given without defining how their algorithms work.
+This includes the previously declared functions $\textsc{IsUnsolvable}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, d_a, d_p)$, which were given as black boxes.
 The implementation itself is a computer program, that attempts to automatically find a proof of unsolvability for a given LCL problem in PN model.
 We keep the explanations independent of any programming language, so that the reader can understand these upcoming topics without needing such knowledge.
 % (see section \ref{sec:port-numbering_model} for more information about PN model).
@@ -43,7 +43,7 @@ We repeat the routine for each multigraph, as shown in the Algorithm \ref{alg:co
 
 %When we assume that an LCL problem $\Pi$ is solvable in PN, we mean that there exists a deterministic distributed algorithm $A$ in PN model, that finds a solution for all multigraphs i.e. algorithm $A$ works in every multigraph.
 %Every simple graph is also a multigraph, thus multigraphs are more relaxed in terms of definition.
-%Allowing parallel edges potentially gives us counter examples with smaller graph sizes when we use the increasing strategy i.e. our algorithm might terminate succesfully much earlier with the desired result and graphs do not necessarily become as complex as they would be with only simple graphs.
+%Allowing parallel edges potentially gives us counterexamples with smaller graph sizes when we use the increasing strategy i.e. our algorithm might terminate succesfully much earlier with the desired result and graphs do not necessarily become as complex as they would be with only simple graphs.
 %%TODO where to discuss about solutions that have been found only with multigraphs? Have we found any solutions with only simple graphs?
 %Smaller graphs mean less complexity and less performance required but as there are also more graphs to iterate, it is not so simple to justify allowing parallel edges only with this argument.
 %The main argument is that allowing parallel edges gives us more opportunities to find counterexamples.
