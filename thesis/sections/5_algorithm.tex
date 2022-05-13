@@ -25,38 +25,36 @@
 
 
 
-In this section, we will introduce the basic idea of an essential algorithm that we use in our implementation (discussed in section \ref{sec:implementation}).
-The purpose of the algorithm is to find a proof that a given LCL problem $\Pi$ is impossible to solve in the PN model.
-In case the algorithm detects the problem unsolvable, it outputs a multigraph as a result.
-We need to prove that this multigraph is enough to show that the problem is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
-The proof is split into multiple parts under this section.
-%Here we specifically allow PN networks to have multiple connections.
-In Section \ref{sec:algorithm:from_multiple_to_simple} we show that the unsolvability of a problem $\Pi$ in PN networks (with multiple connections) implies that it is also impossible to solve $\Pi$ in \emph{simple} PN networks (without multiple connections).
-Later in Section \ref{sec:algorithm:from_finite_to_infinite} we show that unsolvability of an LCL problem in finite networks implies the unsolvability of the problem in infinite trees.
-Finally, in Section \ref{sec:algorithm:from_pn_to_local} we show that the unsolvability of $\Pi$ in PN networks implies that $\Pi$ is not solvable in constant time ($\mathcal{O}(1)$) in the LOCAL model.
+In this section, we will introduce the basic idea of an essential algorithm that finds a proof that an LCL problem is impossible to solve in the PN model.
+In case the algorithm detects the problem as unsolvable, it outputs a multigraph as a result.
+We need to prove that this multigraph is enough to show that the problem is not solvable in constant time in the LOCAL model.
+
+The proof is split into multiple parts.
+In Section \ref{sec:algorithm:from_multiple_to_simple} we show that the unsolvability of a problem in finite PN networks with multiple connections implies the unsolvability of the problem in finite simple PN networks.
+Later in Section \ref{sec:algorithm:from_finite_to_infinite}, we show that the unsolvability of the problem in finite PN networks implies the unsolvability of the problem in infinite tree PN networks.
+Finally, in Section \ref{sec:algorithm:from_pn_to_local}, we show that the unsolvability of the problem in infinite tree PN networks implies the problem is not solvable in constant time in the LOCAL model.
 
 First, we start with defining the meaning of solvability of an LCL problem.
-%TODO These definitions and theorems might have a better place under section 2 background.
 \begin{definition} \label{def:lcl_solvability}
     An LCL problem $\Pi$ is solvable in PN model, if and only if there exists a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
 \end{definition}
 
 We can define an alternative version of the Definition \ref{def:lcl_solvability} using contraposition.
-\begin{definition} \label{def:lcl_solvability:contrapositive}
+\begin{corollary} \label{cor:lcl_solvability:contrapositive}
 An LCL problem $\Pi$ is not solvable in PN model, if and only if there does not exist a PN algorithm $A$ that finds a solution for $\Pi$ in all PN networks.
-\end{definition}
+\end{corollary}
 
-The Definitions \ref{def:lcl_solvability} and \ref{def:lcl_solvability:contrapositive} are equivalent. The latter definition might be more difficult to understand because of the contraposition, but we find it necessary to be shown as we find more fitting to discuss unsolvability rather than solvability.
+Definition \ref{def:lcl_solvability} and Corollary \ref{cor:lcl_solvability:contrapositive} are equivalent. The corollary might be more difficult to understand because of the contraposition, but we find it necessary to be shown as we find more fitting to discuss unsolvability rather than solvability.
 
 %In the Table 2, we show an arbitrary LCL problem Pi that is unsolvable.
-% Using Definition \ref{def:lcl_solvability:contrapositive}, we can see that for each network $A_i, 1 \leq i \leg m$, there exists some network $N_j, 1 \leg j \leg n$ where the algorithm cannot find a solution, denoted by value ``N''.
+% Using Corollary \ref{cor:lcl_solvability:contrapositive}, we can see that for each network $A_i, 1 \leq i \leg m$, there exists some network $N_j, 1 \leg j \leg n$ where the algorithm cannot find a solution, denoted by value ``N''.
 
 We have illustrated two examples of unsolvable LCL problems in Tables \ref{tbl:unsolvable_lcl:1} and \ref{tbl:unsolvable_lcl:2}, where the values ``Y'' (Yes) and ``N'' (No) answer to the question: \emph{can the algorithm in this row solve the problem in the network of this column?}
 Value of ``Y/N'' indicates that the value does not matter for the purpose of the example.
 In both examples, there are only finite number of networks and algorithms for the sake of simplicity.
 In Table \ref{tbl:unsolvable_lcl:1}, the problem $\Pi$ is unsolvable, because there is at least one network for each algorithm, where the algorithm fails to solve the problem.
-In Table \ref{tbl:unsolvable_lcl:2}, we show an example that is a special case of Definition \ref{def:lcl_solvability:contrapositive}.
-The problem $\Pi'$ is also unsolvable, but this time \emph{no algorithm} can solve it in network $N'_{n'}$.
+In Table \ref{tbl:unsolvable_lcl:2}, we show an example that is a special case of Corollary \ref{cor:lcl_solvability:contrapositive}.
+The problem $\Pi'$ is also unsolvable, but this time no algorithm can solve it in network $N'_{n'}$.
 
 \begin{table}[H]
     \parbox{.45\linewidth}{
@@ -100,43 +98,40 @@ The problem $\Pi'$ is also unsolvable, but this time \emph{no algorithm} can sol
 
 Not every unsolvable LCL problem necessarily fall within the case shown in Table~\ref{tbl:unsolvable_lcl:2}.
 Nevertheless, we are interested in it, because it seems more feasible to find a single network where all algorithms fail, in comparison to finding a network for each algorithm separately.
-The special case is written as the following lemma:
+The special case is written as follows.
 
 \begin{lemma} \label{lem:lcl_unsolvability}
-    An LCL problem $\Pi$ is not solvable in PN model, if there exists a PN network $N$ such that no PN algorithm $A$ can solve the $\Pi$ in $N$.
+    An LCL problem $\Pi$ is not solvable in PN model, if there exists a PN network $N$ such that no PN algorithm $A$ can solve the problem $\Pi$ in network $N$.
 \end{lemma}
 \begin{proof}
     Let $\Pi$ be an LCL problem.
     Let $N$ be a PN network such that no PN algorithm $A$ can solve $\Pi$ in $N$.
     Therefore, no PN algorithm $A$ can find a solution to $\Pi$ in all PN networks.
-    According to Definition \ref{def:lcl_solvability:contrapositive}, the problem $\Pi$ is unsolvable.
+    According to Corollary \ref{cor:lcl_solvability:contrapositive}, the problem $\Pi$ is unsolvable.
 \end{proof}
 
 As the Lemma \ref{lem:lcl_unsolvability} shows us, to show that a problem $\Pi$ is unsolvable, it is enough to find a counterexample, a PN network $N$ in which the problem $\Pi$ cannot be solved.
 To show that, it is enough to find an underlying graph $G$ of network $N$ in which the problem $\Pi$ cannot be solved.
 
-\begin{lemma} \label{lem:problem_solvability_in_graphs}
-    If a problem $\Pi$ is solvable in network $N$, then $\Pi$ also has a solution in its underlying graph $G$.
+\begin{lemma} \label{lem:problem_unsolvability_in_graphs}
+    If a problem $\Pi$ is not solvable in graph $G$, then $\Pi$ is also not solvable in any PN network $N$ that has $G$ as its underlying graph.
 \end{lemma}
 \begin{proof}
-    Network $N$ is solvable, therefore it has a valid labeling.
-    By the definition of underlying graph, $G$ has the same structure as network $N$, therefore it can be labeled exactly the same way as network $N$.
-\end{proof}
-\begin{corollary} \label{lem:problem_unsolvability_in_graphs}
-    If a problem $\Pi$ is not solvable in graph $G$, then $\Pi$ is also not solvable in any PN network $N$ that has $G$ as its underlying graph.
-\end{corollary}
-\begin{proof}
-This is a contraposition of Lemma \ref{lem:problem_solvability_in_graphs}.
+    We prove by showing a contradiction.
+    Let us assume the opposite of the lemma.
+    That is, problem $\Pi$ is not solvable in graph $G$, and $\Pi$ is solvable in some PN network $N$ that has $G$ as its underlying graph.
+    This means that network $N$ has a valid labeling, thus its underlying graph $G$ has also a valid labeling.
+    This is a contradiction, therefore the original implication must be true.
 \end{proof}
 
-With the fact from Corollary \ref{lem:problem_unsolvability_in_graphs}, we can come up with an algorithm that automatically tries to find a counterexample graph:
+With the fact from Lemma \ref{lem:problem_unsolvability_in_graphs}, we create an algorithm that automatically tries to find a counterexample graph.
+The algorithm is written as follows.
 
 \begin{algorithm}[H]
     \caption{Counterexample graph finder}
     \label{alg:counterexample_finder}
     \begin{algorithmic}[1] % The number tells where the line numbering should start
         \Require $1 \leq n_{low} \leq n_{high}$
-        %\Require $\Pi$ is an LCL problem
         \Function{Find}{$n_{low},n_{high}, \Pi$} \Comment{Graph bounds $n_{low}$ and $n_{high}$, LCL problem $\Pi$} \label{alg:counterexample_finder:n_loop}
             \State $\Delta \gets \textsc{ActiveDegree}(\Pi)$ \label{alg:counterexample_finder:d_a}
             \State $\delta \gets \textsc{PassiveDegree}(\Pi)$ \label{alg:counterexample_finder:d_p}
@@ -157,15 +152,18 @@ The Algorithm \ref{alg:counterexample_finder} is designed to find the smallest c
 It starts from graphs with $n_{low}$ vertices and goes up to graphs with $n_{high}$ vertices.
 We define $\Delta$ and $\delta$ to be the active and passive degree of the problem $\Pi$ respectively (rows \ref{alg:counterexample_finder:d_a} and \ref{alg:counterexample_finder:d_p}).
 The variable for the current vertex count is called $n$ (row \ref{alg:counterexample_finder:n}).
-For each graph with $n$ vertices, we generate all possible $(\Delta, \delta)$-biregular multigraphs with $\textsc{GenerateGraphs}(n, \Delta, \delta)$, and save the graphs into variable $G_n$ (row \ref{alg:counterexample_finder:Gn}).
-The reason for generating only these types of graphs comes from the LCL formalism from Section \ref{sec:lcl_problems:biregular}.
-Now, for each graph $g \in G_n$ (row \ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ has a solution using the function $\textsc{SolutionExists}(\Pi, g)$ (row \ref{alg:counterexample_finder:solution_exists}).
-If a solution does not exist, we return the graph as a counterexample (row \ref{alg:counterexample_finder:return_g}).
-In the case there are no counterexamples in graphs with $n_{low}$ to $n_{high}$ vertices, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
+For each graph with $n$ vertices, we generate all possible $(\Delta, \delta)$-biregular multigraphs with $\textsc{GenerateGraphs}(n, \Delta, \delta)$, and save the multigraphs into variable $G_n$ (row \ref{alg:counterexample_finder:Gn}).
+The reason for generating only these types of multigraphs comes from the LCL formalism from Section \ref{sec:lcl_problems:biregular}.
+Now, for each multigraph $g \in G_n$ (row \ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ has a solution using the function $\textsc{SolutionExists}(\Pi, g)$ (row \ref{alg:counterexample_finder:solution_exists}).
+If a solution does not exist, we return the multigraph as a counterexample (row \ref{alg:counterexample_finder:return_g}).
+In the case there are no counterexamples in multigraphs between $n_{low}$ and $n_{high}$ vertices, the algorithm returns nothing (row \ref{alg:counterexample_finder:return_nothing}).
 
-Up to this moment, we have not discussed how the function \[ \textsc{GenerateGraphs}(n, \Delta, \delta) \] from row \ref{alg:counterexample_finder:Gn} generates the graphs, nor have we discussed how the function \[ \textsc{SolutionExists}(\Pi, g) \] from row \ref{alg:counterexample_finder:solution_exists} determines the existence of a solution.
+Up to this moment, we have not discussed how the function \[ \textsc{GenerateGraphs}(n, \Delta, \delta) \] from row \ref{alg:counterexample_finder:Gn} actually generates the multigraphs, nor have we discussed how the function \[ \textsc{SolutionExists}(\Pi, g) \] from row \ref{alg:counterexample_finder:solution_exists} determines the existence of a solution.
 These functions are implementation specific and in this section we assume that they exist as black boxes.
 Later on Section \ref{sec:implementation} we introduce our implementations of these functions.
+However, we can discuss why the algorithm generates multigraphs instead of simple graphs.
+The algorithm generates multigraphs, because they are less restrictive than simple graphs.
+Thus, we generate more graphs when multiple edges are allowed, which implies more possibilities to find a counterexample.
 %First we would like to discuss about the $\textsc{GenerateGraphs}(n)$.
 %As we know from Section \ref{}, %TODO refer to LCL section and make sure that it defines the LCL problems we are using here (LCL for (b,a)-biregular graphs).
 %the LCL problems used in this thesis are defined for $(b,a)$-biregular graphs.
@@ -174,9 +172,10 @@ Later on Section \ref{sec:implementation} we introduce our implementations of th
 As we said before, we use the LCL formalism from Section \ref{sec:lcl_problems:biregular}.
 The formalism uses infinite $(\Delta, \delta)$-biregular trees, but the algorithm generates finite $(\Delta, \delta)$-biregular multigraphs.
 In Section~\ref{sec:algorithm:from_multiple_to_simple}, we show that it is enough to find $(\Delta, \delta)$-biregular network with multiple connections, where the problem is unsolvable, because it implies that it is also unsolvable in some simple $(\Delta, \delta)$-biregular network.
-This can be derived to work with graphs with Corollary~\ref{lem:problem_unsolvability_in_graphs}.
+This can be derived to work with graphs with Lemma~\ref{lem:problem_unsolvability_in_graphs}.
 In Section~\ref{sec:algorithm:from_finite_to_infinite}, we show that if an LCL problem is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G$ with cycles, then it is also unsolvable in some infinite $(\Delta, \delta)$-biregular tree $G'$.
 Finite $(\Delta, \delta)$-biregular graphs are always with cycles, when both $\Delta$ and $\delta$ are greater than 1, and this is in practice always the case, because we are not interested in biregular graphs with $\Delta=1$ or $\delta=1$ as they are trivial.
+
 
 %TODO talk about graphs, why they are actually (b, a)-biregular multigraphs. Maybe this is explained by the fact that our LCL problems are defined for (b, a)-biregular.
 %TODO talk about networks and graphs. In the above text they are refered as if they were the same thing.
@@ -196,7 +195,7 @@ Finite $(\Delta, \delta)$-biregular graphs are always with cycles, when both $\D
 %        \node (2) [right = of 1] {Lemma \ref{lem:lcl_unsolvability:from_klift_to_simple}};
 %        \node (3) [below = of $(1)!0.5!(2)$] {Lemma \ref{lem:lcl_unsolvability:from_multiple_to_simple}};
 %        \node (4) [below = of 3] {Lemma \ref{lem:lcl_unsolvability:5}};
-%        \node (5) [below = of 4] {Theorem \ref{thm:lcl_unsolvability}};
+%        \node (5) [below = of 4] {Theorem \ref{thm:algorithm:from_pn_to_local:lcl_unsolvability}};
 %        %\node (4) [right = of mat2-2-1] {$\deg_G(4)=2$};
 %        %\node (5) [right = of mat2-3-1] {$\deg_G(5)=2$};
 %        \draw[<-] (1) edge (3);
@@ -212,7 +211,7 @@ Finite $(\Delta, \delta)$-biregular graphs are always with cycles, when both $\D
 
 In this section we show that if an LCL problem is not solvable in PN networks with multiple connections, then the problem is also not solvable in simple PN networks.
 %We try to first prove a couple of related lemmas and at the end utilize the shown lemmas to show the theorem to be true.
-\todo{Explain or show a figure of dependency of these lemmas???}
+%\todo{Explain or show a figure of dependency of these lemmas???}
 
 % Pi is unsolvable in multiple connection PN network N -> Pi is unsolvable in lift of N
 \begin{lemma} \label{lem:lcl_unsolvability:from_multiple_to_lift}
@@ -222,7 +221,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     Let problem $\Pi$ have no solution in some PN network $N$.
     Then any algorithm $A$ produces a result that is invalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
     Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$.
-    Theorem 7.1. from the textbook \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$
+    Theorem 7.1 from the textbook \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$
     Hence, if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
 \end{proof}
 
@@ -233,8 +232,8 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \begin{proof}
     Let $N_2=(V_2, P_2, p_2)$ be a PN network with multiple connections.
     Let $\operatorname{mul}(u, v)$ be the number of connections between any nodes $u, v \in V_2$.
-    The highest count of multiple connections is $k=\max (\{ m(u, v) \mid u, v \in V_2\} )$.
-    \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
+    The highest count of multiple connections between two nodes is $k=\max (\{ m(u, v) \mid u, v \in V_2\} )$.
+    %\footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
     Let $\operatorname{M}(x+hk) = x$ for all $x = 1, ..., k$ and $h\in \mathbb{N}$, for example $\operatorname{M}(1 + hk) = 1$ and $\operatorname{M}(k + hk) = k$.
 
     Let there be another network $N_1=(V_1, P_1, p_1)$ such that:
@@ -242,7 +241,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
         \item For each $v \in V_2$, there are $k$ clones in $V_1$, namely the nodes $v_1, v_2, ..., v_k \in V_1$.
         Thus, the sizes $|V_1|$ and $k|V_2|$ are equal.
         %$V_1 = \{v_x: \forall v \in V_2, \forall x \in \{1, 2, ..., k\}\}$
-        \item For each port $(v, i) \in P_2$, we have each port $(v_x, i) \in P_1$ where $x=1, 2, ..., k$.
+        \item For each port $(v, i) \in P_2$, we have ports $(v_x, i) \in P_1$ where $x=1, 2, ..., k$.
         %% TODO remove these comments when this has been reviewed.
         %\item For each non-multiple connection $p_2((v, i)) = (u, j)$, we have connections $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$.
         %\item For each multiple connections $p_2((v, i_a)) = (u, j_a)$ where $a = 1, 2, ..., \operatorname{mul}(u, v)$, we have $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$.
@@ -277,7 +276,7 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     Each condition holds, hence the function $\phi$ is a covering map from $V_1$ to $V_2$
     therefore $N_1$ is a $k$-lift of $N_2$.
 
-    We need to show that $N_1$ is a simple PN network i.e. it does not have multiple edges.
+    We need to show that $N_1$ is a simple PN network i.e. it does not have multiple connections.
     %As we know, the non-multiple connections in $N_2$ are preserved in $N_1$ therefore we need to only look at the multiple connections of $N_2$ in more detail.
     There exists connections $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)}))$.
     We see that nodes $u_{\operatorname{M}(x+a-1)}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)})) \leq k$ and
@@ -345,14 +344,16 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \end{lemma}
 \begin{proof}
     Let us assume that an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections.
-    Theorem \ref{lem:lcl_unsolvability:from_klift_to_simple} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
-    Theorem \ref{lem:lcl_unsolvability:from_multiple_to_lift} shows that the problem $\Pi$ is also not solvable in network $N_1$.
+    Lemma \ref{lem:lcl_unsolvability:from_klift_to_simple} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
+    Lemma \ref{lem:lcl_unsolvability:from_multiple_to_lift} shows that the problem $\Pi$ is also not solvable in network $N_1$.
     Therefore, we deduce that the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{proof}
 
 \subsection{From finite to infinite} \label{sec:algorithm:from_finite_to_infinite}
 Our algorithm outputs a finite connected $(\Delta, \delta)$-biregular multigraph with cycles, but in the LCL formalism, graphs are infinite $(\Delta, \delta)$-biregular trees.
-With Lemma \ref{lem:lcl_unsolvability:from_multiple_to_simple}, we get simple networks from multiple connections, but we also need to show how unsolvability in finite graphs with cycles imply unsolvability in infinite trees.
+With Lemma \ref{lem:lcl_unsolvability:from_multiple_to_simple}, we get simple networks from networks with multiple connections, but we also need to show how unsolvability in finite networks with cycles imply unsolvability in infinite tree networks.
+Instead of showing this with networks, we do it with graphs.
+With Lemma \ref{lem:problem_unsolvability_in_graphs}, it immediately applies also to networks.
 %In the LCL formalism, the trees are infinite, so any naive approach of encoding these graphs would not suffice.
 %Instead of generating infinite $(\Delta, \delta)$-biregular trees and finding some finite encoding for them, we can generate finite sized connected $(\Delta, \delta)$-biregular graphs with cycles.
 
@@ -374,53 +375,137 @@ With Lemma \ref{lem:lcl_unsolvability:from_multiple_to_simple}, we get simple ne
 
 %With Lemma \ref{lem:from_finite_to_infinite}, we can focus on finding finite connected $(\Delta, \delta)$-biregular graphs with cycles.
 
-Now with Lemmas \ref{lem:lcl_unsolvability:from_multiple_to_simple} and \ref{lem:from_finite_to_infinite}, the output graphs from our algorithm imply the unsolvability in infinite $(\Delta, \delta)$-biregular trees.
-
-\todo{How does this reflect to networks? The result is for graphs? Maybe refer to the Corollary \ref{lem:problem_unsolvability_in_graphs} and deduce unsolvability in networks. Actually, in the prior section "multi to simple", we have already networks. Take it into account.}
-
+Now with Lemmas \ref{lem:lcl_unsolvability:from_multiple_to_simple}, \ref{lem:problem_unsolvability_in_graphs}, and \ref{lem:from_finite_to_infinite}, the output graphs from our algorithm imply the unsolvability in infinite $(\Delta, \delta)$-biregular tree networks.
 
 \subsection{From PN to LOCAL} \label{sec:algorithm:from_pn_to_local}
 
-We begin by introducing the main theorem of this thesis:
-\todo{
-    Is it still the main theorem? It doesn't seem so.
-    Maybe I should still leave it as it is as it would save me some time in the end.
-    Changes take more time.
-}
-
-\begin{theorem} \label{thm:lcl_unsolvability}
-    If an LCL problem is unsolvable in the PN model, then the problem is also not solvable in constant time in the LOCAL model.
+In this section we show the following theorem:
+\begin{theorem} \label{thm:algorithm:from_pn_to_local:lcl_unsolvability}
+    If an LCL problem is unsolvable in the PN model, then the problem is also unsolvable in constant time in the LOCAL model.
 \end{theorem}
 
-\begin{lemma} \label{lem:lcl_unsolvability:5}
-    If a problem is not solvable in infinite $(\Delta, \delta)$-biregular simple PN networks, then it is not solvable in constant ($\mathcal{O}(1)$) time in the LOCAL model.
-    %TODO Make sure that the LOCAL model is explained under section 2. background.
-    %TODO Make sure that the solving complexities (($\mathcal{O}(1)$) time) are explained under section 2. background.
+To prove Theorem \ref{thm:algorithm:from_pn_to_local:lcl_unsolvability}, we first show the following lemma:
+\begin{lemma} \label{lem:lcl_solvability:constant_local_imply_constant_pn}
+    If an LCL problem is solvable in constant time in the LOCAL model, then it is also solvable in constant time in the PN model.
 \end{lemma}
 
-Now we prove Theorem \ref{thm:lcl_unsolvability}:
+
+We split the proof of Lemma \ref{lem:lcl_solvability:constant_local_imply_constant_pn} into multiple parts as shown in Figure \ref{fig:proof_order:lcl_unsolvability}.
+We need to give a brief introduction to a model called \emph{order-invariant} (OI), which is used in the Figure \ref{fig:proof_order:lcl_unsolvability} and Lemma \ref{lem:algorithm:from_pn_to_local:o1_local_trees_imply_o1_oi_trees}.
+It is similar to the LOCAL and PN model in a sense that it is a message passing model.
+The OI model can be thought as a LOCAL model with a restriction where each node can only compare the identifiers but not access their exact value.
+In the model, the output of an algorithm does not change even if identifiers of nodes are changed as long as their relative order is preserved.
+
+\begin{figure}[H]
+   \centering
+   % https://tex.stackexchange.com/a/499577
+   \begin{tikzpicture}[]
+       \node (1) []             {$\exists\mathcal{O}(1)$ in LOCAL in general graphs};
+       \node (2) [below = of 1] {$\exists\mathcal{O}(1)$ in LOCAL in trees};
+       \node (3) [below = of 2] {$\exists\mathcal{O}(1)$ in OI in trees};%
+       %\node (4) [below = of 3] {$\exists\mathcal{O}(1)$ in PO in trees};
+       \node (4) [below = of 3] {$\exists\mathcal{O}(1)$ in PN in trees};
+       \node (5) [below = of 4] {$\exists\mathcal{O}(1)$ in PN in general graphs};
+       \node (6) [below = of 5] {Solvable in PN in general graphs};
+       \draw[->] (1) -- (2) node [pos=0.5,left,font=\footnotesize] {Lemma \ref{lem:algorithm:from_pn_to_local:o1_local_gen_imply_o1_local_trees}};
+       \draw[->] (2) -- (3) node [pos=0.5,left,font=\footnotesize] {Lemma \ref{lem:algorithm:from_pn_to_local:o1_local_trees_imply_o1_oi_trees}};
+       \draw[->] (3) -- (4) node [pos=0.5,left,font=\footnotesize] {Lemma \ref{lem:algorithm:from_pn_to_local:o1_oi_trees_imply_o1_pn_trees}};%
+       %\draw[->] (4) -- (5) node [pos=0.5,left,font=\footnotesize] {Lemma \ref{lem:algorithm:from_pn_to_local:o1_po_trees_imply_o1_pn_trees}};
+       \draw[->] (4) -- (5) node [pos=0.5,left,font=\footnotesize] {Lemma \ref{lem:algorithm:from_pn_to_local:o1_pn_trees_imply_o1_pn_gen}};
+       \draw[->] (5) -- (6) node [pos=0.5,left,font=\footnotesize] {Lemma \ref{lem:algorithm:from_pn_to_local:o1_pn_trees_imply_pn_gen}};
+    \end{tikzpicture}
+    \caption{Here are all the implications we show in this section.
+    Each implication is a step towards showing Lemma \ref{lem:lcl_solvability:constant_local_imply_constant_pn}.
+    We use the notation $\exists\mathcal{O}(1)$ to denote the existence of a constant time algorithm.
+    }
+   \label{fig:proof_order:lcl_unsolvability}
+\end{figure}
+
+%%%% O(1) LOCAL in general graphs
+% -> O(1) LOCAL in trees
+\begin{lemma} \label{lem:algorithm:from_pn_to_local:o1_local_gen_imply_o1_local_trees}
+    If an LCL problem is solvable in constant time in the LOCAL model, then the problem is solvable in constant time in trees in the LOCAL model.
+\end{lemma}
 \begin{proof}
-    \todo{Complete this proof} %TODO Complete this proof
+    This is trivial, because general graphs contain the graph family of trees.
+\end{proof}
 
-    Let us have an LCL problem $\Pi$ and a PN network $N$.
-    Let us assume that the underlying graph of $N$ is infinite ($\Delta, \delta$)-biregular tree $G$, where problem $\Pi$ is not solvable.
+%%%% O(1) LOCAL in trees
+% -> O(1) OI in trees
+\begin{lemma} \label{lem:algorithm:from_pn_to_local:o1_local_trees_imply_o1_oi_trees}
+    If an LCL problem is solvable in constant time in trees in the LOCAL model, then the problem is solvable in constant time in trees in the OI model.
+\end{lemma}
+\begin{proof}
+    This has been proved for any fixed graph family in the work from Naor and Stockmeyer \cite[theorem 3.3]{DBLP:journals/siamcomp/NaorS95}.
+    The proof applies Ramsey theory to show that there exists a finite set $Y$ of identifiers such that for all $X_1, X_2 \subseteq Y$ with $|X_1| = |X_2| = s$, we have a constant time LOCAL algorithm giving identical results in any graph family whether we use identifiers $X_1$ or $X_2$.
+    It shows that the constant time LOCAL algorithm applied to identifiers from set $Y$ behaves like an OI algorithm.
+\end{proof}
 
-    Theorem 3.3. from the paper \ref{DBLP:journals/siamcomp/NaorS95} shows that if there is a constant... \todo{}.
+% For the next two lemmas, we need to introduce another model called \emph{port numbering + orientation} (PO).
+% In the model, ports are numbered like in the PN model and additionally edges have an orientation \cite{DBLP:journals/dc/GoosHS17}.
 
-    \cite{DBLP:journals/siamcomp/NaorS95} "uses Ramsey theory arguments to prove that $\mathcal{O}(1)$-time LOCAL algorithms can be turned into ``order invariant'' $\mathcal{O}(1)$-time algorithms."
 
-    This \cite{DBLP:journals/dc/GoosHS17} shows that ``Order invariant'' in trees are not stronger than PN algorithms in trees (Lemma 4) (Proof in Appendix A.2). PO is ``Port numbering + orientation'' which is very close to PN in biregular trees. Passive nodes have port numbering, therefore they can give an orientation of the edges.
+%%%% O(1) OI in trees
+% -> O(1) PNin trees
+\begin{lemma} \label{lem:algorithm:from_pn_to_local:o1_oi_trees_imply_o1_pn_trees}
+    If an LCL problem is solvable in constant time in trees in the OI model, then the problem is solvable in constant time in trees in the PO model.
+\end{lemma}
+\begin{proof}
+    Suppose there is a t-time PO algorithm that solves an LCL problem.
+    The paper from Göös et al.~\cite{DBLP:journals/dc/GoosHS17} shows that a PN algorithm can simulate the OI algorithm in t-time.
+\end{proof}
 
+% %%%% O(1) PO in trees
+% % -> O(1) PN in trees
+% \begin{lemma} \label{lem:algorithm:from_pn_to_local:o1_po_trees_imply_o1_pn_trees}
+%     If an LCL problem is solvable in constant time in trees in the PO model, then the problem is solvable in constant time in trees in the PN model.
+% \end{lemma}
+% \begin{proof}
+%     \todo{}
+% \end{proof}
+
+
+
+%%%% O(1) PN in trees
+% -> O(1) PN in general
+\begin{lemma} \label{lem:algorithm:from_pn_to_local:o1_pn_trees_imply_o1_pn_gen}
+    If an LCL problem is solvable in constant time in trees in the PN model, then the problem is solvable in constant time in general graphs in the PN model.
+\end{lemma}
+\begin{proof}
+    \todo{Unfold general graph to infinite tree. Apply tree algorithm. The algorithm only considers a constant radius neighborhood at each node and maps it to output. By covering map argument, it properly labels the general graph.}
+\end{proof}
+
+%%%% O(1) PN in general
+% -> PN in general
+\begin{lemma} \label{lem:algorithm:from_pn_to_local:o1_pn_trees_imply_pn_gen}
+    If an LCL problem is solvable in constant time in general graphs in the PN model, then the problem is solvable in general graphs in the PN model.
+\end{lemma}
+\begin{proof}
+    This is trivial.
 \end{proof}
 
 
-\subsection{Proving the theorem} \label{sec:algorithm:prooving_the_theorem}
-\todo{With the current structure of Section \ref{sec:algorithm}, is this section needed? can't this proof be done in \ref{sec:algorithm:from_pn_to_local}?}
-Now that all the groundwork has been done in the prior sections, we can prove Theorem \ref{thm:lcl_unsolvability}.
-The proof is also our answer to Research Question \ref{research_question:2}.
-\begin{proof}[Proof of Theorem \ref{thm:lcl_unsolvability}]
-    Here is the proof.
-    \todo{}
+Now we prove Lemma \ref{thm:algorithm:from_pn_to_local:lcl_unsolvability}:
+\begin{proof}
+    It immediately follows from Lemma \ref{lem:lcl_solvability:constant_local_imply_constant_pn} that if there does not exist a constant time algorithm in the PN model for some LCL problem, then the problem cannot be solved in constant time in the LOCAL model.
+For example, when there exists an LCL problem that is unsolvable in the PN model, the theorem shows that the problem cannot be solved in constant time in the LOCAL model.
 \end{proof}
 
-\todo{rename all the names of theorems, lemmas and conjectures, that need renaming. }
+
+%%%
+% Here I write notes from our meeting from Thu. 12.5.2022 15:15 - 15-45
+
+% 1st prove the case of cycles.
+% Then we can start to see how we can generalize it.
+
+% Start assuming that problem is solvable in constant time in the LOCAL model.
+% This directly implies also constant time solution in the PN model.
+% We need to show this.
+
+% Constant time local in trees implies constant time pn in trees.
+
+% final step would be to show that 
+
+% If you have constant time PN algorithm for trees, then it also implies you can solve this problem in port numbering model in any graph for constant time.
+
+% We have 10-time algorithm for trees in PN. Then use the same algorithm for any PN network such that each node unfolds their local neighbourhood at distance 10
