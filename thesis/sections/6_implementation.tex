@@ -3,43 +3,18 @@
 %\section{Automatically proving lower bounds for LCL problems} \label{sec:implementation}
 \section{Implementation} \label{sec:implementation}
 In this section we will cover all the important topics that are used in the actual implementation of the Algorithm~\ref{alg:counterexample_finder} from Section~\ref{sec:algorithm}.
-This includes the previously declared functions $\textsc{SolutionExists}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, d_a, d_p)$, which were given as black boxes.
-In Section~\ref{}, we discuss 
-In Section~\ref{}, we discuss how we generate multigraphs.
-In Section~\ref{}
-
 The implementation itself is a computer program~\cite{NonconstantLclClassifier2022}, that attempts to automatically find a proof of unsolvability for an LCL problem in PN model.
 Although the implementation is programmed in Rust programming language~\cite{RustLang}, we keep the explanations independent of any programming language.
 
-The function $\textsc{SolutionExists}(\Pi, g)$ checks if an LCL problem $\Pi$ is unsolvable in some $(d_a, d_p)$-biregular multigraph $g$.
-To perform the checking, it is enough to show that there exists no valid labeling of $\Pi$ in $g$.
-In the implementation this is done with following steps:
-\begin{enumerate}
-    \item encode the problem $\Pi$ and multigraph $g$ into a SAT problem $S$,
-    \item solve the problem $S$ using some efficient SAT solver.
-\end{enumerate}
-When we feed the SAT problem $S$ into a SAT solver, we get either SAT (satisfiable) or UNSAT (unsatisfiable) as a result.
-In case the result is UNSAT, the SAT solver found no possible labeling for the problem.
-Thus we have found a counterexample and we are done.
-Otherwise we can continue searching using some other multigraph.
-The routine is illustrated on Figure \ref{fig:implementation:1}.
+%This includes the previously declared functions $\textsc{SolutionExists}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, \Delta, \delta)$, which were given as black boxes.
+In Section~\ref{sec:implementation:generating_multigraphs}, we discuss how we generate multigraphs, and describe the function $\textsc{GenerateGraphs}(n, \Delta, \delta)$.
+In Section~\ref{sec:implementation:sat}, we discuss Boolean satisfiability problems (SAT) generally.
+Then, in Section~\ref{sec:implementation:our_sat}, we discuss how we use SAT to implement the function $\textsc{SolutionExists}(\Pi, g)$.
+As we are interested in classifying not just one LCL problem, but a class of problems, we need to know how to generate them.
+In Section~\ref{sec:implementation:generating_lcl_problems}, we discuss how we generate LCL problems.
+\todo{Write here about rest of the subsections}In Section~\ref{} \dots
 
-\begin{figure}[H]
-\centering
-\includegraphics[]{diagrams/implementation_idea_diagram2.pdf}
-\caption{The SAT routine. When given a multigraph and an LCL problem, it checks if a valid labeling exists.}
-\label{fig:implementation:1}
-\end{figure}
 
-We repeat the routine for each multigraph, as shown in the Algorithm \ref{alg:counterexample_finder}, and terminate early if the result is UNSAT.
-\todo{WIP}
-
-\begin{figure}[H]
-\centering
-\includegraphics[]{diagrams/implementation_idea_diagram3.pdf}
-\caption{An example of an execution of multiple SAT routines. Execution terminates at graph $77$ when first UNSAT is encountered.}
-\label{fig:implementation:2}
-\end{figure}
 
 %TODO biregular multigraphs?
 %TODO LCL problems on biregular trees etc?
@@ -58,7 +33,7 @@ We repeat the routine for each multigraph, as shown in the Algorithm \ref{alg:co
 
 
 
-\subsection{Generating multigraphs}
+\subsection{Generating multigraphs} \label{sec:implementation:generating_multigraphs}
 We want to generate $(\Delta, \delta)$-biregular multigraphs, but how can we do it?
 A naive approach to this would be generating all possible graphs, and then filtering out graphs that are not in the graph family.
 This is a very bad idea, and we show why.
@@ -224,7 +199,7 @@ We then compute all valid pairs of $(n_A, n_B)$ in Table \ref{tbl:valid_pairs}.
 Now we know a lot more about the graphs we are going to generate.
 Given that we know $\Delta$ and $\delta$, we can easily generate all possible graph sizes for $(\Delta, \delta)$-biregular multigraphs.
 
-Before we tell more about the function $\textsc{GenerateGraphs}(n, d_a, d_p)$, we want to discuss graph isomorphism.
+Before we tell more about the function $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we want to discuss graph isomorphism.
 We quote the definition of graph isomorphism from~\cite{DBLP:journals/jsc/McKayP14}:
 \begin{displayquote}
 An isomorphism between two graphs is a bijection between their vertex sets that preserves adjacency.
@@ -237,7 +212,7 @@ In Table \ref{tbl:graph_count_nonisomorphic}, we show the count of simple graphs
 Alongside the values, we show the count of nonisomorphic simple graphs.
 As we can see, there are significantly fewer nonisomorphic simple graphs than there are simple graphs.
 Thus, we want to generate only nonisomorphic graphs.
-For our implementation of $\textsc{GenerateGraphs}(n, d_a, d_p)$, we use the tools \emph{genbg} and \emph{multig} from gtools.
+For our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we use the tools \emph{genbg} and \emph{multig} from gtools as follows.
 
 \begin{table}[H]
   \centering
@@ -283,7 +258,14 @@ We also give the tool a maximum edge multiplicity of $\Delta$ and upper bound of
 By feeding the bipartite graphs from genbg to multig, we will receive $(\Delta, \delta)$-biregular multigraphs.
 The output format from multig is a simple text format that is quite trivial to parse, so we do not discuss more about it.
 
-\todo{Discuss something about Table~\ref{tbl:graph_count_nonisomorphicasdasd}}
+To conclude, our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$ first generates the pair $(n_A, n_B)$ with given $n$ and degrees $(\Delta, \delta)$.
+If the pair does not exist, the function returns an empty set.
+Otherwise, we continue to the second step where we generate the bipartite graphs using genbg, as described before.
+The last step is to feed the graphs from genbg to multig, as described before.
+The result from multig is the set of all connected nonisomorphic $(\Delta, \delta)$-biregular multigraphs of size $n$.
+
+In Table~\ref{tbl:graph_count_nonisomorphicasdasd}, we have listed the number of graphs generated in the second and third steps, when $(\Delta, \delta)=(3,2)$.
+
 
 \begin{table}[H]
   \centering
@@ -299,6 +281,7 @@ The output format from multig is a simple text format that is quite trivial to p
     15  & 6 & 9   & 272  & 0.01  & 658   & 0.00\\
     20  & 8 & 12  & 4146 & 0.23  & 13902 & 0.04\\
     25  & 10 & 15 & 79052 & 7.60 & 357219& 1.37\\
+    30  & 12 & 18 & 1747977 & 224.70 & 10509351& 47.28\\
     \vdots & \vdots &\vdots&\vdots&\vdots&\vdots&\vdots\\
     \bottomrule
   \end{tabular}
@@ -313,16 +296,106 @@ The output format from multig is a simple text format that is quite trivial to p
   \label{tbl:graph_count_nonisomorphicasdasd}
 \end{table}
 
+\subsection{Boolean satisfiability problem} \label{sec:implementation:sat}
 
-\subsection{Generating LCL problems}
+Boolean satisfiability problem (SAT) is the problem of determining, if a propositional formula can be made true by assigning truth values to its variables.
+A propositional formula is \emph{satisfiable}, if there exists an assignment that results in true, otherwise it is \emph{unsatisfiable}.
+For example, a formula $a \land \neg b$ is satisfiable, because it is true if $a$ is true ($a=\top$) and $b$ is false ($b=\bot$).
+For example, a formula $a \land \neg a$ is unsatisfiable, because it is always false.
+
+Conjuctive normal form (CNF) is a standard form to describe propositional formulas.
+It is a conjuction (logical AND) of clauses, where each clause is a disjunction (logical OR).
+That is, CNF is an AND of ORs, for example:
+$$(a \lor d \lor \neg b)\land (c \lor a) \land (\neg a \lor  \neg b).$$
+The only allowed operators in CNF are AND ($\land$), OR ($\lor$) and NOT ($\neg$).
+
+SAT is the first problem proven as NP-complete problem \cite{DBLP:conf/stoc/Cook71}.
+A solution to an NP-complete problem is fast to verify, but there is no known way to solve a problem fast.
+However, there are many programs called SAT solvers, that attempt to solve SAT as fast as possible~\cite{TheInternationalSATCompetitionWebPage}.
+These solvers usually accept a propositional formula in DIMACS CNF format~\cite{DIMACS:CNF}.
+It is a text format that represents a propositional formula in CNF form.
+
+\todo{Use the section 4.1 ``SAT encoding'' from \cite{DBLP:conf/sat/JarvisaloKKK12} as an inspiration for this section. Maybe we will find a nice way to present things?}
+
+\subsection{Our SAT encoding} \label{sec:implementation:our_sat}
+
+
+The function $\textsc{SolutionExists}(\Pi, g)$ checks if an LCL problem $\Pi$ is unsolvable in some $(\Delta, \delta)$-biregular multigraph $g$.
+To perform the checking, it is enough to show that there exists no valid labeling of $\Pi$ in $g$.
+In the implementation this is done with following steps:
+\begin{enumerate}
+    \item encode the problem $\Pi$ and multigraph $g$ into a SAT problem $S$,
+    \item solve the problem $S$ using a fast SAT solver.
+\end{enumerate}
+When we feed the SAT problem $S$ into a SAT solver, we get either SAT (satisfiable) or UNSAT (unsatisfiable) as a result.
+In case the result is UNSAT, the SAT solver found no possible labeling for the problem.
+Thus we have found a counterexample and we are done.
+Otherwise we can continue searching using some other multigraph.
+The routine is illustrated on Figure \ref{fig:implementation:1}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[]{diagrams/implementation_idea_diagram2.pdf}
+\caption{The SAT routine. When given a multigraph and an LCL problem, it checks if a valid labeling exists.}
+\label{fig:implementation:1}
+\end{figure}
+
+We repeat the routine for each multigraph, as shown in the Algorithm \ref{alg:counterexample_finder}, and terminate early if the result is UNSAT.
+This is illustrated in Figure~\ref{fig:implementation:2}.
+\todo{WIP}
+
+\begin{figure}[H]
+\centering
+\includegraphics[]{diagrams/implementation_idea_diagram3.pdf}
+\caption{An example of an execution of multiple SAT routines. Execution terminates at the 77th multigraph, when first UNSAT is encountered.}
+\label{fig:implementation:2}
+\end{figure}
+
+Now we discuss how we encode the SAT problem, given that we have an LCL problem $\Pi=(A, P, \Sigma)$ from class $(\Delta, \delta, \lambda)$, and a $(\Delta, \delta)$-biregular connected multigraph $G=(V,E)$, where the parts of vertices are $V_A$ and $V_P$.
+Each active node can have possibly any label configuration from $A$ (respectively passive nodes and $P$), and there are always as many ways to label a label configuration as there are permutations of the label configuration.
+Let $\operatorname{Perm}(A)$ and $\operatorname{Perm}(P)$ be the sets of all permutations of label configurations in sets $A$ and $P$, respectively.
+
+We define variables $L_{A,u,v,l}$ for each incident edge $(u, v)$ of an active node $u$, for each possible label $l \in \Sigma$.
+Similarly, we define variables $L_{P,u,v,l}$ for each incident edge $(u, v)$ of a passive node $u$, for each possible label $l \in \Sigma$.
+
+
+We also define variables $R_{A, u, p}$ for each permutation of each label configuration in $A$, for each active node $u$.
+Similarly, we define variables $R_{P, u, p}$ for each permutation of each label configuration in $P$, for each passive node $u$.
+
+We have 5 conditions for the encoding:
+\begin{enumerate}[label=(\alph*)]
+\item Adjacent nodes have to agree on the labels of each edge. \todo{$\leftarrow$ rephrase this}
+      We encode each adjacent node to not have different label for their shared edge.
+      For each $e=(u, v)\in E$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{u,v,l_1}, L_{v,u,l_2}$ is true. \todo{We changed $L_{blabla}$, so update the above description!!!}
+\item d
+\item d
+\item d
+\end{enumerate}
+
+% 1. Adjacent nodes need to agree on the edge's label. In other words, two adjacent nodes cannot label their shared edge differently.
+\todo{}
+% 2. Nodes need to have a valid labeling.
+  % 2.1 Each active node has only one permutation
+  \todo{}
+  % 2.2 Each passive node has only one permutation
+  \todo{}
+  % 2.3 If a node has a labeling (a permutation of a configuration) then and only then the labeling must hold true.
+    % 2.3.1 Active nodes
+    \todo{}
+    % 2.3.2 Passive nodes
+    \todo{}
+
+
+
+\subsection{Generating LCL problems} \label{sec:implementation:generating_lcl_problems}
 
 When we generate LCL problems, we generate whole class of LCL problems.
 A class of LCL problems is a set of LCL problems where the problems share common attributes.
-The attributes are the values of a triple $(\Delta, \delta, l)$, where $\Delta$ and $\delta$ are the sizes of a label configuration in $A$ and $P$, respectively, and $l$ is the size of $\Sigma$ i.e. the number of labels.
+The attributes are the values of a triple $(\Delta, \delta, \lambda)$, where $\Delta$ and $\delta$ are the sizes of a label configuration in $A$ and $P$, respectively, and $\lambda$ is the size of $\Sigma$ i.e. the number of labels.
 
 The set of all possible label configurations is a $k$-combination with repetitions, where $k$ is the size of a label configuration.
 Let us call the function of $k$-combination with repetitions as $\operatorname{comb}(k, \Sigma)$.
-For example, if $\Delta$ is 2, $\Sigma=\{A, B\}$ and $l$ is 2, then the set of all possible label configurations is
+For example, if $\Delta$ is 2, $\Sigma=\{A, B\}$ and $\lambda$ is 2, then the set of all possible label configurations is
 $$ \operatorname{comb}(\Delta, \Sigma) = \{ \{A, A\}, \{A, B\}, \{B, B\} \}. $$
 
 The set of all possible sets of label configurations is a power set of the set of all possible label configurations, excluding an empty set.
@@ -338,9 +411,9 @@ For example, the power set of above example excluding an empty set is
     &\{\{A, A\}, \{A, B\}, \{B, B\}\} \}.\\
 \end{align*}
 
-The set of all LCL problems of class $(\Delta, \delta, l)$ is a Cartesian product
+The set of all LCL problems of class $(\Delta, \delta, \lambda)$ is a Cartesian product
 $$ \operatorname{comb}(\Delta, \Sigma) \times \operatorname{comb}(\delta, \Sigma),$$
-where $\Sigma$ is any set of labels of length $l$.
+where $\Sigma$ is any set of labels of length $\lambda$.
 In our implementation, we use the upper-case alphabet as $\Sigma$.
 The elements are pairs $(A, P)$, where $A$ is the set of all allowed label configurations for active nodes, and $P$ is the set of all allowed label configurations for passive nodes.
 
@@ -352,7 +425,7 @@ These are the optimizations that reduce the size of problems we have to process 
   \centering
   \begin{tabular}{r|rrr}
     \toprule
-    $(\Delta, \delta, l)$ & Problems & Purged problems & Purged and normalized\\
+    $(\Delta, \delta, \lambda)$ & Problems & Purged problems & Purged and normalized\\
     \midrule
     (1,1,1)& 1 & 1 & 1 \\
     (1,1,2)& 9 & 3 & 2 \\
@@ -390,7 +463,7 @@ Here, we assume that each label in a label configuration is represented in lexic
 We also assume a common set of labels, the upper-case alphabet.
 %In other words, we assume that there is a total order between labels, and a total order between label configurations.
 The total order of two LCL problems is the lexicographic order.
-That is, the total order of problems $\Pi_1=(A_1, P_1, \Sigma_1), \Pi_2=(A_2, P_2, \Sigma_2)$ from problem class $(\Delta, \delta, l)$ is $\Pi_1 < \Pi_2$ if and only if $A_1 < A_2$ or $(A_1 = A_2 \text{ and } P_1 < P_2)$.
+That is, the total order of problems $\Pi_1=(A_1, P_1, \Sigma_1), \Pi_2=(A_2, P_2, \Sigma_2)$ from problem class $(\Delta, \delta, \lambda)$ is $\Pi_1 < \Pi_2$ if and only if $A_1 < A_2$ or $(A_1 = A_2 \text{ and } P_1 < P_2)$.
 The result of normalization is an LCL problem in its \emph{canonical form}.
 After normalizing any two isomorphic LCL problems, their appearance is identical.
 
@@ -402,20 +475,6 @@ Finally, we normalize each problem, and remove duplicates.
 The amount of problems after purging and normalizing can be seen in Table~\ref{tbl:lcl_problem_classes}.
 
 
-\subsection{Boolean satisfiability problem}
-\todo{Explain
-\begin{itemize}
-  \item SAT problems, %TODO
-  \item DIMACS CNF, %TODO
-  \item SAT solvers, %TODO
-\end{itemize}
-}
-
-\subsection{SAT solvers} % talk about sats generally before talkign specifically how we encode the problems
-
-\subsection{SAT encoding and solving}
-
-\todo{Use the section 4.1 ``SAT encoding'' from \cite{DBLP:conf/sat/JarvisaloKKK12} as an inspiration for this section. Maybe we will find a nice way to present things?}
 
 %\subsection{Software optimizations
 \subsection{Caching}
