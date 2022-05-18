@@ -344,49 +344,62 @@ where $\Sigma$ is any set of labels of length $l$.
 In our implementation, we use the upper-case alphabet as $\Sigma$.
 The elements are pairs $(A, P)$, where $A$ is the set of all allowed label configurations for active nodes, and $P$ is the set of all allowed label configurations for passive nodes.
 
-Now that we know how to generate a class of LCL problems, we want to show the number of elements in some classes.
-See Table \ref{}.
+Now that we know how to generate a class of LCL problems, we show the number of elements in some chosen classes in Table~\ref{tbl:lcl_problem_classes}.
+In the table, we also show the numbers of \emph{purged} and \emph{normalized} problems for each chosen class.
+These are the optimizations that reduce the size of problems we have to process through in our implementation, and we discuss them next.
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{r|rrrr}
+  \begin{tabular}{r|rrr}
     \toprule
-    $n$&Simple graphs & Nonisomorphic simple graphs & Time (s)\\
+    $(\Delta, \delta, l)$ & Problems & Purged problems & Purged and normalized\\
     \midrule
-    1  &1                 & 1 & 0.00\\
-    2  &2                 & 2 & 0.00\\
-    3  &8                 & 4 & 0.00\\
-    4  &64                & 11 & 0.00\\
-    5  &1024              & 34 & 0.00\\
-    6  &32768             & 156 & 0.00\\
-    7  &2097152           & 1044 & 0.00\\
-    8  &268435456         & 12346 & 0.00\\
-    9  &68719476736       & 274668   & 0.09\\
-    10 &35184372088832    & 12005168 & 3.57\\
-    11 &36028797018963968 &1018997864&295.13\\
-    \vdots & \vdots &\vdots\\
+    (1,1,1)& 1 & 1 & 1 \\
+    (1,1,2)& 9 & 3 & 2 \\
+    (2,1,2)& 21 & 7 & 5 \\
+    (2,2,2)& 49 & 27 & 18 \\
+    (3,2,2)& 105 & 67 & 38 \\
+    (4,2,2)& 217 & 147 & 84 \\
+    (4,3,2)& 465 & 379 & 200 \\
+    (4,4,2)& 961 & 843 & 446 \\
+    (6,6,2)& 16129 & 15627 & 7926 \\
+    (2,2,3)& 3969 & 2103 & 419 \\
+    (3,2,3)& 64449 & 44343 & 7735 \\
+    (3,3,3)& 1046529 & 962871 & 162299 \\
+    \vdots & \vdots\\
     \bottomrule
   \end{tabular}
   \caption{%
-    The numbers of simple graphs, and nonisomorphic simple graphs.
-    There is also generation time for each nonisomorphic set of simple graphs.
-    Nonisomorphic graphs were generated with the tool called \emph{geng}.
-    The tool was executed on a single thread of AMD Ryzen 9 3900X 12-Core Processor.
-    For example, the command for generating all 10-sized connected simple graphs is \codee{geng 10 > simple10.txt}.
+    The number of LCL problems in different problem classes.
   }
-  \label{tbl:graph_count_nonisomorphic}
+  \label{tbl:lcl_problem_classes}
 \end{table}
 
+Purging is an operation, where an LCL problem is cut down from label configurations that are redundant in a sense that they cannot possibly be in a valid configuration, no matter what.
+These redundant label configurations are found by forming a list of labels that appear in both sets $A$ and $P$.
+Then we remove each label configuration from both sets, that have some other labels than what was in the list.
+
+For example, if $A=\{\{A, A\}, \{A, B\}, \{B, B\}\}$ and $P=\{\{A, A\}, \{A, C\}, \{C, C\}\}$, then the labels in $A$ are $\{A, B\}$ and labels in P are $\{A, C\}$.
+The labels that appear in both $A$ and $P$, i.e.  $\{A, B\} \cup \{A, C\} $ is $\{A\}$.
+Thus, we remove all label configurations from both $A$ and $P$ that contain any other label than $A$.
+In the end, we get $A=\{\{A, A\}\}$ and $P=\{\{A, A\}\}$.
 
 
-Let us first talk about the format we use to represent LCL problems.
-In Section~\ref{}, we showed the maximal independent set problem in infinite (3,2)-biregular graphs.
-We represent the problem in the format as follows:
-\todo{Tell how we generate all LCL problems}
+Normalizing an LCL problem is an operation of renaming the labels with a permutation such that the resulting problem is the minimum of all permutated problems.
+Here, we assume that each label in a label configuration is represented in lexicographic order, and each label configuration is also represented in lexicographic order in both sets $A$ and $P$.
+We also assume a common set of labels, the upper-case alphabet.
+%In other words, we assume that there is a total order between labels, and a total order between label configurations.
+The total order of two LCL problems is the lexicographic order.
+That is, the total order of problems $\Pi_1=(A_1, P_1, \Sigma_1), \Pi_2=(A_2, P_2, \Sigma_2)$ from problem class $(\Delta, \delta, l)$ is $\Pi_1 < \Pi_2$ if and only if $A_1 < A_2$ or $(A_1 = A_2 \text{ and } P_1 < P_2)$.
+The result of normalization is an LCL problem in its \emph{canonical form}.
+After normalizing any two isomorphic LCL problems, their appearance is identical.
 
-\todo{tell how we normalize problems}
-\todo{tell about purging}
+For example, the problems $$\Pi_1=(\{\{B, B\}\}, \{\{A, C\}, \{C,C\}\}, \Sigma), \Pi_2=(\{\{D, D\}\}, \{\{A,A\},\{E, A\}\}, \Sigma)$$ after normalization look like $$\Pi_1'=(\{\{A, A\}\}, \{\{B,B\},\{B, C\}\}, \Sigma), \Pi_2'=(\{\{A, A\}\}, \{\{B,B\},\{B, C\}\}, \Sigma)$$ (denoted by a prime).
 
+In our implementation, we first generate all LCL problems.
+Then we use the purge operation for each LCL problem, and remove problems that have an empty set of label configurations.
+Finally, we normalize each problem, and remove duplicates.
+The amount of problems after purging and normalizing can be seen in Table~\ref{tbl:lcl_problem_classes}.
 
 
 \subsection{Boolean satisfiability problem}
