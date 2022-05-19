@@ -2,8 +2,8 @@
 
 %\section{Automatically proving lower bounds for LCL problems} \label{sec:implementation}
 \section{Implementation} \label{sec:implementation}
-In this section we will cover all the important topics that are used in the actual implementation of the Algorithm~\ref{alg:counterexample_finder} from Section~\ref{sec:algorithm}.
-The implementation itself is a computer program~\cite{NonconstantLclClassifier2022}, that attempts to automatically find a proof of unsolvability for an LCL problem in PN model.
+In this section, we will cover all the important topics that are used in the actual implementation of the Algorithm~\ref{alg:counterexample_finder} from Section~\ref{sec:algorithm}.
+The implementation itself is a computer program~\cite{NonconstantLclClassifier2022}, that attempts to automatically find a proof of unsolvability for an LCL problem in the PN model.
 Although the implementation is programmed in Rust programming language~\cite{RustLang}, we keep the explanations independent of any programming language.
 
 %This includes the previously declared functions $\textsc{SolutionExists}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, \Delta, \delta)$, which were given as black boxes.
@@ -12,30 +12,12 @@ In Section~\ref{sec:implementation:sat}, we discuss Boolean satisfiability probl
 Then, in Section~\ref{sec:implementation:our_sat}, we discuss how we use SAT to implement the function $\textsc{SolutionExists}(\Pi, g)$.
 As we are interested in classifying not just one LCL problem, but a class of problems, we need to know how to generate them.
 In Section~\ref{sec:implementation:generating_lcl_problems}, we discuss how we generate LCL problems.
-\todo{Write here about rest of the subsections}In Section~\ref{} \dots
-
-
-
-%TODO biregular multigraphs?
-%TODO LCL problems on biregular trees etc?
-
-%When we assume that an LCL problem $\Pi$ is solvable in PN, we mean that there exists a deterministic distributed algorithm $A$ in PN model, that finds a solution for all multigraphs i.e. algorithm $A$ works in every multigraph.
-%Every simple graph is also a multigraph, thus multigraphs are more relaxed in terms of definition.
-%Allowing parallel edges potentially gives us counterexamples with smaller graph sizes when we use the increasing strategy i.e. our algorithm might terminate succesfully much earlier with the desired result and graphs do not necessarily become as complex as they would be with only simple graphs.
-%%TODO where to discuss about solutions that have been found only with multigraphs? Have we found any solutions with only simple graphs?
-%Smaller graphs mean less complexity and less performance required but as there are also more graphs to iterate, it is not so simple to justify allowing parallel edges only with this argument.
-%The main argument is that allowing parallel edges gives us more opportunities to find counterexamples.
-%It might be that in some problems we cannot even find counterexamples without parallel.
-
-%This is indeed what we have used in this work.
-%Probably, we have to iterate a lot of graphs.
-%For this purpose we want to be able to generate the graphs.
-
+Lastly, we discuss some optimizations in our implementation in Section \ref{sec:implementation:optimizations}.
 
 
 \subsection{Generating multigraphs} \label{sec:implementation:generating_multigraphs}
 We want to generate $(\Delta, \delta)$-biregular multigraphs, but how can we do it?
-A naive approach to this would be generating all possible graphs, and then filtering out graphs that are not in the graph family.
+A naive approach to this would be generating all possible multigraphs, and then filtering out graphs that are not in the graph family.
 This is a very bad idea, and we show why.
 
 Let us first consider only simple graphs.
@@ -79,11 +61,11 @@ However, this is not true when we consider only $(\Delta, \delta)$-biregular mul
 Clearly the number of multiple edges is bounded by $\max(\Delta, \delta)$.
 
 The numbers of incident edges for nodes of parts $A$ and $B$ are $\Delta$ and $\delta$, respectively.
-We know from Equation~\ref{eq:biregular:sum_of_degrees} that the sums of degrees of each node in each part must be equal.
 How do we know the number of nodes in each part i.e. what are the possible pairs of positive integers that sum up to $n$?
 There are only $n-1$ possibilities:
 $$(1, n-1), (2, n-2), ..., (n-2, 2), (n-1, 1).$$
-Out of those pairs, only pairs $(n_A, n_B)$ such that
+We know from Equation~\ref{eq:biregular:sum_of_degrees} that the sums of degrees of each node in each part must be equal.
+Therefore, only pairs $(n_A, n_B)$ such that
 \begin{equation} \label{eq:pairs:1}
   \Delta n_A = \delta n_B,
 \end{equation}
@@ -140,20 +122,18 @@ However, most of the time there are no valid pairs for chosen $n$, as we can see
 \end{table}
 
 It turns out that there is always at most one pair that fills the conditions shown in Equations~\ref{eq:pairs:1} and \ref{eq:pairs:2}.
-We can find a formula for all possible values of n
-\begin{align}
+We can find a formula for all possible values of $n$.
+\begin{align*}
   n_A &= x \\
   n_B &= n-x\\
   \Delta x &= \delta (n-x) \\
   \Rightarrow n&=\frac{x(\Delta+\delta)}{\delta}\\
-\end{align}
+\end{align*}
 
 When we fix $\Delta$ and $\delta$, the possible numbers for $n$ are all integers $\frac{x(\Delta + \delta)}{\delta}$, where $x$ is any positive integer.
 Not necessarily all values of $x$ result on an integer, but this is more than enough.
 We can iterate through all $x$ up to some upper bound, and consider only values of $n$ that are integers, as we do in Table \ref{tbl:values_of_x}.
 We then compute all valid pairs of $(n_A, n_B)$ in Table \ref{tbl:valid_pairs}.
-%Thus, we get equations $n_A=\Delta x$ and $n_B=\delta x$.
-%For example, we list all valid pairs for $(3, 2)$-biregular multigraphs in Table~\ref{tbl:valid_pairs}.
 
 \begin{table}[H]
   \parbox{.45\linewidth}{
@@ -171,7 +151,7 @@ We then compute all valid pairs of $(n_A, n_B)$ in Table \ref{tbl:valid_pairs}.
   \end{tabular}
   \caption{
     All values of $x$ and $n$ for $(3,2)$-biregular multigraph.
-    All rows where $n$ is an integer, are bolded.
+    All rows, where $n$ is an integer, are bolded.
   }
   \label{tbl:values_of_x}
   }
@@ -190,7 +170,7 @@ We then compute all valid pairs of $(n_A, n_B)$ in Table \ref{tbl:valid_pairs}.
     \bottomrule
   \end{tabular}
   \caption{
-    All valid $n$ and pairs of $(n_A, n_B)$ for $(3,2)$-biregular multigraph.
+    All valid values of $n$ and pairs of $(n_A, n_B)$ for $(3,2)$-biregular multigraph.
   }
   \label{tbl:valid_pairs}
   }
@@ -315,23 +295,21 @@ However, there are many programs called SAT solvers, that attempt to solve SAT a
 These solvers usually accept a propositional formula in DIMACS CNF format~\cite{DIMACS:CNF}.
 It is a text format that represents a propositional formula in CNF form.
 
-\todo{Use the section 4.1 ``SAT encoding'' from \cite{DBLP:conf/sat/JarvisaloKKK12} as an inspiration for this section. Maybe we will find a nice way to present things?}
-
 \subsection{Our SAT encoding} \label{sec:implementation:our_sat}
 
 
 The function $\textsc{SolutionExists}(\Pi, g)$ checks if an LCL problem $\Pi$ is unsolvable in some $(\Delta, \delta)$-biregular multigraph $g$.
 To perform the checking, it is enough to show that there exists no valid labeling of $\Pi$ in $g$.
-In the implementation this is done with following steps:
+In the implementation, this is done with the following steps:
 \begin{enumerate}
     \item encode the problem $\Pi$ and multigraph $g$ into a SAT problem $S$,
     \item solve the problem $S$ using a fast SAT solver.
 \end{enumerate}
-When we feed the SAT problem $S$ into a SAT solver, we get either SAT (satisfiable) or UNSAT (unsatisfiable) as a result.
+When we feed the SAT problem $S$ into a SAT solver, we get as a result either SAT (satisfiable) or UNSAT (unsatisfiable).
 In case the result is UNSAT, the SAT solver found no possible labeling for the problem.
 Thus we have found a counterexample and we are done.
 Otherwise we can continue searching using some other multigraph.
-The routine is illustrated on Figure \ref{fig:implementation:1}.
+The routine is illustrated in Figure~\ref{fig:implementation:1}.
 
 \begin{figure}[H]
 \centering
@@ -340,9 +318,8 @@ The routine is illustrated on Figure \ref{fig:implementation:1}.
 \label{fig:implementation:1}
 \end{figure}
 
-We repeat the routine for each multigraph, as shown in the Algorithm \ref{alg:counterexample_finder}, and terminate early if the result is UNSAT.
+We repeat the routine for each multigraph, as shown in the Algorithm~\ref{alg:counterexample_finder}, and terminate early if the result is UNSAT.
 This is illustrated in Figure~\ref{fig:implementation:2}.
-\todo{WIP}
 
 \begin{figure}[H]
 \centering
@@ -351,47 +328,81 @@ This is illustrated in Figure~\ref{fig:implementation:2}.
 \label{fig:implementation:2}
 \end{figure}
 
-Now we discuss how we encode the SAT problem, given that we have an LCL problem $\Pi=(A, P, \Sigma)$ from class $(\Delta, \delta, \lambda)$, and a $(\Delta, \delta)$-biregular connected multigraph $G=(V,E)$, where the parts of vertices are $V_A$ and $V_P$.
+Now we discuss how we encode the SAT problem, given that we have an LCL problem $\Pi=(A, P, \Sigma)$ from class $(\Delta, \delta, \lambda)$, and a connected $(\Delta, \delta)$-biregular multigraph $G=(V,E)$, where the parts of vertices are $V_A$ and $V_P$.
 Each active node can have possibly any label configuration from $A$ (respectively passive nodes and $P$), and there are always as many ways to label a label configuration as there are permutations of the label configuration.
 Let $\operatorname{Perm}(A)$ and $\operatorname{Perm}(P)$ be the sets of all permutations of label configurations in sets $A$ and $P$, respectively.
 
 We define variables $L_{A,u,v,l}$ for each incident edge $(u, v)$ of an active node $u$, for each possible label $l \in \Sigma$.
 Similarly, we define variables $L_{P,u,v,l}$ for each incident edge $(u, v)$ of a passive node $u$, for each possible label $l \in \Sigma$.
-
-
 We also define variables $R_{A, u, p}$ for each permutation of each label configuration in $A$, for each active node $u$.
 Similarly, we define variables $R_{P, u, p}$ for each permutation of each label configuration in $P$, for each passive node $u$.
+In all of these variables, $A$ and $P$ denote that the node $u$ is from $V_A$ and $V_P$, respectively.
 
-We have 5 conditions for the encoding:
-\begin{enumerate}[label=(\alph*)]
-\item Adjacent nodes have to agree on the labels of each edge. \todo{$\leftarrow$ rephrase this}
-      We encode each adjacent node to not have different label for their shared edge.
-      For each $e=(u, v)\in E$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{u,v,l_1}, L_{v,u,l_2}$ is true. \todo{We changed $L_{blabla}$, so update the above description!!!}
-\item d
-\item d
-\item d
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\renewcommand{\labelenumii}{\arabic{enumi}\alph{enumii}.}
+We have 3 conditions for our encoding.
+Each condition is applied twice, once for active nodes and once for passive nodes.
+\begin{enumerate}
+\item
+  Each node has to agree with their adjacent node on the labels of each edge between them.
+  \begin{enumerate}
+  \item
+    For each $e=(u, v)\in E, u\in V_A$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{A,u,v,l_1}, L_{P,v,u,l_2}$ is true, i.e. clause $(\neg L_{A,u,v,l_1} \lor \neg L_{P,v,u,l_2})$.
+    \label{enu:sat_conditions:1a}
+  \item
+    For each $e=(u, v)\in E, u\in V_P$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{P,u,v,l_1}, L_{A,v,u,l_2}$ is true, i.e. clause $(\neg L_{P,u,v,l_1} \lor \neg L_{A,v,u,l_2})$
+    \label{enu:sat_conditions:1b}
+  \end{enumerate}
+\item
+  Each node can only be applied one permutation of label configurations.
+  \begin{enumerate}
+  \item
+    Let us fix an active node $u \in V_A$.
+    For each permutation $p \in \operatorname{Perm}(A)$, we require that only one $R_{A, u, p}$ is true, i.e. clause $(R_{A, u, p_1} \lor R_{A, u, p_2} \lor \dotsm \lor R_{A, u, p_{|\operatorname{Perm}(A)|}})$ for requiring at least one permutation,
+    and clauses
+    $ (\neg R_{A, u, p_i} \lor \neg R_{A, u, p_j})$ where $i, j \in \{1, ..., |\operatorname{Perm}(A)|\}, i < j$,
+    for requiring at most one permutation.
+    We repeat this for each active node $u \in V_A$.
+    \label{enu:sat_conditions:2a}
+  \item
+    Let us fix a passive node $u \in V_P$.
+    For each permutation $p \in \operatorname{Perm}(P)$, we require that only one $R_{P, u, p}$ is true, i.e. clause $(R_{P, u, p_1} \lor R_{P, u, p_2} \lor \dotsm \lor R_{P, u, p_{|\operatorname{Perm}(P)|}})$ for requiring at least one permutation,
+    and clauses
+    $ (\neg R_{P, u, p_i} \lor \neg R_{P, u, p_j})$ where $i, j \in \{1, ..., |\operatorname{Perm}(P)|\}, i < j$,
+    for requiring at most one permutation.
+    We repeat this for each passive node $u \in V_P$.
+    \label{enu:sat_conditions:2b}
+  \end{enumerate}
+\item
+  A permutation of label configurations implies that a node labels its incident edges according to the permutation.
+  \begin{enumerate}
+  \item
+    Let us fix an active node $u \in V_A$.
+    For each permutation $p \in \operatorname{Perm}(A)$, for each label $l_i \in p, 1 \leq i \leq \Delta$, we require that $R_{A, u, p}$ implies $L_{A,u,v_i,l_i}$, where $v_i$ is the $i$-th adjacent passive node of active node $u$.
+    That is, we get a clause $(\neg R_{A, u, p} \lor L_{A,u,v_i,l_i})$.
+    We repeat this requirement for each active node $u \in V_A$.
+    \label{enu:sat_conditions:3a}
+  \item
+    Let us fix a passive node $u \in V_P$.
+    For each permutation $p \in \operatorname{Perm}(P)$, for each label $l_i \in p, 1 \leq i \leq \delta$, we require that $R_{P, u, p}$ implies $L_{P,u,v_i,l_i}$, where $v_i$ is the $i$-th adjacent active node of passive node $u$.
+    That is, we get a clause $(\neg R_{P, u, p} \lor L_{P,u,v_i,l_i})$.
+    We repeat this requirement for each passive node $u \in V_P$.
+    \label{enu:sat_conditions:3b}
+  \end{enumerate}
 \end{enumerate}
 
-% 1. Adjacent nodes need to agree on the edge's label. In other words, two adjacent nodes cannot label their shared edge differently.
-\todo{}
-% 2. Nodes need to have a valid labeling.
-  % 2.1 Each active node has only one permutation
-  \todo{}
-  % 2.2 Each passive node has only one permutation
-  \todo{}
-  % 2.3 If a node has a labeling (a permutation of a configuration) then and only then the labeling must hold true.
-    % 2.3.1 Active nodes
-    \todo{}
-    % 2.3.2 Passive nodes
-    \todo{}
-
+Based on the above conditions and clauses, we encode the SAT by forming a conjunction of the clauses.
+Formatting the problem as DIMACS CNF can be done with a simple mapping from the variables to unique positive integers, or negative integers in case of a negated variable.
+It is quite trivial, therefore we do not discuss more about it.
+After obtaining the SAT problem in DIMACS CNF, we feed the problem into a SAT solver, as showed in Figure~\ref{fig:implementation:1}.
+In our implementation, we use the SAT solver called Kissat~\cite{BiereFazekasFleuryHeisinger-SAT-Competition-2020-solvers, Kissat}, which is the winner in the main track of the SAT Competition 2020~\cite{SatCompetition2020}.
 
 
 \subsection{Generating LCL problems} \label{sec:implementation:generating_lcl_problems}
 
 When we generate LCL problems, we generate whole class of LCL problems.
 A class of LCL problems is a set of LCL problems where the problems share common attributes.
-The attributes are the values of a triple $(\Delta, \delta, \lambda)$, where $\Delta$ and $\delta$ are the sizes of a label configuration in $A$ and $P$, respectively, and $\lambda$ is the size of $\Sigma$ i.e. the number of labels.
+The attributes are the values of a triple $(\Delta, \delta, \lambda)$, where $\Delta$ and $\delta$ are the sizes of label configurations in $A$ and $P$, respectively, and $\lambda$ is the size of $\Sigma$ i.e. the number of labels.
 
 The set of all possible label configurations is a $k$-combination with repetitions, where $k$ is the size of a label configuration.
 Let us call the function of $k$-combination with repetitions as $\operatorname{comb}(k, \Sigma)$.
@@ -400,7 +411,7 @@ $$ \operatorname{comb}(\Delta, \Sigma) = \{ \{A, A\}, \{A, B\}, \{B, B\} \}. $$
 
 The set of all possible sets of label configurations is a power set of the set of all possible label configurations, excluding an empty set.
 Let us call this power set without an empty sets as a function $\operatorname{pow}(d, S)$, where $d$ is the size of a label configuration, and $S$ is the set of all possible label configurations.
-For example, the power set of above example excluding an empty set is
+For example, the power set of the above example excluding an empty set is
 \begin{align*}
   \operatorname{pow}(\Delta, \operatorname{comb}(\Delta, \Sigma)) =  \{&\{\{A, A\}\}, \\
     &\{\{A, B\}\}, \\
@@ -448,7 +459,7 @@ These are the optimizations that reduce the size of problems we have to process 
   \label{tbl:lcl_problem_classes}
 \end{table}
 
-Purging is an operation, where an LCL problem is cut down from label configurations that are redundant in a sense that they cannot possibly be in a valid configuration, no matter what.
+Purging is an operation, where an LCL problem is cut down from label configurations that are redundant, in a sense that they cannot possibly be in a valid configuration, no matter what.
 These redundant label configurations are found by forming a list of labels that appear in both sets $A$ and $P$.
 Then we remove each label configuration from both sets, that have some other labels than what was in the list.
 
@@ -461,7 +472,6 @@ In the end, we get $A=\{\{A, A\}\}$ and $P=\{\{A, A\}\}$.
 Normalizing an LCL problem is an operation of renaming the labels with a permutation such that the resulting problem is the minimum of all permutated problems.
 Here, we assume that each label in a label configuration is represented in lexicographic order, and each label configuration is also represented in lexicographic order in both sets $A$ and $P$.
 We also assume a common set of labels, the upper-case alphabet.
-%In other words, we assume that there is a total order between labels, and a total order between label configurations.
 The total order of two LCL problems is the lexicographic order.
 That is, the total order of problems $\Pi_1=(A_1, P_1, \Sigma_1), \Pi_2=(A_2, P_2, \Sigma_2)$ from problem class $(\Delta, \delta, \lambda)$ is $\Pi_1 < \Pi_2$ if and only if $A_1 < A_2$ or $(A_1 = A_2 \text{ and } P_1 < P_2)$.
 The result of normalization is an LCL problem in its \emph{canonical form}.
@@ -476,10 +486,20 @@ The amount of problems after purging and normalizing can be seen in Table~\ref{t
 
 
 
-%\subsection{Software optimizations
-\subsection{Caching}
-%TODO pre-computing multigraphs and lcl problems and saving them?
+\subsection{Optimizations} \label{sec:implementation:optimizations}
+In this section, we will discuss some optimizations used in the implementation that we have not yet mentioned in previous sections.
+The optimizations we discuss here briefly, utilizes either parallelization or caching.
 
-\subsection{parallelization}
-%TODO Talk about parallelization here or separately in above sections
+When we generate graphs with genbg, we actually do it in parallel using multiple threads.
+The tool can be given arguments \codee{r/m} so that it only generates subset \codee{r} from subsets between $0$ and \codee{m}$-1$.
+For example, to split it evenly between 4 threads, we give the first thread 0/4, the second thread 1/4, the third thread 2/4, and finally the fourth thread 3/4.
+We then pipe the results to multig in each thread in parallel.
+This makes the time it takes to generate the graphs roughly $t$-times faster, where $t$ is the number of threads used, assuming that there are $t$ available cores in the system.
 
+When multigraphs are generated, we can optionally save them into a database.
+Already generated multigraphs can be fetched from the database when needed, nearly for free in terms of time.
+Similarly, LCL problems can also be saved into the database, and automatically fetched from there.
+
+In our implementation, finding counterexamples for multiple LCL problems is done in parallel, utilizing all logical cores of the system.
+This can be done quite trivially, as different instances of finding counterexamples do not really depend on each other.
+They only depend on the multigraphs to generate SAT problems, which can be accessed safely with read-only access.

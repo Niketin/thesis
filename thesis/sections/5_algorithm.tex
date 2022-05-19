@@ -227,12 +227,6 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
     Thus, $N_1$ is connected.
 \end{proof}
 
-%\begin{figure}[H]
-% \centering
-% \includegraphics[]{example-image-duck}
-% \caption{\todo{Illustration of k-lift using Theorem \ref{lem:lcl_unsolvability:from_klift_to_simple}}}
-% \label{fig:duck2}
-%\end{figure}
 
 \begin{figure}[H]
     \subcaptionbox{
@@ -257,21 +251,6 @@ If an LCL problem $\Pi$ is not solvable in PN network $N$, then it is also not s
 \end{figure}
 
 
-%% This is more like an instruction on how to build the network, not a proof or is it?
-
-    % Let $N=(V, P, p)$ be a PN network with multiple connections.
-    % Let $m(u, v)$ be the number of connections between any nodes $u, v \in V$.
-    % Let $k=\max {m(u, v) | u, v \in V}$ i.e. the maximum number of multiple connections.
-    % \footnote{\todo{Is the "maximum number of multiple connections" ambiguous? Does it appear as the highest count of parallel connections or as the total number of multiple connections in the network?}}
-
-    %Let's construct a new network $N'=(V', P', p')$ that consists of $k$ copies of $N$.
-    %Initially the network $N'$ is not connected and therefore it is not a valid PN network but lets ignore this for now as the network gets valid soon as we alter it.
-    %For each connection (v', j')
-%
-    %Let $\phi: V' \rightarrow V$ be a surjection such that for each node $v_i \in V'$ where $i=1, 2, ..., k$, $\phi(v_i) = v \in V$.
-    %Next, we will swap the ends of connections such that the network becomes connected and
-    %\todo{Complete this proof}
-% Pi is unsolvable in multiple connection PN network N -> Pi is unsolvable in simple PN network N' (lift of N)
 \begin{lemma} \label{lem:lcl_unsolvability:from_multiple_to_simple}
     If an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections, then it is also not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{lemma}
@@ -288,8 +267,6 @@ Our algorithm outputs a finite connected $(\Delta, \delta)$-biregular multigraph
 With Lemma~\ref{lem:lcl_unsolvability:from_multiple_to_simple}, we get simple networks from networks with multiple connections, but we also need to show how unsolvability in finite networks with cycles imply unsolvability in infinite tree networks.
 Instead of showing this with networks, we do it with graphs.
 With Lemma~\ref{lem:problem_unsolvability_in_graphs}, it immediately applies also to networks.
-%In the LCL formalism, the trees are infinite, so any naive approach of encoding these graphs would not suffice.
-%Instead of generating infinite $(\Delta, \delta)$-biregular trees and finding some finite encoding for them, we can generate finite sized connected $(\Delta, \delta)$-biregular graphs with cycles.
 
 \begin{lemma} \label{lem:from_finite_to_infinite}
     If an LCL problem $\Pi$ is unsolvable in finite connected $(\Delta, \delta)$-biregular graph $G$ with cycles, then it is also unsolvable in some infinite $(\Delta, \delta)$-biregular tree $G'$.

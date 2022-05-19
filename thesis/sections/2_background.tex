@@ -468,18 +468,6 @@ Distributed algorithms are deterministic in this work unless otherwise mentioned
 In other research there might be randomizing involved.
 
 
-%TODO Find a correct place to talk  about execution times if there is any}
-%In the message passing model, one could easily think that the execution time of the algorithm is the standard unit used to measure the performance but this is not true.
-%The message passing model implies that the dominant cost during an execution of a distributed algorithm is the message passing itself
-%\cite{DBLP:books/el/leeuwen90/LamportL90}.
-%This really...
-%TODO continue here
-
-
-
-
-%The following two sections (\ref{sec:port-numbering_model} and \ref{sec:local_model} ) talk about different forms of message passing models that are highly relative to this paper.
-
 \subsection{Port-numbering model} \label{sec:port-numbering_model}
 This section is based on the textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
@@ -639,7 +627,6 @@ Researchers are often interested in different distributed graph problems.
 These problems always have some kind of set of solution.
 As it turns out, many of these problems can be encoded using the node labelings.
 
-%TODO feels like this needs a smooth transition from the previous topic
 Node labelings are a way to associate information with each node $v \in V$.
 It is defined as a function $f\colon V \rightarrow Y$, where $Y$ is an arbitrary set of labels.
 
@@ -799,7 +786,6 @@ Then we say that a distributed algorithm $A$ solves a problem $\Pi$ on a graph f
 Often when we discuss some algorithms solving some problems, we state $\mathcal{F}, \Pi, \Pi'$ and $T$ implicitly.
 For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} implies that $\mathcal{F}$ is bipartite graphs, $\Pi$ is the problem of finding a vertex cover and problem $\Pi'$ is omitted.
 
-%\todo{Continue from here with an example problem and an algorithm that solves it in some graph family given some other problem or omit it.}
 
 \subsection{Covering map} \label{sec:covering_map}
 There exists a limitation to what problems can be solved in a deterministic PN model.
@@ -810,7 +796,6 @@ In this section we discuss a topological concept that can help us to formalize s
 The concept is called \emph{covering map}%
 \footnote{Note that this is not related to the vertex cover problem even though they share the word ``cover''.}.
 Later in this work, we use the concept in proving Lemmas \ref{lem:lcl_unsolvability:from_multiple_to_lift} and \ref{lem:lcl_unsolvability:from_klift_to_simple}.
-%TODO Final check: are they all of the theorems where covering map is used?
 
 First we want to show a definition of \emph{covering} for graphs from the paper
 \cite{DBLP:conf/stoc/Angluin80}:
@@ -955,13 +940,6 @@ In this section we define \emph{Locally checkable labeling (LCL)} problems gener
 This section is intended as an introduction to Section \ref{sec:lcl_problems:biregular} where we introduce an alternative definition of LCL problems that we will be using in this work.
 Briefly, LCL problems are a family of graph problems where a global solution (node labeling) can be verified locally by the individual nodes.
 
-
-%TODO move this commented paragraph to somewhere where we talk about locality and complexity.
-%LCL problems were first introduced in the paper \cite{DBLP:journals/siamcomp/NaorS95} by Moni Naor and Larry Stockmeyer in 1995.
-%The paper laid the groundwork for further researches of the locality of distributed graph problems.
-%\emph{Locality} is the maximum distance each node has to gather information from, in order to choose an output \cite{DBLP:journals/sigact/Suomela20}.
-%Instead of discussing about locality, we can equally talk about round complexity of message passing algorithms \cite{DBLP:journals/sigact/Suomela20}.
-%\todo{talk something about the constant radius and every t-time problem basically has to form the output based on the t-radius neighourhood (the information about the t-radius network the nodes have gathered) }.
 
 \newcommand{\Sigmain}{\Sigma_{\text{in}}}
 \newcommand{\Sigmaout}{\Sigma_{\text{out}}}
