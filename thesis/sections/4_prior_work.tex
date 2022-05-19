@@ -1,15 +1,11 @@
 %!tex root = ../main.tex
 
 \section{Prior work} \label{sec:prior_work}
-%In this section, we discuss the related studies that have been released prior to this work.
-%\todo{\(\leftarrow\) is this sentence needed?}
-%In computer science, we are often interested in finding the best possible algorithm for some computational problem.
 In Section~\ref{sec:prior_work:automation_of_proving}, we generally discuss the \emph{automation of finding} information about the best possible algorithm for a problem, and we briefly discuss what has been previously done on this topic in general.
 In Section~\ref{sec:prior_work:automation_of_proving_in_local_model} we narrow our focus on the subject to the field of distributed computing.
 In addition, we also discuss relevant automated tools that have been developed prior to this work and the complexity classes that are relevant in the LOCAL model.
 
-\subsection{Automation of proving} \label{sec:prior_work:automation_of_proving} %Algorithm synthetization
-%\todo{Maybe start talking more generally, without mentioning anything about LOCAL or LCL, and explain that in computer science, we are looking for }
+\subsection{Automation of proving} \label{sec:prior_work:automation_of_proving}
 Given any computational problem, we want to find the best possible (i.e. optimal) algorithm for the problem.
 We like to learn something new about the computability of the problem in terms of computational complexity, in order to narrow the search for the best algorithm.
 There are usually two things that we would want to discover about a problem.
@@ -44,10 +40,8 @@ Propositional satisfiability solvers (SAT solvers) have been used in various syn
 SAT solvers have been used especially in synthesis of circuits, where one goal is to find optimal Boolean circuits in terms of size.
 For example, Järvisalo et~al.\ \cite{DBLP:conf/sat/JarvisaloKKK12} present a method to encode an ensemble computation problem as a propositional formula.
 The encoding is then fed to a SAT solver to obtain either a working circuit design for the ensemble computation problem or a proof of nonexistence.
-We use SAT solvers in our implementation to find negative results, and we will talk more about them in Section \ref{} (\todo{Add reference to section where we explain SAT})
+We use SAT solvers in our implementation to find negative results, and we will talk more about them in Sections~\ref{sec:implementation:sat} and~\ref{sec:implementation:our_sat}.
 
-%\todo{algorithm synthesis is by no means easy, it is often undecidable or bla bla bla, check the väikkäri}
-%"given a specification of the desired behavior, let the computer find an algorithm that matches the specification"\cite{DBLP:phd/basesearch/Rybicki16}
 
 \subsection{Automation of proving in the LOCAL model} \label{sec:prior_work:automation_of_proving_in_local_model}
 
