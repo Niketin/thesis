@@ -15,7 +15,7 @@ In Section~\ref{sec:implementation:generating_lcl_problems}, we discuss how we g
 Lastly, we discuss some optimizations in our implementation in Section \ref{sec:implementation:optimizations}.
 
 
-\subsection{Generating multigraphs} \label{sec:implementation:generating_multigraphs}
+\subsection{Generating Multigraphs} \label{sec:implementation:generating_multigraphs}
 We want to generate $(\Delta, \delta)$-biregular multigraphs, but how can we do it?
 A naive approach to this would be generating all possible multigraphs, and then filtering out graphs that are not in the graph family.
 This is a very bad idea, and we show why.
@@ -276,7 +276,7 @@ In Table~\ref{tbl:graph_count_nonisomorphicasdasd}, we have listed the number of
   \label{tbl:graph_count_nonisomorphicasdasd}
 \end{table}
 
-\subsection{Boolean satisfiability problem} \label{sec:implementation:sat}
+\subsection{Boolean Satisfiability Problem} \label{sec:implementation:sat}
 
 Boolean satisfiability problem (SAT) is the problem of determining, if a propositional formula can be made true by assigning truth values to its variables.
 A propositional formula is \emph{satisfiable}, if there exists an assignment that results in true, otherwise it is \emph{unsatisfiable}.
@@ -295,7 +295,7 @@ However, there are many programs called SAT solvers, that attempt to solve SAT a
 These solvers usually accept a propositional formula in DIMACS CNF format~\cite{DIMACS:CNF}.
 It is a text format that represents a propositional formula in CNF form.
 
-\subsection{Our SAT encoding} \label{sec:implementation:our_sat}
+\subsection{Our SAT Encoding} \label{sec:implementation:our_sat}
 
 
 The function $\textsc{SolutionExists}(\Pi, g)$ checks if an LCL problem $\Pi$ is unsolvable in some $(\Delta, \delta)$-biregular multigraph $g$.
@@ -398,7 +398,7 @@ After obtaining the SAT problem in DIMACS CNF, we feed the problem into a SAT so
 In our implementation, we use the SAT solver called Kissat~\cite{BiereFazekasFleuryHeisinger-SAT-Competition-2020-solvers, Kissat}, which is the winner in the main track of the SAT Competition 2020~\cite{SatCompetition2020}.
 
 
-\subsection{Generating LCL problems} \label{sec:implementation:generating_lcl_problems}
+\subsection{Generating LCL Problems} \label{sec:implementation:generating_lcl_problems}
 
 When we generate LCL problems, we generate whole class of LCL problems.
 A class of LCL problems is a set of LCL problems where the problems share common attributes.
