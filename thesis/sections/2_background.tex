@@ -370,7 +370,7 @@ For an example of a ball, see the Figure \ref{fig:graph5}.
 \end{figure}
 
 
-\subsection{Distributed computing} \label{sec:distributed_computing}
+\subsection{Distributed Computing} \label{sec:distributed_computing}
 Executing a computer program in several identical or different computers is called distributed computing
 \cite{DBLP:books/el/leeuwen90/LamportL90}.
 It is similar to running a computer program that contains multiple concurrent tasks, in a single computer, but in distributed computing there are higher level tasks that are distributed to multiple different computers.
@@ -468,7 +468,7 @@ Distributed algorithms are deterministic in this work unless otherwise mentioned
 In other research there might be randomizing involved.
 
 
-\subsection{Port-numbering model} \label{sec:port-numbering_model}
+\subsection{Port-Numbering Model} \label{sec:port-numbering_model}
 This section is based on the textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
 
 Port-numbering model (PN model) is a rather weak model of computation that inherits from the message passing model.
@@ -499,7 +499,7 @@ When all nodes have stopped, the algorithm is considered as stopped.
 The running time of the algorithm $A$ is the total communication rounds that took place.
 
 
-\subsection{Formalized port-numbering model} \label{sec:formalized_pn_model}
+\subsection{Formalized Port-Numbering Model} \label{sec:formalized_pn_model}
 In Section \ref{sec:port-numbering_model} we briefly and informally introduced the PN model.
 Now in this section and in the following subsections we give a more formal definition to the PN model.
 As in the previous section, this section is based on the textbook \cite{HirvonenSuomelaDistAlg2020} unless otherwise mentioned.
@@ -590,7 +590,7 @@ For example the network is simple in Figure \ref{fig:formal_pn2:a}.
 \end{figure}
 
 
-\subsubsection{Underlying graph} \label{sec:underlying_graph}
+\subsubsection{Underlying Graph} \label{sec:underlying_graph}
 
 Each simple PN network $N=(V,P,p)$ has an \emph{underlying graph} $G=(V,E)$.
 An edge $\{v, w\}$ is part of the underlying network $G$ if and only if $v$ is connected to $w$, that is, $E = \{ \{v, w\} \mid  p((v, i)) = (w, j) \}$.
@@ -622,7 +622,7 @@ Throughout this work, we assume that the introduced networks are connected.
 \end{figure}
 
 %\subsubsection{Node labelings}
-\subsubsection{Distributed graph problems} \label{sec:dist_graph_probl}
+\subsubsection{Distributed Graph Problems} \label{sec:dist_graph_probl}
 Researchers are often interested in different distributed graph problems.
 These problems always have some kind of set of solution.
 As it turns out, many of these problems can be encoded using the node labelings.
@@ -697,7 +697,7 @@ On the other hand, the node labeling in Figure \ref{fig:distributed_graph_proble
 
 
 
-\subsubsection{Distributed algorithms in the PN model}
+\subsubsection{Distributed Algorithms in the PN Model}
 
 \newcommand{\algin}{\operatorname{Input}}
 \newcommand{\algstates}{\operatorname{States}}
@@ -734,7 +734,7 @@ The function is given a node's current state and a $d$-element tuple of received
 In return, it gives a state value that represents the node's new state.
 Additionally, whenever the current state is an output state $x \in \algout$, we require that the function $\algrecv_{A,d}$ returns the exact same state $x$.
 
-\subsubsection{Execution of PN algorithm}
+\subsubsection{Execution of PN Algorithm}
 
 As formerly mentioned, a distributed algorithm $A$ can be described as a state machine.
 Correspondingly the \emph{execution} of $A$ can be described as the history of states of each node of a PN network $N=(V, P, p)$.
@@ -769,7 +769,7 @@ Now that we know when $A$ stops, we define what is considered as the output of $
 Assuming that $A$ stops in time $T$, we define the \emph{output} of $A$ as $g=x_T$.
 With the same assumption, we define the \emph{local output} of node $u$ as $x_t(u)$.
 
-\subsubsection{Solving graph problems in PN}
+\subsubsection{Solving Graph Problems in PN}
 As this thesis focuses strongly on graph problems, it is necessary to define what it means for a distributed algorithm to solve a graph problem.
 
 A family of graphs is a set of graphs with same kind of properties.
@@ -787,7 +787,7 @@ Often when we discuss some algorithms solving some problems, we state $\mathcal{
 For example \emph{algorithm $A$ finds a vertex cover in any bipartite graph} implies that $\mathcal{F}$ is bipartite graphs, $\Pi$ is the problem of finding a vertex cover and problem $\Pi'$ is omitted.
 
 
-\subsection{Covering map} \label{sec:covering_map}
+\subsection{Covering Map} \label{sec:covering_map}
 There exists a limitation to what problems can be solved in a deterministic PN model.
 The limitation comes from an underlying graph of a PN network being symmetric~%
 \mcite{DBLP:conf/focs/Linial87, DBLP:journals/siamcomp/Linial92}.
@@ -919,7 +919,7 @@ The networks $N_1$ and $N_2$ do not have loops, but instead they connect to othe
 This symmetricity implies that each node ends up in an identical state with its symmetrical equivalent after each communication round, assuming the input problem $\Pi$ does not break the symmetry.
 For example, when node $a_2$ from network $N_1$ uses its port 2, it cannot determine whether it is communicating with node $a_1$ or with itself, as $a_1$ and $a_2$ are always in identical states.
 
-\subsection{LOCAL model} \label{sec:local_model}
+\subsection{LOCAL Model} \label{sec:local_model}
 The LOCAL model is another message passing model that is used in the field of distributed computation.
 It inherits from the PN model, hence most of the definition is already done in Section \ref{sec:formalized_pn_model}.
 The difference is that the graph problem $\Pi'$, given as an input, is always predetermined.
@@ -935,7 +935,7 @@ This amount of time is enough for any node in $G$ to gather complete information
 With the complete information of everything, each node can compute the whole solution and output its own part of the solution.
 Because of this, researchers are usually interested in complexity classes below the $\mathcal{O}(\operatorname{diameter}(G))$.
 
-\subsection{Locally checkable labeling problems} \label{sec:lcl_problems}
+\subsection{Locally Checkable Labeling Problems} \label{sec:lcl_problems}
 In this section we define \emph{Locally checkable labeling (LCL)} problems generally.
 This section is intended as an introduction to Section \ref{sec:lcl_problems:biregular} where we introduce an alternative definition of LCL problems that we will be using in this work.
 Briefly, LCL problems are a family of graph problems where a global solution (node labeling) can be verified locally by the individual nodes.
@@ -984,7 +984,7 @@ Listing the locally consistent labelings of each problem would result in substan
 It is clear that defining the whole set $C$ explicitly in this formalism would be a substantial amount of work, at least when radius $r$ is high.
 Therefore, we depend on another formalism of LCL problems that provides a more compact representation of the problems.
 
-\subsection{LCL problems in biregular graphs} \label{sec:lcl_problems:biregular}
+\subsection{LCL Problems in Biregular Graphs} \label{sec:lcl_problems:biregular}
 In this section, we will introduce an alternative formalism of LCL problems used in this work, that originates from paper \cite{DBLP:conf/podc/Brandt19}, and recently it has been seen in the papers including \cite{DBLP:conf/podc/Olivetti20} and \cite{DBLP:journals/sigact/Suomela20}.
 We will be referring to these papers in the following definitions.
 
