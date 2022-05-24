@@ -9,3 +9,215 @@
 % \caption{\todo{Illustration of k-lift using Theorem \ref{lem:lcl_unsolvability:from_klift_to_simple}}}
 % \label{fig:duck2}
 %\end{figure}
+
+In this section, we will discuss the results from our implementation.
+We answer to Research question~\ref{research_question:3} in Section~\ref{sec:results:improving_bounds} by finding new lower bounds for LCL problems that have already been classified prior this work.
+In Section~\ref{sec:results:classifying_large_classes}, we answer to Research question~\ref{research_question:4} by finding new lower bounds for classes of LCL problems.
+We use the implementation~\cite[commit \codee{46ab4cc917}]{NonconstantLclClassifier2022} in its current state as of the time of writing this thesis.
+When we say \codee{bin}, we refer to the compiled binary of the implementation.
+Throughout this section, we assume that the results are obtained in a modern computer with AMD Ryzen 9 3900X 12-core 24-thread CPU, and 32 GB of RAM.
+
+We do not use the caching feature of our implementation, as fetching already generated problem classes and multigraphs from the disk is substantially faster than generating them.
+We want to give the measurements without pre-generated data unless we target some specific problems, like in Section~\ref{sec:results:improving_bounds}.
+
+
+
+%We will answer to Research questions 3 by using our implementation for various LCL problems and showing their
+%
+%and 4 by showing classifications
+%
+\subsection{Improving lower bounds of LCL problems}\label{sec:results:improving_bounds}
+There are two LCL problem classes in the database, $(\Delta, \delta, \lambda) = (3,2,3)$ and $(\Delta, \delta, \lambda) = (3,2,2)$.
+The problems in the class $(3,2,2)$ are already classified with tight deterministic bounds.
+This is not the case in class $(3,2,3)$, therefore we try to find new deterministic lower bounds for the problems using our implementation.
+
+We use the latest database dump~\cite{DatabaseDump} of the database~\cite{Tereshchenko2021,LclClassifierAalto,LclClassifierGithub}.
+In the class $(3,2,3)$, there are 7735 unique LCL-problems after purging and normalizing the problems, as we can see from Table~\ref{tbl:lcl_problem_classes}.
+The database also agrees with the number of problems.
+
+We are interested in the problems that have a constant ($\mathcal{O}(1)$) deterministic lower bound and a non-constant upper-bound, as these are the only problems for which we can possibly find a better lower bound of non-constant i.e. $\Omega(\log^*n)$.
+When we remove problems with non-constant deterministic lower bounds, we get 6538 problems with a constant deterministic lower bound.
+Out of these problems, we need to remove problems with constant upper bound, as these problems already have a tight constant bound, i.e. $\Theta(1)$.
+After the removal, we have only 66 problems left.
+The problems can be fetched from the database to a file \codee{problems.txt} using the command \verb|bin fetch_problems 3 2 3 <database_address> > problems.txt|, assuming that there is a PostgreSQL database running in the address \verb|<database_address>| with the data from the dump.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[]{example-image-duck}
+% \caption{\todo{Maybe add a figure that explains the upper and lower bounds we want the problems to have. }}
+% \label{fig:duck2}
+% \end{figure}
+
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape,
+  columns=fixed,
+  fontadjust=true,
+  basewidth=0.5em
+}
+
+We execute our implementation using the command \codee{time} from the shell \codee{Zsh} to measure the elapsed real time.
+The whole command is
+\begin{lstlisting}
+time bin find <$\text{n}_{\text{low}}$> <$\text{n}_{\text{high}}$> from_stdin < problems.txt
+\end{lstlisting}
+where $n_\text{low}$ and $n_\text{high}$ are substituted with smallest and highest number of vertices we want for the graphs, respectively.
+We run the command as follows in Table~\ref{tbl:results:asd1}.
+
+\begin{table}[H]
+    \centering
+    %\begin{adjustbox}{width={\textwidth},keepaspectratio}%
+    \begin{tabular}{rrrrrr}
+        \toprule
+        &&& \multicolumn{2}{c}{Time (s)} \\
+        \cmidrule{4-5}
+        $n_\text{low}$ & $n_\text{high}$ & \# of new lower bounds & Generate graphs & SAT\\
+        \midrule
+        %&&&&& \multicolumn{2}{c}{Trees} \\
+        %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
+        1  & 5  & 1 & 0.031 & 0.002\\
+        6  & 10 & 7 & 0.030 & 0.004\\
+        11 & 15 & 8 & 0.062 & 0.015\\
+        16 & 20 & 7 & 0.140 & 0.080\\
+        21 & 25 & 7 & 3.758 & 0.510\\
+        26 & 30 & 7 & 137.5 & 3.980\\
+        %\vdots & \vdots &\vdots&\vdots\\
+        \bottomrule
+    \end{tabular}
+    %\end{adjustbox}
+    \caption{%
+    Executing the command multiple times with different vertex ranges gives us new lower bounds.
+    We can also see how long it takes to generate multigraphs, and also how long it takes to encode and solve SAT problems.
+    }
+    \label{tbl:results:asd1}
+\end{table}
+
+The executions from Table~\ref{tbl:results:asd1} were all executed with an identical input problem set, therefore some problems can be as a result in multiple executions.
+When we consider only the smallest graph, where the problem was found to be unsolvable, there are only 9 distinct problems left.
+The problems are listed in Table~\ref{tbl:results:asd2}.
+
+\begin{table}[H]
+    \centering
+    \begin{adjustbox}{width={\textwidth},keepaspectratio}%
+    \begin{tabular}{rlllllll}
+        \toprule
+        &&& \multicolumn{2}{c}{Lower bound} \\
+        \cmidrule{4-5}
+        $n$ & $A$ & $P$ & Old & New & Upper bound\\
+        \midrule
+        %&&&&& \multicolumn{2}{c}{Trees} \\
+        %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
+        5  & AAA AAB BBC BCC     & AB CC       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC BCC     & AC BB       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC BCC     & AC BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC BCC CCC & AC BB       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC CCC     & AC BB       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB BCC         & AC BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA ABC BBC         & AB BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA BBC             & AB BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
+        15 & AAA BBC             & AB AC BB CC & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log^* n)$\\
+        %\vdots & \vdots &\vdots&\vdots&\vdots&\vdots&\vdots\\
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+    \caption{%
+    New lower bounds for LCL problems from the class $(3,2,3)$.
+    Here, the column $n$ tells the size of the smallest multigraph, in which the problem is unsolvable.
+    The last column lists the current known upper bound from the database.
+    }
+    \label{tbl:results:asd2}
+\end{table}
+
+Next, in Table~\ref{tbl:results:asd3}, we list all the multigraphs in which we found the problems to be unsolvable.
+
+\begin{table}[H]
+    \centering
+    %\begin{adjustbox}{width={\textwidth},keepaspectratio}%
+    \begin{tabular}{ll|r|r|r|r|r|r}
+        \toprule
+        && \multicolumn{6}{c}{$n$} \\
+        \cmidrule{3-8}
+        $A$ & $P$ & 5&10&15&20&25&30\\
+        \midrule
+        %&&&&& \multicolumn{2}{c}{Trees} \\
+        %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
+        AAA AAB BBC BCC     & AB CC       & 1 &   &          &     &     &    \\
+        AAA BBC             & AB AC BB CC &   &   & $9$      &     &     &    \\
+        AAA AAB ABC BCC     & AC BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA AAB ABC BCC     & AC BB       &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA AAB ABC BCC CCC & AC BB       &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA AAB ABC CCC     & AC BB       &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA AAB BCC         & AC BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA ABC BBC         & AB BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA BBC             & AB BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        %\vdots & \vdots &\vdots&\vdots&\vdots&\vdots&\vdots\\
+        \bottomrule
+    \end{tabular}
+    %\end{adjustbox}
+    \caption{%
+    List of multigraphs in which the problems are unsolvable.
+    The multigraphs are listed as identifiers under each graph size $n$, and these numbers are specific to the size.
+    The identifiers under sizes $20$, $25$ and $30$ are too large to be shown in this table, thus we use sets $X,Y,Z$.
+    The sizes of these sets are $|X|=12, |Y|=66$ and $|Z|=424$.
+    }
+    \label{tbl:results:asd3}
+\end{table}
+
+We visualize the multigraphs of sizes $n \in \{5,10,15\}$ from Table~\ref{tbl:results:asd3}.
+These graphs can be seen in Figure~\ref{fig:results:graphs}.
+
+\begin{figure}[H]
+    \subcaptionbox{
+        $n=5$, $id=1.$
+      \label{fig:results:graphs:n5_1}
+    }%
+    {
+      \centering
+      \includegraphics[scale=0.4]{diagrams/results_multigraph_n5_1.pdf}
+    }
+    \hfill
+    \subcaptionbox{
+        $n=10$, $id=1.$
+      \label{fig:results:graphs:n10_1}
+    }%
+       {
+      \centering
+      \includegraphics[scale=0.4]{diagrams/results_multigraph_n10_1.pdf}
+    }
+    \hfill
+    \subcaptionbox{
+        $n=15$, $id=5.$
+      \label{fig:results:graphs:n15_5}
+    }%
+       {
+      \centering
+      \includegraphics[scale=0.4]{diagrams/results_multigraph_n15_5.pdf}
+    }
+    \hfill
+    \subcaptionbox{
+        $n=15$, $id=9.$
+      \label{fig:results:graphs:n15_9}
+    }%
+       {
+      \centering
+      \includegraphics[scale=0.4]{diagrams/results_multigraph_n15_9.pdf}
+    }
+    \hfill
+    \subcaptionbox{
+        $n=15$, $id=12$.
+      \label{fig:results:graphs:n15_12}
+    }%
+       {
+      \centering
+      \includegraphics[scale=0.4]{diagrams/results_multigraph_n15_12.pdf}
+    }
+    \caption{All multigraphs from Table~\ref{tbl:results:asd3}, where $n \in \{5,10,15\}.$}
+    \label{fig:results:graphs}
+  \end{figure}
+
+
+\subsection{Finding New Lower Bounds For Classes of LCL Problems} \label{sec:results:classifying_large_classes}
+In this section, we try to find new lower bounds for various classes of LCL problems, with the focus on measuring performance.
+We give the execution times of each execution similarly we did in Table~\ref{tbl:results:asd1}.
+
+
