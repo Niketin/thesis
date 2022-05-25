@@ -131,27 +131,28 @@ We can find a formula for all possible values of $n$.
 \end{align*}
 
 When we fix $\Delta$ and $\delta$, the possible numbers for $n$ are all integers $\frac{x(\Delta + \delta)}{\delta}$, where $x$ is any positive integer.
-Not necessarily all values of $x$ result on an integer, but this is more than enough.
-We can iterate through all $x$ up to some upper bound, and consider only values of $n$ that are integers, as we do in Table \ref{tbl:values_of_x}.
+However, there is one problem.
+Not necessarily all values of $x$ result on an integer.
+We can ensure integer solutions by assigning $x=y\frac{\delta}{\gcd(\delta, \Delta)}$, where $y$ is any positive integer.
+Then we iterate through all $y$ up to some upper bound, as we do in Table \ref{tbl:values_of_x}.
 We then compute all valid pairs of $(n_A, n_B)$ in Table \ref{tbl:valid_pairs}.
 
 \begin{table}[H]
   \parbox{.45\linewidth}{
   \centering
-  \begin{tabular}{rr}
+  \begin{tabular}{rrr}
     \toprule
-    $x$&$n=\frac{x(\Delta + \delta)}{\delta}$\\
+    $y$&$x=y\frac{\delta}{\gcd(\delta, \Delta)}$&$n=y\frac{(\Delta + \delta)}{\gcd(\delta, \Delta)}$\\
     \midrule
-    1 & 2.5 \\
-    \textbf{2} & \textbf{5}   \\
-    3 & 7.5 \\
-    \textbf{4} & \textbf{10}  \\
-    \vdots & \vdots \\
+    1 & 2 & 5 \\
+    2 & 4 & 10 \\
+    3 & 6 & 15 \\
+    4 & 8 & 20 \\
+    \vdots & \vdots & \vdots \\
     \bottomrule
   \end{tabular}
   \caption{
-    All values of $x$ and $n$ for $(3,2)$-biregular multigraph.
-    All rows, where $n$ is an integer, are bolded.
+    All values of $y$, $x$, and $n$ for $(3,2)$-biregular multigraph.
   }
   \label{tbl:values_of_x}
   }
@@ -196,7 +197,7 @@ For our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we use t
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{r|rrrr}
+  \begin{tabular}{r|r|rrr}
     \toprule
     $n$&Simple graphs & Nonisomorphic simple graphs & Time (s)\\
     \midrule
