@@ -3,6 +3,14 @@
 \section{Results} \label{sec:results}
 %TODO Show all results that have been found while doing the research, like different problems that have now new lower bounds.
 
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape,
+  columns=fixed,
+  fontadjust=true,
+  basewidth=0.5em
+}
+
 %\begin{figure}[H]
 % \centering
 % \includegraphics[]{example-image-duck}
@@ -11,15 +19,27 @@
 %\end{figure}
 
 In this section, we will discuss the results from our implementation.
-We answer to Research question~\ref{research_question:3} in Section~\ref{sec:results:improving_bounds} by finding new lower bounds for LCL problems that have already been classified prior this work.
+We answer to Research question~\ref{research_question:3} in Section~\ref{sec:results:improving_bounds} by finding new non-constant lower bounds for LCL problems that have already been classified with constant lower bounds prior this work.
 In Section~\ref{sec:results:classifying_large_classes}, we answer to Research question~\ref{research_question:4} by finding new lower bounds for classes of LCL problems.
-We use the implementation~\cite[commit \codee{46ab4cc917}]{NonconstantLclClassifier2022} in its current state as of the time of writing this thesis.
+We use the implementation~\cite[commit \codee{c244e8e683}]{NonconstantLclClassifier2022} in its current state as of the time of writing this thesis.
 When we say \codee{bin}, we refer to the compiled binary of the implementation.
 Throughout this section, we assume that the results are obtained in a modern computer with AMD Ryzen 9 3900X 12-core 24-thread CPU, and 32 GB of RAM.
 
 We do not use the caching feature of our implementation, as fetching already generated problem classes and multigraphs from the disk is substantially faster than generating them.
 We want to give the measurements without pre-generated data unless we target some specific problems, like in Section~\ref{sec:results:improving_bounds}.
 
+Earlier in Section~\ref{sec:lcl_problems:biregular}, we used the following notation to present the sets $A$ and $P$ of maximal independent set.
+\begin{align*}
+    %\Sigma &= \mathrm{\{I,O,P\}}, \\
+    A &= \mathrm{\{\{I,I,I\},\{P,O,O\}\}}, \\
+    P &= \mathrm{\{\{I,P\},\{I,O\},\{O,O\}\}}.
+  \end{align*}
+In the following sections, all LCL problems are presented in an alternative format, where each label in a label configuration are concatenated, and each label configuration is separated by a space.
+Active and passive configurations are also concatenated and separated by a semicolon.
+Maximal independent set would be encoded as
+\lstinline{III POO; IP IO OO}.
+The problems are also normalized, as explained in Section~\ref{sec:implementation:generating_lcl_problems}.
+Therefore, the problem is actually encoded as \lstinline{AAA BBC; AB AC BB}.
 
 
 %We will answer to Research questions 3 by using our implementation for various LCL problems and showing their
@@ -27,8 +47,8 @@ We want to give the measurements without pre-generated data unless we target som
 %and 4 by showing classifications
 %
 \subsection{Improving lower bounds of LCL problems}\label{sec:results:improving_bounds}
-There are two LCL problem classes in the database, $(\Delta, \delta, \lambda) = (3,2,3)$ and $(\Delta, \delta, \lambda) = (3,2,2)$.
-The problems in the class $(3,2,2)$ are already classified with tight deterministic bounds.
+There are two LCL problem classes in the database that are for non-directed non-rooted trees---$(\Delta, \delta, \lambda) = (3,2,3)$ and $(\Delta, \delta, \lambda) = (3,2,2)$.
+All 38 problems of the class $(3,2,2)$ are already classified with tight deterministic bounds.
 This is not the case in class $(3,2,3)$, therefore we try to find new deterministic lower bounds for the problems using our implementation.
 
 We use the latest database dump~\cite{DatabaseDump} of the database~\cite{Tereshchenko2021,LclClassifierAalto,LclClassifierGithub}.
@@ -39,7 +59,7 @@ We are interested in the problems that have a constant ($\mathcal{O}(1)$) determ
 When we remove problems with non-constant deterministic lower bounds, we get 6538 problems with a constant deterministic lower bound.
 Out of these problems, we need to remove problems with constant upper bound, as these problems already have a tight constant bound, i.e. $\Theta(1)$.
 After the removal, we have only 66 problems left.
-The problems can be fetched from the database to a file \codee{problems.txt} using the command \verb|bin fetch_problems 3 2 3 <database_address> > problems.txt|, assuming that there is a PostgreSQL database running in the address \verb|<database_address>| with the data from the dump.
+The problems can be fetched from the database to a file \codee{problems.txt} using the command \verb|bin fetch_problems 3 2 3 <database_address> > problems.txt|, assuming that there is a PostgreSQL database in the address \verb|<database_address>| with the data from the dump.
 
 % \begin{figure}[H]
 % \centering
@@ -48,20 +68,12 @@ The problems can be fetched from the database to a file \codee{problems.txt} usi
 % \label{fig:duck2}
 % \end{figure}
 
-\lstset{
-  basicstyle=\ttfamily,
-  mathescape,
-  columns=fixed,
-  fontadjust=true,
-  basewidth=0.5em
-}
-
-We execute our implementation using the command \codee{time} from the shell \codee{Zsh} to measure the elapsed real time.
-The whole command is
+We execute our implementation using the command
 \begin{lstlisting}
-time bin find <$\text{n}_{\text{low}}$> <$\text{n}_{\text{high}}$> from_stdin < problems.txt
+bin find <$\text{n}_{\text{low}}$> <$\text{n}_{\text{high}}$> --stats from_stdin < problems.txt
 \end{lstlisting}
 where $n_\text{low}$ and $n_\text{high}$ are substituted with smallest and highest number of vertices we want for the graphs, respectively.
+The option \lstinline{--stats} gives us the execution times from generating graphs, and encoding/solving SAT problems.
 We run the command as follows in Table~\ref{tbl:results:asd1}.
 
 \begin{table}[H]
@@ -156,7 +168,7 @@ Next, in Table~\ref{tbl:results:asd3}, we list all the multigraphs in which we f
     %\end{adjustbox}
     \caption{%
     List of multigraphs in which the problems are unsolvable.
-    The multigraphs are listed as identifiers under each graph size $n$, and these numbers are specific to the size.
+    The multigraphs are listed as identifiers under each graph size $n$, and these identifiers are each specific to the size $n$.
     The identifiers under sizes $20$, $25$ and $30$ are too large to be shown in this table, thus we use sets $X,Y,Z$.
     The sizes of these sets are $|X|=12, |Y|=66$ and $|Z|=424$.
     }
@@ -177,9 +189,10 @@ These graphs can be seen in Figure~\ref{fig:results:graphs}.
     }
     \hfill
     \subcaptionbox{
-        $n=10$, $id=1.$
+        $n=10, id=1.$
       \label{fig:results:graphs:n10_1}
     }%
+    [0.20\textwidth]
        {
       \centering
       \includegraphics[scale=0.4]{diagrams/results_multigraph_n10_1.pdf}
@@ -218,6 +231,77 @@ These graphs can be seen in Figure~\ref{fig:results:graphs}.
 
 \subsection{Finding New Lower Bounds For Classes of LCL Problems} \label{sec:results:classifying_large_classes}
 In this section, we try to find new lower bounds for various classes of LCL problems, with the focus on measuring performance.
-We give the execution times of each execution similarly we did in Table~\ref{tbl:results:asd1}.
+We give the execution times of each execution similarly we did in Table~\ref{tbl:results:asd1}, except this time we exclude all problems with new lower bounds before executing the implementation with higher graph sizes.
+We also use only the exact graph sizes that are possible with each problem class, as explained in Section~\ref{sec:implementation:generating_multigraphs}.
+For example, there are only multigraphs of sizes $5, 10, 15, 20, 25, 30, ...$, with the problem class $(3,2,3)$.
+In this section, we use a cache for problems, therefore only the first graph size for each example has the true generation time for problems, and all consequent entries in each table show the time it takes to fetch the problems from the cache.
 
+Our first experiment with problem class $(7,5,2)$ is a failure, as seen in Table~\ref{tbl:results:new_lower_bounds_for_classes:7_5_2}.
+We could not generate even the smallest multigraphs without the process being terminated.
+The class has 7770 unique problems.
+%For comparison, the class $(3,2,3)$ has 7735 problems.
+We thought that the class would be a good starting point, as previously in Section~\ref{sec:results:improving_bounds}, we ran the implementation with the class $(3,2,3)$, which has a similar number of problems (7735).
+It seems that the degrees $\Delta=7$ and $\delta=5$ along with graph size $n=12$ results in too large set of graphs.
+Our implementation cannot handle such cases, so there is a lot of room for improvements in the part of graph generation.
+\begin{table}[H]
+    \centering
+    %\begin{adjustbox}{width={\textwidth},keepaspectratio}%
+    \begin{tabular}{rrrrrr}
+        \toprule
+        && \multicolumn{3}{c}{Time (s)} \\
+        \cmidrule{3-5}
+        $n$ & \# of new lower bounds & Generate problems & Generate graphs & SAT\\
+        \midrule
+        %&&&&& \multicolumn{2}{c}{Trees} \\
+        %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
+        12  & ?  & 0.068  & $>359$  & ?\\
+        24 & ? & ? & ? & ? \\
+        36 & ? & ? & ? & ? \\
+        %\vdots & \vdots &\vdots&\vdots\\
+        \bottomrule
+    \end{tabular}
+    %\end{adjustbox}
+    \caption{%
+    Failed experiment with the problem class $(7,5,2)$.
+    The execution terminated early during generating graphs, probably because lack of memory.
+    }
+    \label{tbl:results:new_lower_bounds_for_classes:7_5_2}
+\end{table}
 
+Our second experiment is with problem class $(6,4,2)$.
+We kept the label count same as in the first experiment, but we lower each degree by one.
+Thus, there are only 1616 problems in the class.
+The results can be seen in Table~\ref{tbl:results:new_lower_bounds_for_classes:6_4_2}.
+This time we got new lower bounds at least for some problems.
+\begin{table}[H]
+    \centering
+    %\begin{adjustbox}{width={\textwidth},keepaspectratio}%
+    \begin{tabular}{rrrrrr}
+        \toprule
+        && \multicolumn{3}{c}{Time (s)} \\
+        \cmidrule{3-5}
+        $n$ & \# of new lower bounds & Generate problems & Generate graphs & SAT\\
+        \midrule
+        %&&&&& \multicolumn{2}{c}{Trees} \\
+        %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
+        5  & 250  & 0.036  & 0.053  & 0.188\\
+        10 & 21 & 0.002 & 0.373 & 47.5 \\
+        15 & ? & $<1$ & $>453$ & ? \\
+        %\vdots & \vdots &\vdots&\vdots\\
+        \bottomrule
+    \end{tabular}
+    %\end{adjustbox}
+    \caption{%
+    New lower bounds for problems from the class $(6,4,2)$.
+    The execution terminates at $n=15$ during the generation of graphs, probably for the same reason it terminated in the first experiment.
+    }
+    \label{tbl:results:new_lower_bounds_for_classes:6_4_2}
+\end{table}
+
+In our Research question~\ref{research_question:4}, we ask if we can make the implementation fast enough to classify large classes of problems.
+The class $(7,5,2)$ with size 7770 was definitely too large for our implementation, because of the high degrees.
+The class $(3,2,3)$ has roughly the same size (7735) and it could be classified using graphs up to size $n=30$.
+On the other hand the class $(6,4,2)$ had only 1616 problems, but we were able to classify the problems using graphs up to size $n=10$.
+It seems that the answer depends a lot on the definition of what is a large class of problems.
+In this thesis, we consider a problem class with over 1000 problems as large.
+With this definition, we get an answer of yes, with some classes.
