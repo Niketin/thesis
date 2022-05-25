@@ -1,7 +1,6 @@
 %!tex root = ../main.tex
 
 \section{Results} \label{sec:results}
-%TODO Show all results that have been found while doing the research, like different problems that have now new lower bounds.
 
 \lstset{
   basicstyle=\ttfamily,
@@ -298,10 +297,13 @@ This time we got new lower bounds at least for some problems.
     \label{tbl:results:new_lower_bounds_for_classes:6_4_2}
 \end{table}
 
-In our Research question~\ref{research_question:4}, we ask if we can make the implementation fast enough to classify large classes of problems.
+In Research question~\ref{research_question:4}, we ask if we can make the implementation fast enough to classify large classes of problems.
 The class $(7,5,2)$ with size 7770 was definitely too large for our implementation, because of the high degrees.
 The class $(3,2,3)$ has roughly the same size (7735) and it could be classified using graphs up to size $n=30$.
 On the other hand the class $(6,4,2)$ had only 1616 problems, but we were able to classify the problems using graphs up to size $n=10$.
 It seems that the answer depends a lot on the definition of what is a large class of problems.
 In this thesis, we consider a problem class with over 1000 problems as large.
 With this definition, we get an answer of yes, with some classes.
+
+The bottleneck that causes our implementation to terminate early is the graph generation.
+We make an observation that the large classes that can be classified fast are the classes with low number of degrees, because then there are only low number of graphs, thus no running out of memory.
