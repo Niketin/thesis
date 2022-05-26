@@ -1,9 +1,28 @@
 %!tex root = ../main.tex
 
-\section{Summary} \label{sec:summary}
+\section{Conclusion} \label{sec:conclusion}
 
-One of our objectives was to automate the proving that an LCL problem is unsolvable in the PN model.
-We presented a novel algorithm that can detect the unsolvability of the problem first in finite connected $(\Delta, \delta)$-biregular multigraphs by generating all non-isomorphic multigraphs of this family in the sizes $n_\text{low}, ..., n_\text{high}$.
-This was further shown to be proof of unsolvability of the problem in PN networks that had the PN model
-\todo{}
-In this thesis, we have found satisfying answers to each of our research questions.
+I present a novel algorithm that can detect if an LCL problem does not have a solution in finite connected $(\Delta, \delta)$-biregular multigraphs.
+Then I showed that if the problem does not have a solution in the graph family, it is also unsolvable in the PN model.
+
+I also prove that if an LCL problem is not solvable in the PN model, it cannot be solved in constant time in the LOCAL model.
+Thus, our algorithm can automatically prove that an LCL problem is not solvable in constant time in the LOCAL model i.e.\ giving it a lower bound of $\Omega(\log^* n)$.
+
+In order to automatically find new lower bounds in practice, I present an implementation of the algorithm.
+With the implementation, I find 9 LCL problems with new lower bound and as a consequence, the problem
+\begin{align*}
+    A&=\text{AAA BBC},\\
+    P&=\text{AB AC BB CC},
+\end{align*}
+is now classified with a tight bound of $\Theta(\log^* n)$.
+The implementation uses the state-of-the-art graph generation and SAT solving software, in addition to parallelization, to be able to classify large LCL problem classes.
+
+\subsection{Future Work}
+
+Concerning the performance of the implementation, there is still room for improvements.
+The graph generation is a huge bottleneck and generating large number of graphs causes the implementation to terminate.
+If this can be solved, the implementation could classify problems using higher degree multigraphs.
+The implementation in its current state does not fully support high performance computing.
+With a support for high performance computing, we could potentially find even more interesting results than what we have found.
+We could also analyze more closely the problems and multigraphs in which the problems are unsolvable.
+This could reveal some general patterns or ideas for more classifiers.

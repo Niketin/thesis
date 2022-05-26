@@ -61,7 +61,7 @@ However, this is not true when we consider only $(\Delta, \delta)$-biregular mul
 Clearly the number of multiple edges is bounded by $\max(\Delta, \delta)$.
 
 The numbers of incident edges for nodes of parts $A$ and $B$ are $\Delta$ and $\delta$, respectively.
-How do we know the number of nodes in each part i.e. what are the possible pairs of positive integers that sum up to $n$?
+How do we know the number of nodes in each part i.e.\ what are the possible pairs of positive integers that sum up to $n$?
 There are only $n-1$ possibilities:
 $$(1, n-1), (2, n-2), ..., (n-2, 2), (n-1, 1).$$
 We know from Equation~\ref{eq:biregular:sum_of_degrees} that the sums of degrees of each node in each part must be equal.
@@ -186,7 +186,7 @@ We quote the definition of graph isomorphism from~\cite{DBLP:journals/jsc/McKayP
 An isomorphism between two graphs is a bijection between their vertex sets that preserves adjacency.
 \end{displayquote}
 In other words, they are similar because of symmetry.
-To decrease the number of graphs drastically, we are interested only in nonisomorphic graphs i.e. there is no similarity between any two graphs.
+To decrease the number of graphs drastically, we are interested only in nonisomorphic graphs i.e.\ there is no similarity between any two graphs.
 There is a well known software package called \emph{nauty and Traces}~\cite{DBLP:journals/jsc/McKayP14}, that has tools for generating all nonisomorphic graphs of different graph families.
 The collection of tools is called \emph{gtools}.
 In Table \ref{tbl:graph_count_nonisomorphic}, we show the count of simple graphs, as in Table~\ref{tbl:graph_count_growth}.
@@ -348,10 +348,10 @@ Each condition is applied twice, once for active nodes and once for passive node
   Each node has to agree with their adjacent node on the labels of each edge between them.
   \begin{enumerate}
   \item
-    For each $e=(u, v)\in E, u\in V_A$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{A,u,v,l_1}, L_{P,v,u,l_2}$ is true, i.e. clause $(\neg L_{A,u,v,l_1} \lor \neg L_{P,v,u,l_2})$.
+    For each $e=(u, v)\in E, u\in V_A$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{A,u,v,l_1}, L_{P,v,u,l_2}$ is true, i.e.\ clause $(\neg L_{A,u,v,l_1} \lor \neg L_{P,v,u,l_2})$.
     \label{enu:sat_conditions:1a}
   \item
-    For each $e=(u, v)\in E, u\in V_P$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{P,u,v,l_1}, L_{A,v,u,l_2}$ is true, i.e. clause $(\neg L_{P,u,v,l_1} \lor \neg L_{A,v,u,l_2})$
+    For each $e=(u, v)\in E, u\in V_P$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{P,u,v,l_1}, L_{A,v,u,l_2}$ is true, i.e.\ clause $(\neg L_{P,u,v,l_1} \lor \neg L_{A,v,u,l_2})$
     \label{enu:sat_conditions:1b}
   \end{enumerate}
 \item
@@ -359,7 +359,7 @@ Each condition is applied twice, once for active nodes and once for passive node
   \begin{enumerate}
   \item
     Let us fix an active node $u \in V_A$.
-    For each permutation $p \in \operatorname{Perm}(A)$, we require that only one $R_{A, u, p}$ is true, i.e. clause $(R_{A, u, p_1} \lor R_{A, u, p_2} \lor \dotsm \lor R_{A, u, p_{|\operatorname{Perm}(A)|}})$ for requiring at least one permutation,
+    For each permutation $p \in \operatorname{Perm}(A)$, we require that only one $R_{A, u, p}$ is true, i.e.\ clause $(R_{A, u, p_1} \lor R_{A, u, p_2} \lor \dotsm \lor R_{A, u, p_{|\operatorname{Perm}(A)|}})$ for requiring at least one permutation,
     and clauses
     $ (\neg R_{A, u, p_i} \lor \neg R_{A, u, p_j})$ where $i, j \in \{1, ..., |\operatorname{Perm}(A)|\}, i < j$,
     for requiring at most one permutation.
@@ -367,7 +367,7 @@ Each condition is applied twice, once for active nodes and once for passive node
     \label{enu:sat_conditions:2a}
   \item
     Let us fix a passive node $u \in V_P$.
-    For each permutation $p \in \operatorname{Perm}(P)$, we require that only one $R_{P, u, p}$ is true, i.e. clause $(R_{P, u, p_1} \lor R_{P, u, p_2} \lor \dotsm \lor R_{P, u, p_{|\operatorname{Perm}(P)|}})$ for requiring at least one permutation,
+    For each permutation $p \in \operatorname{Perm}(P)$, we require that only one $R_{P, u, p}$ is true, i.e.\ clause $(R_{P, u, p_1} \lor R_{P, u, p_2} \lor \dotsm \lor R_{P, u, p_{|\operatorname{Perm}(P)|}})$ for requiring at least one permutation,
     and clauses
     $ (\neg R_{P, u, p_i} \lor \neg R_{P, u, p_j})$ where $i, j \in \{1, ..., |\operatorname{Perm}(P)|\}, i < j$,
     for requiring at most one permutation.
@@ -403,7 +403,7 @@ In our implementation, we use the SAT solver called Kissat~\cite{BiereFazekasFle
 
 When we generate LCL problems, we generate whole class of LCL problems.
 A class of LCL problems is a set of LCL problems where the problems share common attributes.
-The attributes are the values of a triple $(\Delta, \delta, \lambda)$, where $\Delta$ and $\delta$ are the sizes of label configurations in $A$ and $P$, respectively, and $\lambda$ is the size of $\Sigma$ i.e. the number of labels.
+The attributes are the values of a triple $(\Delta, \delta, \lambda)$, where $\Delta$ and $\delta$ are the sizes of label configurations in $A$ and $P$, respectively, and $\lambda$ is the size of $\Sigma$ i.e.\ the number of labels.
 
 The set of all possible label configurations is a $k$-combination with repetitions, where $k$ is the size of a label configuration.
 Let us call the function of $k$-combination with repetitions as $\operatorname{comb}(k, \Sigma)$.
@@ -467,7 +467,7 @@ These redundant label configurations are found by forming a list of labels that 
 Then we remove each label configuration from both sets, that have some other labels than what was in the list.
 
 For example, if $A=\{\{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\}\}$ and $P=\{\{\mathrm{A, A}\}, \{\mathrm{A, C}\}, \{\mathrm{C, C}\}\}$, then the labels in $A$ are $\{\mathrm{A, B}\}$ and labels in $P$ are $\{\mathrm{A, C}\}$.
-The labels that appear in both $A$ and $P$, i.e.  $\{\mathrm{A, B}\} \cup \{\mathrm{A, C}\} $ is $\{\mathrm{A}\}$.
+The labels that appear in both $A$ and $P$, i.e.\ $\{\mathrm{A, B}\} \cup \{\mathrm{A, C}\} $ is $\{\mathrm{A}\}$.
 Thus, we remove all label configurations from both $A$ and $P$ that contain any other label than $\mathrm{A}$.
 In the end, we get $A=\{\{\mathrm{A, A}\}\}$ and $P=\{\{\mathrm{A, A}\}\}$.
 
