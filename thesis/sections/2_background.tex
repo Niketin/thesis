@@ -15,7 +15,7 @@ These are widely used models in the field of distributed computing, and they are
 %
 In Section \ref{sec:covering_map}, we introduce a topological concept called \emph{covering map} that reveals a limitation of port-numbering model.
 %
-We are focusing on a certain family of graph problems called \emph{Locally checkable labeling} problems that we discuss in Sections \ref{sec:lcl_problems} and \ref{sec:lcl_problems:biregular}.
+We are focusing on a certain family of graph problems called \emph{locally checkable labeling} problems that we discuss in Sections \ref{sec:lcl_problems} and \ref{sec:lcl_problems:biregular}.
 
 
 \subsection{Graphs} \label{sec:graphs}
@@ -83,7 +83,7 @@ One example of a directed graph is a flow graph, in which the edges represent fl
 \emph{Undirected graph} is a graph in which the order of the vertices in an edge does not matter.
 An edge of an undirected graph is defined as an unordered pair $\{v, w\} \in E$, therefore the following holds:
 \begin{equation}
-\forall v, w \in V\colon \{v, w\} = \{w, v\}
+\forall v, w \in V\colon \{v, w\} = \{w, v\}.
 \end{equation}
 For example $E=\{\{1, 2\}, \{1, 2\}, \{3, 2\}, \{2, 3\}, \{1, 3\}\}=\{\{1,2\},\{1,3\},\{2,3\}\}$.
 Visualization of this graph $G=(\{1,2,3\}, E)$ can be seen in the Figure \ref{fig:graph1:b}.
@@ -112,13 +112,13 @@ In multigraphs with loops, a loop counts as 2 to a degree.
 
 A graph that is \emph{bipartite} has exactly two disjoint sets of vertices (we call them part $A$ and part $B$), and every edge of the graph has one endpoint in vertex of $A$ and another in $B$:
 \begin{align}
-V &= A \cup B\\
-A \cap B &= \emptyset\\
-E &=\{\{a, b\} \mid a \in A, b \in B\}
+V &= A \cup B,\\
+A \cap B &= \emptyset,\\
+E &=\{\{a, b\} \mid a \in A, b \in B\}.
 \end{align}
 For bipartite graphs, the sum of degrees on $A$ and $B$ are equal:
 \begin{equation} \label{eq:biregular:sum_of_degrees}
-\sum_{a\in A} \deg_G(a) = \sum_{b\in B} \deg_G(b)
+\sum_{a\in A} \deg_G(a) = \sum_{b\in B} \deg_G(b).
 \end{equation}
 An example of a bipartite graph can be seen in Figure \ref{fig:graph2}.
 
@@ -573,7 +573,7 @@ For example the network is simple in Figure \ref{fig:formal_pn2:a}.
   }%
     [.3\linewidth] {
     \centering
-    \includegraphics[width=0.3\textwidth]{diagrams/formalizing_pn_network_diagram5.pdf}
+    \includegraphics[width=0.2\textwidth]{diagrams/formalizing_pn_network_diagram5.pdf}
   }
   \hfill
   \subcaptionbox{
@@ -728,7 +728,7 @@ After initialization, each node constructs messages for each of their neighbor b
 A node gives its current local state as an input to the function and the returning value is a $d$-element tuple of messages.
 
 The third function allows nodes to receive messages from each of their neighbors.
-It is defined as:
+It is defined as
 \[ \algrecv_{A,d}\colon \algstates_A \times \algmsg_A^d \rightarrow \algstates_A. \]
 The function is given a node's current state and a $d$-element tuple of received messages.
 In return, it gives a state value that represents the node's new state.
@@ -936,7 +936,7 @@ With the complete information of everything, each node can compute the whole sol
 Because of this, researchers are usually interested in complexity classes below the $\mathcal{O}(\operatorname{diameter}(G))$.
 
 \subsection{Locally Checkable Labeling Problems} \label{sec:lcl_problems}
-In this section we define \emph{Locally checkable labeling (LCL)} problems generally.
+In this section we define \emph{locally checkable labeling (LCL)} problems generally.
 This section is intended as an introduction to Section \ref{sec:lcl_problems:biregular} where we introduce an alternative definition of LCL problems that we will be using in this work.
 Briefly, LCL problems are a family of graph problems where a global solution (node labeling) can be verified locally by the individual nodes.
 

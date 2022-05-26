@@ -26,3 +26,4 @@
 {"rule":"A_INFINITIVE","sentence":"^\\QA graph that is allowed to contain multiple edges is called a multigraph.\\E$"}
 {"rule":"A_INFINITIVE","sentence":"^\\QIf a solution does not exist, we return the multigraph as a counterexample (row \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q).\\E$"}
 {"rule":"A_INFINITIVE","sentence":"^\\QIf a solution does not exist, we return the multigraph as a counterexample (row \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q).\\E$"}
+{"rule":"PHRASE_REPETITION","sentence":"^\\Q\\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q Problems Purged problems Purged and normalized 1 1 1 1 1 1 1 1 2 9 3 2 2 1 2 21 7 5 2 2 2 49 27 18 3 2 2 105 67 38 4 2 2 217 147 84 4 3 2 465 379 200 4 4 2 961 843 446 6 6 2 16129 15627 7926 2 2 3 3969 2103 419 3 2 3 64449 44343 7735 3 3 3 1046529 962871 162299 The number of LCL problems in different problem classes.\\E$"}
