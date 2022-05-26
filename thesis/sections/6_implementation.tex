@@ -2,31 +2,23 @@
 
 %\section{Automatically proving lower bounds for LCL problems} \label{sec:implementation}
 \section{Implementation} \label{sec:implementation}
-In this section, we will cover all the important topics that are used in the actual implementation of the Algorithm~\ref{alg:counterexample_finder} from Section~\ref{sec:algorithm}.
+In this section, we will explain all the modules that we use in the implementation of the Algorithm~\ref{alg:counterexample_finder}.
 The implementation itself is a computer program~\cite{NonconstantLclClassifier2022}, that attempts to automatically find a proof of unsolvability for an LCL problem in the PN model.
-Although the implementation is programmed in Rust programming language~\cite{RustLang}, we keep the explanations independent of any programming language.
+Although we have used Rust programming language~\cite{RustLang} for the implementation, we keep the explanations independent of any programming language.
 
 %This includes the previously declared functions $\textsc{SolutionExists}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, \Delta, \delta)$, which were given as black boxes.
 In Section~\ref{sec:implementation:generating_multigraphs}, we discuss how we generate multigraphs, and describe the function $\textsc{GenerateGraphs}(n, \Delta, \delta)$.
-In Section~\ref{sec:implementation:sat}, we discuss Boolean satisfiability problems (SAT) generally.
-Then, in Section~\ref{sec:implementation:our_sat}, we discuss how we use SAT to implement the function $\textsc{SolutionExists}(\Pi, g)$.
+In Section~\ref{sec:implementation:sat}, we discuss Boolean satisfiability problems (SAT), and in Section~\ref{sec:implementation:our_sat}, we discuss how we use SAT to implement the function $\textsc{SolutionExists}(\Pi, g)$.
 As we are interested in classifying not just one LCL problem, but a class of problems, we need to know how to generate them.
 In Section~\ref{sec:implementation:generating_lcl_problems}, we discuss how we generate LCL problems.
 Lastly, we discuss some optimizations in our implementation in Section \ref{sec:implementation:optimizations}.
 
 
 \subsection{Generating Multigraphs} \label{sec:implementation:generating_multigraphs}
-We want to generate $(\Delta, \delta)$-biregular multigraphs, but how can we do it?
-A naive approach to this would be generating all possible multigraphs, and then filtering out graphs that are not in the graph family.
-This is a very bad idea, and we show why.
-
-Let us first consider only simple graphs.
-We need to figure out the formula for the number of simple graphs with $n$ vertices.
-A complete graph of $n$ vertices has an edge between any two vertices.
-The count of edges in a complete graph is \(\binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{n(n-1)}{2}.\)
-Therefore, there are \(2^{\frac{n(n-1)}{2}}\) different simple graphs of size $n$, as there are two options for each edge, either they are in the graph or not.
+A naive way to generate $(\Delta, \delta)$-biregular multigraphs is to generate all possible multigraphs, and then filtering out graphs that are not in the graph family.
+Note that there are \(2^{\frac{n(n-1)}{2}}\) different simple graphs of size $n$.
 The number of simple graphs grows exponentially fast, as shown in Table~\ref{tbl:graph_count_growth}.
-This is clearly too much for modern computers with small numbers of $n$, therefore we need to think of better options.
+Generating all graphs of size $n$ may take forever on modern computers even for small values of $n$.
 %0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55,
 %1, 2, 8, 64, 1024, 32768, 2097152, 268435456, 68719476736, 35184372088832, 36028797018963968
 \begin{table}[H]
@@ -60,19 +52,18 @@ With multiple edges without any limits, the number of multigraphs is infinite.
 However, this is not true when we consider only $(\Delta, \delta)$-biregular multigraphs of size $n$.
 Clearly the number of multiple edges is bounded by $\max(\Delta, \delta)$.
 
+We call the parts of a biregular graph as $A$ and $B$ (see Section~\ref{sec:graphs}).
 The numbers of incident edges for nodes of parts $A$ and $B$ are $\Delta$ and $\delta$, respectively.
-How do we know the number of nodes in each part i.e.\ what are the possible pairs of positive integers that sum up to $n$?
-There are only $n-1$ possibilities:
+There are only $n-1$ possibilities for pair $(|A|, |B|)$:
 $$(1, n-1), (2, n-2), ..., (n-2, 2), (n-1, 1).$$
 We know from Equation~\ref{eq:biregular:sum_of_degrees} that the sums of degrees of each node in each part must be equal.
-Therefore, only pairs $(n_A, n_B)$ such that
+Therefore, we need to consider only pairs $(n_A, n_B)$ such that the following hold
 \begin{equation} \label{eq:pairs:1}
   \Delta n_A = \delta n_B,
 \end{equation}
 \begin{equation} \label{eq:pairs:2}
-n_A + n_B = n
+n_A + n_B = n.
 \end{equation}
-will work.
 If we assume that $\Delta \geq \delta$, then we can see from Equation~\ref{eq:pairs:1} that $n_A\leq n_B$, therefore we only need to consider pairs
 
 $$(1, n-1), (2, n-2), ..., (\left\lfloor\frac{n}{2}\right\rfloor, n - \left\lfloor\frac{n}{2}\right\rfloor).$$
@@ -121,21 +112,20 @@ However, most of the time there are no valid pairs for chosen $n$, as we can see
   }
 \end{table}
 
-It turns out that there is always at most one pair that fills the conditions shown in Equations~\ref{eq:pairs:1} and \ref{eq:pairs:2}.
-We can find a formula for all possible values of $n$.
+Equations~\ref{eq:pairs:1} and \ref{eq:pairs:2} are linear equations with two unknown variables $n_A$ and $n_B$, therefore there is at most one solution.
+Let us assume that the number of vertices in $n_A$ is $x$.
+From the equations we know that
 \begin{align*}
-  n_A &= x, \\
   n_B &= n-x,\\
   \Delta x &= \delta (n-x), \\
   \text{and therefore } n&=\frac{x(\Delta+\delta)}{\delta}.
 \end{align*}
 
-When we fix $\Delta$ and $\delta$, the possible numbers for $n$ are all integers $\frac{x(\Delta + \delta)}{\delta}$, where $x$ is any positive integer.
-However, there is one problem.
-Not necessarily all values of $x$ result on an integer.
-We can ensure integer solutions by assigning $x=y\frac{\delta}{\gcd(\delta, \Delta)}$, where $y$ is any positive integer.
-Then we iterate through all $y$ up to some upper bound, as we do in Table \ref{tbl:values_of_x}.
-We then compute all valid pairs of $(n_A, n_B)$ in Table \ref{tbl:valid_pairs}.
+For some fixed $\Delta$ and $\delta$, $n$ may not always be an integer at all integer values of $x$.
+%When we fix $\Delta$ and $\delta$, the possible numbers for $n$ are all integers $\frac{x(\Delta + \delta)}{\delta}$, where $x$ is any positive integer.
+However, we can ensure integer solutions by assigning $x=y\frac{\delta}{\gcd(\delta, \Delta)}$, where $y$ is any positive integer.
+Then we iterate through all $y$ up to some upper bound (see Table \ref{tbl:values_of_x}).
+We then compute all valid pairs of $(n_A, n_B)$ as shown in Table \ref{tbl:valid_pairs}.
 
 \begin{table}[H]
   \parbox{.45\linewidth}{
@@ -177,23 +167,19 @@ We then compute all valid pairs of $(n_A, n_B)$ in Table \ref{tbl:valid_pairs}.
   }
 \end{table}
 
-Now we know a lot more about the graphs we are going to generate.
-Given that we know $\Delta$ and $\delta$, we can easily generate all possible graph sizes for $(\Delta, \delta)$-biregular multigraphs.
+Using the above observations, we can generate all possible graph sizes for $(\Delta, \delta)$-biregular multigraphs faster.
 
-Before we tell more about the function $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we want to discuss graph isomorphism.
-We quote the definition of graph isomorphism from~\cite{DBLP:journals/jsc/McKayP14}:
-\begin{displayquote}
-An isomorphism between two graphs is a bijection between their vertex sets that preserves adjacency.
-\end{displayquote}
-In other words, they are similar because of symmetry.
-To decrease the number of graphs drastically, we are interested only in nonisomorphic graphs i.e.\ there is no similarity between any two graphs.
+Before we discuss the function $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we need to define isomorphism.
+Two graphs $G_1$ and $G_2$ are said to be isomorphic, if there is a bijection $f$ between vertices of $G_1$ and $G_2$ such that $f$ preserves the adjacency of vertices.
+In other words, they are similar if we ignore the labels on the vertices.
+Working with isomorphic graphs is redundant.
+Therefore, we are interested only in nonisomorphic graphs.
 There is a well known software package called \emph{nauty and Traces}~\cite{DBLP:journals/jsc/McKayP14}, that has tools for generating all nonisomorphic graphs of different graph families.
 The collection of tools is called \emph{gtools}.
-In Table \ref{tbl:graph_count_nonisomorphic}, we show the count of simple graphs, as in Table~\ref{tbl:graph_count_growth}.
-Alongside the values, we show the count of nonisomorphic simple graphs.
+In Table~\ref{tbl:graph_count_nonisomorphic}, we show the total number of simple graphs as well as the number of nonisomorphic simple graphs possible for different values of $n$.
 As we can see, there are significantly fewer nonisomorphic simple graphs than there are simple graphs.
 Thus, we want to generate only nonisomorphic graphs.
-For our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we use the tools \emph{genbg} and \emph{multig} from gtools as follows.
+For our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we use the tools \emph{genbg} and \emph{multig} from \emph{gtools} as follows.
 
 \begin{table}[H]
   \centering
@@ -226,8 +212,10 @@ For our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we use t
 \end{table}
 
 The first tool, \emph{genbg}, is used to generate small bipartite graphs that are nonisomorphic.
-The tool requires number of vertices for parts A and B separately, and we already know how to generate them.
-We additionally specify two ranges of degrees so that we get bipartite graphs, where the degrees of nodes range from $1$ to $\Delta$ and from $1$ to $\delta$ in parts A and B, respectively.
+The tool requires the sizes of parts $A$ and $B$ as an input, and we generate the sizes as we have shown earlier in this section.
+By default, the tool outputs the graphs to standard output stream in a format called \emph{graph6}.
+A graph in \emph{graph6} format is a one line of ASCII characters.
+We additionally specify two ranges of degrees so that we get bipartite graphs, where the degrees of nodes range from $1$ to $\Delta$ and from $1$ to $\delta$ in parts $A$ and $B$, respectively.
 We also use a flag ``-c'' to generate only connected graphs.
 The output from the graph is then fed into the second tool.
 
@@ -237,12 +225,12 @@ All graphs outputted from \emph{multig} are also nonisomorphic.
 The tool takes an exact range of edges we want for the graphs, and we already know that the number is exactly $\Delta n_A = \delta n_B$.
 We also give the tool a maximum edge multiplicity of $\Delta$ and upper bound of $\Delta$ on maximum degree, as we assume that $\Delta \geq \delta$.
 By feeding the bipartite graphs from \emph{genbg} to \emph{multig}, we will receive $(\Delta, \delta)$-biregular multigraphs.
-The output format from \emph{multig} is a simple text format that is quite trivial to parse, so we do not discuss more about it.
+The output format from \emph{multig} is a simple text format (different from \emph{graph6}) that is quite trivial to parse, so we do not discuss more about it.
 
 To conclude, our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$ first generates the pair $(n_A, n_B)$ with given $n$ and degrees $(\Delta, \delta)$.
 If the pair does not exist, the function returns an empty set.
 Otherwise, we continue to the second step where we generate the bipartite graphs using \emph{genbg}, as described before.
-The last step is to feed the graphs from \emph{genbg} to \emph{multig}, as described before.
+The last step is to feed the graphs from \emph{genbg} to \emph{multig} as described before.
 The result from \emph{multig} is the set of all connected nonisomorphic $(\Delta, \delta)$-biregular multigraphs of size $n$.
 
 In Table~\ref{tbl:graph_count_nonisomorphicasdasd}, we have listed the number of graphs generated in the second and third steps, when $(\Delta, \delta)=(3,2)$.
@@ -279,53 +267,52 @@ In Table~\ref{tbl:graph_count_nonisomorphicasdasd}, we have listed the number of
 
 \subsection{Boolean Satisfiability Problem} \label{sec:implementation:sat}
 
-Boolean satisfiability problem (SAT) is the problem of determining, if a propositional formula can be made true by assigning truth values to its variables.
+Boolean satisfiability problem (SAT) is the problem of determining if there exists a truth value assignment to the variables of a given formula with respect to which the formula is true.
 A propositional formula is \emph{satisfiable}, if there exists an assignment that results in true, otherwise it is \emph{unsatisfiable}.
-For example, a formula $a \land \neg b$ is satisfiable, because it is true if $a$ is true ($a=\top$) and $b$ is false ($b=\bot$).
-For example, a formula $a \land \neg a$ is unsatisfiable, because it is always false.
+For example, formula $a \land \neg b$ is satisfiable, because it is true if $a$ is true ($a=\top$) and $b$ is false ($b=\bot$), and formula $a \land \neg a$ is unsatisfiable, because it is always false.
 
 Conjuctive normal form (CNF) is a standard form to describe propositional formulas.
-It is a conjuction (logical AND) of clauses, where each clause is a disjunction (logical OR).
+It is a conjuction (logical AND) of clauses, where each clause is a disjunction of variables (logical OR).
 That is, CNF is an AND of ORs, for example:
 $$(a \lor d \lor \neg b)\land (c \lor a) \land (\neg a \lor  \neg b).$$
 The only allowed operators in CNF are AND ($\land$), OR ($\lor$) and NOT ($\neg$).
 
-SAT is the first problem proven as NP-complete problem \cite{DBLP:conf/stoc/Cook71}.
-A solution to an NP-complete problem is fast to verify, but there is no known way to solve a problem fast.
-However, there are many programs called SAT solvers, that attempt to solve SAT as fast as possible~\cite{TheInternationalSATCompetitionWebPage}.
+SAT was the first problem proved to be NP-complete \cite{DBLP:conf/stoc/Cook71}.
+A problem is said to be NP-complete if its solution is fast to verify, but there is no known way to solve the problem fast.
+However, there are tools called SAT solvers, that attempt to solve SAT as fast as possible~\cite{TheInternationalSATCompetitionWebPage}.
 These solvers usually accept a propositional formula in DIMACS CNF format~\cite{DIMACS:CNF}.
 It is a text format that represents a propositional formula in CNF form.
 
 \subsection{Our SAT Encoding} \label{sec:implementation:our_sat}
 
 
-The function $\textsc{SolutionExists}(\Pi, g)$ checks if an LCL problem $\Pi$ is unsolvable in some $(\Delta, \delta)$-biregular multigraph $g$.
-To perform the checking, it is enough to show that there exists no valid labeling of $\Pi$ in $g$.
+The function $\textsc{SolutionExists}(\Pi, G)$ checks if an LCL problem $\Pi$ is unsolvable in some $(\Delta, \delta)$-biregular multigraph $G$.
+To perform the checking, it is enough to show that there exists no valid labeling of $\Pi$ in $G$.
 In the implementation, this is done with the following steps:
 \begin{enumerate}
-    \item encode the problem $\Pi$ and multigraph $g$ into a SAT problem $S$,
+    \item encode the problem $\Pi$ and multigraph $G$ into a CNF formula $S$,
     \item solve the problem $S$ using a fast SAT solver.
 \end{enumerate}
-When we feed the SAT problem $S$ into a SAT solver, we get as a result either SAT (satisfiable) or UNSAT (unsatisfiable).
-In case the result is UNSAT, the SAT solver found no possible labeling for the problem.
-Thus we have found a counterexample and we are done.
-Otherwise we can continue searching using some other multigraph.
+When we feed the CNF formula $S$ into a SAT solver, we get as a result either $\top$ (satisfiable) or $\bot$ (unsatisfiable).
+In case the result is $\bot$, the SAT solver found no possible labeling for the problem.
+Thus, we have found a counterexample, and we are done.
+Otherwise, we can continue searching using other multigraphs.
 The routine is illustrated in Figure~\ref{fig:implementation:1}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[]{diagrams/implementation_idea_diagram2.pdf}
+\includegraphics[]{diagrams/implementation_idea_diagram2a.pdf}
 \caption{The SAT routine. When given a multigraph and an LCL problem, it checks if a valid labeling exists.}
 \label{fig:implementation:1}
 \end{figure}
 
-We repeat the routine for each multigraph, as shown in the Algorithm~\ref{alg:counterexample_finder}, and terminate early if the result is UNSAT.
+We repeat the routine for each multigraph, as shown in the Algorithm~\ref{alg:counterexample_finder}, and terminate early if the result is $\bot$.
 This is illustrated in Figure~\ref{fig:implementation:2}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[]{diagrams/implementation_idea_diagram3.pdf}
-\caption{An example of an execution of multiple SAT routines. Execution terminates at the 77th multigraph, when first UNSAT is encountered.}
+\includegraphics[]{diagrams/implementation_idea_diagram3a.pdf}
+\caption{An example of an execution of multiple SAT routines. Execution terminates at the 77th multigraph, when the first unsatisfiable result is encountered.}
 \label{fig:implementation:2}
 \end{figure}
 
