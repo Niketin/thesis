@@ -1,3 +1,5 @@
 biregular
 nonisomorphic
 Nonisomorphic
+unsolvability
+Kissat

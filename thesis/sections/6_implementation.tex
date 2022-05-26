@@ -124,10 +124,10 @@ However, most of the time there are no valid pairs for chosen $n$, as we can see
 It turns out that there is always at most one pair that fills the conditions shown in Equations~\ref{eq:pairs:1} and \ref{eq:pairs:2}.
 We can find a formula for all possible values of $n$.
 \begin{align*}
-  n_A &= x \\
-  n_B &= n-x\\
-  \Delta x &= \delta (n-x) \\
-  \Rightarrow n&=\frac{x(\Delta+\delta)}{\delta}\\
+  n_A &= x, \\
+  n_B &= n-x,\\
+  \Delta x &= \delta (n-x), \\
+  \text{and therefore } n&=\frac{x(\Delta+\delta)}{\delta}.
 \end{align*}
 
 When we fix $\Delta$ and $\delta$, the possible numbers for $n$ are all integers $\frac{x(\Delta + \delta)}{\delta}$, where $x$ is any positive integer.
@@ -225,25 +225,25 @@ For our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$, we use t
   \label{tbl:graph_count_nonisomorphic}
 \end{table}
 
-The first tool, genbg, is used to generate small bipartite graphs that are nonisomorphic.
+The first tool, \emph{genbg}, is used to generate small bipartite graphs that are nonisomorphic.
 The tool requires number of vertices for parts A and B separately, and we already know how to generate them.
 We additionally specify two ranges of degrees so that we get bipartite graphs, where the degrees of nodes range from $1$ to $\Delta$ and from $1$ to $\delta$ in parts A and B, respectively.
 We also use a flag ``-c'' to generate only connected graphs.
 The output from the graph is then fed into the second tool.
 
-The second tool, multig, is used to generate small multigraphs with a given underlying graph.
+The second tool, \emph{multig}, is used to generate small multigraphs with a given underlying graph.
 It replaces edges of a simple graph with multiple edges in all possible ways.
-All graphs outputted from multig are also nonisomorphic.
+All graphs outputted from \emph{multig} are also nonisomorphic.
 The tool takes an exact range of edges we want for the graphs, and we already know that the number is exactly $\Delta n_A = \delta n_B$.
 We also give the tool a maximum edge multiplicity of $\Delta$ and upper bound of $\Delta$ on maximum degree, as we assume that $\Delta \geq \delta$.
-By feeding the bipartite graphs from genbg to multig, we will receive $(\Delta, \delta)$-biregular multigraphs.
-The output format from multig is a simple text format that is quite trivial to parse, so we do not discuss more about it.
+By feeding the bipartite graphs from \emph{genbg} to \emph{multig}, we will receive $(\Delta, \delta)$-biregular multigraphs.
+The output format from \emph{multig} is a simple text format that is quite trivial to parse, so we do not discuss more about it.
 
 To conclude, our implementation of $\textsc{GenerateGraphs}(n, \Delta, \delta)$ first generates the pair $(n_A, n_B)$ with given $n$ and degrees $(\Delta, \delta)$.
 If the pair does not exist, the function returns an empty set.
-Otherwise, we continue to the second step where we generate the bipartite graphs using genbg, as described before.
-The last step is to feed the graphs from genbg to multig, as described before.
-The result from multig is the set of all connected nonisomorphic $(\Delta, \delta)$-biregular multigraphs of size $n$.
+Otherwise, we continue to the second step where we generate the bipartite graphs using \emph{genbg}, as described before.
+The last step is to feed the graphs from \emph{genbg} to \emph{multig}, as described before.
+The result from \emph{multig} is the set of all connected nonisomorphic $(\Delta, \delta)$-biregular multigraphs of size $n$.
 
 In Table~\ref{tbl:graph_count_nonisomorphicasdasd}, we have listed the number of graphs generated in the second and third steps, when $(\Delta, \delta)=(3,2)$.
 
@@ -270,7 +270,7 @@ In Table~\ref{tbl:graph_count_nonisomorphicasdasd}, we have listed the number of
   \caption{%
     The counts of simple bipartite graphs and (3,2)-biregular multigraphs, when $(\Delta, \delta) = (3, 2)$.
     Both graph families are connected and nonisomorphic.
-    We used the tools genbg and multig, as discussed above, and we feed the output from genbg to multig.
+    We used the tools \emph{genbg} and \emph{multig}, as discussed above, and we feed the output from \emph{genbg} to \emph{multig}.
     We also show the time it takes to generate each set of graphs.
     The tools were executed on a single thread of AMD Ryzen 9 3900X 12-Core Processor.
   }
@@ -407,20 +407,20 @@ The attributes are the values of a triple $(\Delta, \delta, \lambda)$, where $\D
 
 The set of all possible label configurations is a $k$-combination with repetitions, where $k$ is the size of a label configuration.
 Let us call the function of $k$-combination with repetitions as $\operatorname{comb}(k, \Sigma)$.
-For example, if $\Delta$ is 2, $\Sigma=\{A, B\}$ and $\lambda$ is 2, then the set of all possible label configurations is
-$$ \operatorname{comb}(\Delta, \Sigma) = \{ \{A, A\}, \{A, B\}, \{B, B\} \}. $$
+For example, if $\Delta$ is 2, $\Sigma=\{\mathrm{A, B}\}$ and $\lambda$ is 2, then the set of all possible label configurations is
+$$ \operatorname{comb}(\Delta, \Sigma) = \{ \{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\} \}. $$
 
 The set of all possible sets of label configurations is a power set of the set of all possible label configurations, excluding an empty set.
 Let us call this power set without an empty sets as a function $\operatorname{pow}(d, S)$, where $d$ is the size of a label configuration, and $S$ is the set of all possible label configurations.
 For example, the power set of the above example excluding an empty set is
 \begin{align*}
-  \operatorname{pow}(\Delta, \operatorname{comb}(\Delta, \Sigma)) =  \{&\{\{A, A\}\}, \\
-    &\{\{A, B\}\}, \\
-    &\{\{B, B\}\}, \\
-    &\{\{A, A\}, \{A, B\}\}, \\
-    &\{\{A, A\}, \{B, B\}\}, \\
-    &\{\{A, B\}, \{B, B\}\}, \\
-    &\{\{A, A\}, \{A, B\}, \{B, B\}\} \}.\\
+  \operatorname{pow}(\Delta, \operatorname{comb}(\Delta, \Sigma)) =  \{&\{\{\mathrm{A, A}\}\}, \\
+    &\{\{\mathrm{A, B}\}\}, \\
+    &\{\{\mathrm{B, B}\}\}, \\
+    &\{\{\mathrm{A, A}\}, \{\mathrm{A, B}\}\}, \\
+    &\{\{\mathrm{A, A}\}, \{\mathrm{B, B}\}\}, \\
+    &\{\{\mathrm{A, B}\}, \{\mathrm{B, B}\}\}, \\
+    &\{\{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\}\} \}.
 \end{align*}
 
 The set of all LCL problems of class $(\Delta, \delta, \lambda)$ is a Cartesian product
@@ -435,23 +435,25 @@ These are the optimizations that reduce the size of problems we have to process 
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{r|rrr}
+  \begin{tabular}{rrrrrr}
     \toprule
-    $(\Delta, \delta, \lambda)$ & Problems & Purged problems & Purged and normalized\\
+    $\Delta$ & $\delta$ & $\lambda$ & Problems & Purged problems & Purged and normalized problems\\
     \midrule
-    (1,1,1)& 1 & 1 & 1 \\
-    (1,1,2)& 9 & 3 & 2 \\
-    (2,1,2)& 21 & 7 & 5 \\
-    (2,2,2)& 49 & 27 & 18 \\
-    (3,2,2)& 105 & 67 & 38 \\
-    (4,2,2)& 217 & 147 & 84 \\
-    (4,3,2)& 465 & 379 & 200 \\
-    (4,4,2)& 961 & 843 & 446 \\
-    (6,6,2)& 16129 & 15627 & 7926 \\
-    (2,2,3)& 3969 & 2103 & 419 \\
-    (3,2,3)& 64449 & 44343 & 7735 \\
-    (3,3,3)& 1046529 & 962871 & 162299 \\
-    \vdots & \vdots\\
+    1 & 1 & 1 & 1 & 1 & 1 \\
+    \midrule
+    1 & 1 & 2 & 9 & 3 & 2 \\
+    2 & 1 & 2 & 21 & 7 & 5 \\
+    2 & 2 & 2 & 49 & 27 & 18 \\
+    3 & 2 & 2 & 105 & 67 & 38 \\
+    4 & 2 & 2 & 217 & 147 & 84 \\
+    4 & 3 & 2 & 465 & 379 & 200 \\
+    4 & 4 & 2 & 961 & 843 & 446 \\
+    6 & 6 & 2 & 16129 & 15627 & 7926 \\
+    \midrule
+    2 & 2 & 3 & 3969 & 2103 & 419 \\
+    3 & 2 & 3 & 64449 & 44343 & 7735 \\
+    3 & 3 & 3 & 1046529 & 962871 & 162299 \\
+    %\vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
     \bottomrule
   \end{tabular}
   \caption{%
@@ -464,10 +466,10 @@ Purging is an operation, where an LCL problem is cut down from label configurati
 These redundant label configurations are found by forming a list of labels that appear in both sets $A$ and $P$.
 Then we remove each label configuration from both sets, that have some other labels than what was in the list.
 
-For example, if $A=\{\{A, A\}, \{A, B\}, \{B, B\}\}$ and $P=\{\{A, A\}, \{A, C\}, \{C, C\}\}$, then the labels in $A$ are $\{A, B\}$ and labels in P are $\{A, C\}$.
-The labels that appear in both $A$ and $P$, i.e.  $\{A, B\} \cup \{A, C\} $ is $\{A\}$.
-Thus, we remove all label configurations from both $A$ and $P$ that contain any other label than $A$.
-In the end, we get $A=\{\{A, A\}\}$ and $P=\{\{A, A\}\}$.
+For example, if $A=\{\{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\}\}$ and $P=\{\{\mathrm{A, A}\}, \{\mathrm{A, C}\}, \{\mathrm{C, C}\}\}$, then the labels in $A$ are $\{\mathrm{A, B}\}$ and labels in $P$ are $\{\mathrm{A, C}\}$.
+The labels that appear in both $A$ and $P$, i.e.  $\{\mathrm{A, B}\} \cup \{\mathrm{A, C}\} $ is $\{\mathrm{A}\}$.
+Thus, we remove all label configurations from both $A$ and $P$ that contain any other label than $\mathrm{A}$.
+In the end, we get $A=\{\{\mathrm{A, A}\}\}$ and $P=\{\{\mathrm{A, A}\}\}$.
 
 
 Normalizing an LCL problem is an operation of renaming the labels with a permutation such that the resulting problem is the minimum of all permutated problems.
@@ -478,7 +480,11 @@ That is, the total order of problems $\Pi_1=(A_1, P_1, \Sigma_1), \Pi_2=(A_2, P_
 The result of normalization is an LCL problem in its \emph{canonical form}.
 After normalizing any two isomorphic LCL problems, their appearance is identical.
 
-For example, the problems $$\Pi_1=(\{\{B, B\}\}, \{\{A, C\}, \{C,C\}\}, \Sigma), \Pi_2=(\{\{D, D\}\}, \{\{A,A\},\{E, A\}\}, \Sigma)$$ after normalization look like $$\Pi_1'=(\{\{A, A\}\}, \{\{B,B\},\{B, C\}\}, \Sigma), \Pi_2'=(\{\{A, A\}\}, \{\{B,B\},\{B, C\}\}, \Sigma)$$ (denoted by a prime).
+For example, the problems
+$$\Pi_1=(\{\{\mathrm{B, B}\}\}, \{\{\mathrm{A, C}\}, \{\mathrm{C,C\}}\}, \Sigma),$$
+$$\Pi_2=(\{\{\mathrm{D, D}\}\}, \{\{\mathrm{A,A\}},\{\mathrm{E, A}\}\}, \Sigma),$$ after normalization look like
+$$\Pi_1'=(\{\{\mathrm{A, A}\}\}, \{\{\mathrm{B, B}\},\{\mathrm{B, C}\}\}, \Sigma),$$
+$$\Pi_2'=(\{\{\mathrm{A, A}\}\}, \{\{\mathrm{B, B}\},\{\mathrm{B, C}\}\}, \Sigma),$$ (denoted by a prime).
 
 In our implementation, we first generate all LCL problems.
 Then we use the purge operation for each LCL problem, and remove problems that have an empty set of label configurations.
@@ -491,10 +497,10 @@ The amount of problems after purging and normalizing can be seen in Table~\ref{t
 In this section, we will discuss some optimizations used in the implementation that we have not yet mentioned in previous sections.
 The optimizations we discuss here briefly, utilizes either parallelization or caching.
 
-When we generate graphs with genbg, we actually do it in parallel using multiple threads.
+When we generate graphs with \emph{genbg}, we actually do it in parallel using multiple threads.
 The tool can be given arguments \codee{r/m} so that it only generates subset \codee{r} from subsets between $0$ and \codee{m}$-1$.
 For example, to split it evenly between 4 threads, we give the first thread 0/4, the second thread 1/4, the third thread 2/4, and finally the fourth thread 3/4.
-We then pipe the results to multig in each thread in parallel.
+We then pipe the results to \emph{multig} in each thread in parallel.
 This makes the time it takes to generate the graphs roughly $t$-times faster, where $t$ is the number of threads used, assuming that there are $t$ available cores in the system.
 
 When multigraphs are generated, we can optionally save them into a database.

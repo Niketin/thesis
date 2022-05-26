@@ -45,18 +45,19 @@ Therefore, the problem is actually encoded as \lstinline{AAA BBC; AB AC BB}.
 %
 %and 4 by showing classifications
 %
-\subsection{Improving lower bounds of LCL problems}\label{sec:results:improving_bounds}
+\subsection{Improving Lower Bounds of LCL Problems}\label{sec:results:improving_bounds}
+As we discussed in Section~\ref{sec:research_question}, we will be using a database~\cite{Tereshchenko2021,LclClassifierAalto,LclClassifierGithub} that consists of LCL problems and their current known lower and upper bounds.
 There are two LCL problem classes in the database that are for non-directed non-rooted trees---$(\Delta, \delta, \lambda) = (3,2,3)$ and $(\Delta, \delta, \lambda) = (3,2,2)$.
 All 38 problems of the class $(3,2,2)$ are already classified with tight deterministic bounds.
 This is not the case in class $(3,2,3)$, therefore we try to find new deterministic lower bounds for the problems using our implementation.
 
-We use the latest database dump~\cite{DatabaseDump} of the database~\cite{Tereshchenko2021,LclClassifierAalto,LclClassifierGithub}.
+We use the latest database dump~\cite{DatabaseDump} of the database.
 In the class $(3,2,3)$, there are 7735 unique LCL-problems after purging and normalizing the problems, as we can see from Table~\ref{tbl:lcl_problem_classes}.
 The database also agrees with the number of problems.
 
-We are interested in the problems that have a constant ($\mathcal{O}(1)$) deterministic lower bound and a non-constant upper-bound, as these are the only problems for which we can possibly find a better lower bound of non-constant i.e. $\Omega(\log^*n)$.
+We are interested in the problems that have a constant ($\mathcal{O}(1)$) deterministic lower bound and a non-constant upper-bound, as these are the only problems for which we can possibly find a better lower bound of non-constant i.e.\ $\Omega(\log^*n)$.
 When we remove problems with non-constant deterministic lower bounds, we get 6538 problems with a constant deterministic lower bound.
-Out of these problems, we need to remove problems with constant upper bound, as these problems already have a tight constant bound, i.e. $\Theta(1)$.
+Out of these problems, we need to remove problems with constant upper bound, as these problems already have a tight constant bound, i.e.\ $\Theta(1)$.
 After the removal, we have only 66 problems left.
 The problems can be fetched from the database to a file \codee{problems.txt} using the command \verb|bin fetch_problems 3 2 3 <database_address> > problems.txt|, assuming that there is a PostgreSQL database in the address \verb|<database_address>| with the data from the dump.
 
@@ -78,7 +79,7 @@ We run the command as follows in Table~\ref{tbl:results:asd1}.
 \begin{table}[H]
     \centering
     %\begin{adjustbox}{width={\textwidth},keepaspectratio}%
-    \begin{tabular}{rrrrrr}
+    \begin{tabular}{rrrrr}
         \toprule
         &&& \multicolumn{2}{c}{Time (s)} \\
         \cmidrule{4-5}
@@ -91,7 +92,7 @@ We run the command as follows in Table~\ref{tbl:results:asd1}.
         11 & 15 & 8 & 0.062 & 0.015\\
         16 & 20 & 7 & 0.140 & 0.080\\
         21 & 25 & 7 & 3.758 & 0.510\\
-        26 & 30 & 7 & 137.5 & 3.980\\
+        26 & 30 & 7 & 137.5\phantom{00} & 3.980\\
         %\vdots & \vdots &\vdots&\vdots\\
         \bottomrule
     \end{tabular}
@@ -118,26 +119,29 @@ The problems are listed in Table~\ref{tbl:results:asd2}.
         \midrule
         %&&&&& \multicolumn{2}{c}{Trees} \\
         %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
-        5  & AAA AAB BBC BCC     & AB CC       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        10 & AAA AAB ABC BCC     & AC BB       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        10 & AAA AAB ABC BCC     & AC BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        10 & AAA AAB ABC BCC CCC & AC BB       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        10 & AAA AAB ABC CCC     & AC BB       & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        10 & AAA AAB BCC         & AC BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        10 & AAA ABC BBC         & AB BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        10 & AAA BBC             & AB BB CC    & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log n)$\\
-        15 & AAA BBC             & AB AC BB CC & $\Omega(1)$ & $\Omega(log^*n)$ & $\mathcal{O}(\log^* n)$\\
+        5  & AAA AAB BBC BCC     & AB CC       & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC BCC     & AC BB       & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC BCC     & AC BB CC    & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC BCC CCC & AC BB       & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB ABC CCC     & AC BB       & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA AAB BCC         & AC BB CC    & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA ABC BBC         & AB BB CC    & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        10 & AAA BBC             & AB BB CC    & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log n)$\\
+        15 & AAA BBC             & AB AC BB CC & $\Omega(1)$ & $\Omega(\log^*n)$ & $\mathcal{O}(\log^* n)$\\
         %\vdots & \vdots &\vdots&\vdots&\vdots&\vdots&\vdots\\
         \bottomrule
     \end{tabular}
     \end{adjustbox}
     \caption{%
     New lower bounds for LCL problems from the class $(3,2,3)$.
-    Here, the column $n$ tells the size of the smallest multigraph, in which the problem is unsolvable.
+    Here, the column $n$ indicates the size of the smallest multigraph, in which the problem is unsolvable.
     The last column lists the current known upper bound from the database.
     }
     \label{tbl:results:asd2}
 \end{table}
+We make an observation that the last problem with a new lower bound in Table~\ref{tbl:results:asd2} has a matching upper bound.
+Therefore, this problem has now a tight bound of $\Theta(log^* n)$.
+Also, we make an observation that it is a relaxation of the maximal independent set i.e. the set $P$ has an additional label configuration CC.
 
 Next, in Table~\ref{tbl:results:asd3}, we list all the multigraphs in which we found the problems to be unsolvable.
 
@@ -178,50 +182,53 @@ We visualize the multigraphs of sizes $n \in \{5,10,15\}$ from Table~\ref{tbl:re
 These graphs can be seen in Figure~\ref{fig:results:graphs}.
 
 \begin{figure}[H]
+  \captionsetup{justification=centering}
     \subcaptionbox{
-        $n=5$, $id=1.$
+        $n=5,$ \\ \phantom{(a)}$id=1.$
       \label{fig:results:graphs:n5_1}
     }%
+    [0.13\textwidth]
     {
       \centering
-      \includegraphics[scale=0.4]{diagrams/results_multigraph_n5_1.pdf}
+      \includegraphics[scale=0.35]{diagrams/results_multigraph_n5_1.pdf}
     }
     \hfill
     \subcaptionbox{
-        $n=10, id=1.$
+      $n=10,$ \\ \phantom{(b)}$id=1.$
+        %$n=10, id=1.$
       \label{fig:results:graphs:n10_1}
     }%
-    [0.20\textwidth]
+    %[0.20\textwidth]
        {
       \centering
-      \includegraphics[scale=0.4]{diagrams/results_multigraph_n10_1.pdf}
+      \includegraphics[scale=0.35]{diagrams/results_multigraph_n10_1.pdf}
     }
     \hfill
     \subcaptionbox{
-        $n=15$, $id=5.$
+      $n=15,$ \\ \phantom{(c)}$id=5.$
       \label{fig:results:graphs:n15_5}
     }%
        {
       \centering
-      \includegraphics[scale=0.4]{diagrams/results_multigraph_n15_5.pdf}
+      \includegraphics[scale=0.35]{diagrams/results_multigraph_n15_5.pdf}
     }
     \hfill
     \subcaptionbox{
-        $n=15$, $id=9.$
+      $n=15,$ \\ \phantom{(d)}$id=9.$
       \label{fig:results:graphs:n15_9}
     }%
        {
       \centering
-      \includegraphics[scale=0.4]{diagrams/results_multigraph_n15_9.pdf}
+      \includegraphics[scale=0.35]{diagrams/results_multigraph_n15_9.pdf}
     }
     \hfill
     \subcaptionbox{
-        $n=15$, $id=12$.
+      $n=15,$ \\ \phantom{(e)}$id=12.$
       \label{fig:results:graphs:n15_12}
     }%
        {
       \centering
-      \includegraphics[scale=0.4]{diagrams/results_multigraph_n15_12.pdf}
+      \includegraphics[scale=0.35]{diagrams/results_multigraph_n15_12.pdf}
     }
     \caption{All multigraphs from Table~\ref{tbl:results:asd3}, where $n \in \{5,10,15\}.$}
     \label{fig:results:graphs}
@@ -239,7 +246,7 @@ Our first experiment with problem class $(7,5,2)$ is a failure, as seen in Table
 We could not generate even the smallest multigraphs without the process being terminated.
 The class has 7770 unique problems.
 %For comparison, the class $(3,2,3)$ has 7735 problems.
-We thought that the class would be a good starting point, as previously in Section~\ref{sec:results:improving_bounds}, we ran the implementation with the class $(3,2,3)$, which has a similar number of problems (7735).
+At first, it seemed the class would be a good starting point, as previously in Section~\ref{sec:results:improving_bounds}, we ran the implementation with the class $(3,2,3)$, which has a similar number of problems (7735).
 It seems that the degrees $\Delta=7$ and $\delta=5$ along with graph size $n=12$ results in too large set of graphs.
 Our implementation cannot handle such cases, so there is a lot of room for improvements in the part of graph generation.
 \begin{table}[H]
@@ -284,8 +291,8 @@ This time we got new lower bounds at least for some problems.
         %&&&&& \multicolumn{2}{c}{Trees} \\
         %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
         5  & 250  & 0.036  & 0.053  & 0.188\\
-        10 & 21 & 0.002 & 0.373 & 47.5 \\
-        15 & ? & $<1$ & $>453$ & ? \\
+        10 & 21 & 0.002 & 0.373 & 47.5\phantom{00} \\
+        15 & ? & $<1$\phantom{.000} & $>453$\phantom{.000} & ? \\
         %\vdots & \vdots &\vdots&\vdots\\
         \bottomrule
     \end{tabular}
@@ -306,4 +313,4 @@ In this thesis, we consider a problem class with over 1000 problems as large.
 With this definition, we get an answer of yes, with some classes.
 
 The bottleneck that causes our implementation to terminate early is the graph generation.
-We make an observation that the large classes that can be classified fast are the classes with low number of degrees, because then there are only low number of graphs, thus no running out of memory.
+We make an observation that the large classes that can be classified fast are the classes with low number of degrees, because then there is only a low number of graphs, thus no running out of memory.
