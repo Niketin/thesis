@@ -156,10 +156,10 @@ In this section we show that if an LCL problem is not solvable in PN networks wi
 If an LCL problem $\Pi$ is not solvable in a PN network $N$, then it is also not solvable in any PN network $N'$ that is a lift of $N$.
 \end{lemma}
 \begin{proof}
-    Since problem $\Pi$ has no solution in some PN network $N$, any algorithm $A$ will produce an invalid solution to $\Pi$ i.e. a local constraint is violated at least at some node $v$.
+    Since problem $\Pi$ has no solution in some PN network $N$, any algorithm $A$ will produce an invalid solution to $\Pi$ i.e.\ a local constraint is violated at least at some node $v$.
     Let $\phi: V' \rightarrow V$ be a covering map from $N'=(V', P', p')$ to $N=(V, P, p)$.
     Theorem 7.1 from the textbook \cite{HirvonenSuomelaDistAlg2020} shows that the nodes of $N'$ will have exactly the same state as their counterparts at $N$ for each time unit $t=0,1,...$\;.
-    Hence, if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e. the local constraint violations also appear in the covering network $N'$.
+    Hence, if we run algorithm $A$ on both networks $N$ and $N'$, the local constraint violation at some node $v \in N$ also appears in all nodes $v' \in V'$ such that $\phi(v') = v$ i.e.\ the local constraint violations also appear in the covering network $N'$.
 \end{proof}
 
 % Network with multiple connections ----k-lift--->  simple network
@@ -207,7 +207,7 @@ If an LCL problem $\Pi$ is not solvable in a PN network $N$, then it is also not
     From above, we can conclude that $\phi$ is a covering map from $V_1$ to $V_2$
     therefore $N_1$ is a $k$-lift of $N_2$.
 
-    We need to show that $N_1$ is a simple PN network i.e. it does not have multiple connections.
+    We need to show that $N_1$ is a simple PN network i.e.\ it does not have multiple connections.
     %As we know, the non-multiple connections in $N_2$ are preserved in $N_1$ therefore we need to only look at the multiple connections of $N_2$ in more detail.
     Note that for each connection $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ where $a=1, 2, ..., \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)}))$, nodes $u_{\operatorname{M}(x+a-1)}$ are distinct for all $a$ because $1 \leq a \leq \operatorname{mul}(\phi(v_{x}),\phi(u_{\operatorname{M}(x+a-1)})) \leq k$ and
     there are exactly $k$ many "u" nodes in $V_1$, namely nodes $u_1, u_2, ..., u_k \in V_1$.

@@ -34,11 +34,10 @@ Earlier in Section~\ref{sec:lcl_problems:biregular}, we used the following notat
     P &= \mathrm{\{\{I,P\},\{I,O\},\{O,O\}\}}.
   \end{align*}
 In the following sections, all LCL problems are presented in an alternative format, where each label in a label configuration are concatenated, and each label configuration is separated by a space.
-Active and passive configurations are also concatenated and separated by a semicolon.
 Maximal independent set would be encoded as
-\lstinline{III POO; IP IO OO}.
+$A = \text{III POO}$ and $P = \text{IP IO OO}$.
 The problems are also normalized, as explained in Section~\ref{sec:implementation:generating_lcl_problems}.
-Therefore, the problem is actually encoded as \lstinline{AAA BBC; AB AC BB}.
+Therefore, the problem is actually encoded as $A = \text{AAA BBC}$ and $P = \text{AB AC BB}$.
 
 
 %We will answer to Research questions 3 by using our implementation for various LCL problems and showing their
@@ -141,7 +140,7 @@ The problems are listed in Table~\ref{tbl:results:asd2}.
 \end{table}
 We make an observation that the last problem with a new lower bound in Table~\ref{tbl:results:asd2} has a matching upper bound.
 Therefore, this problem has now a tight bound of $\Theta(log^* n)$.
-Also, we make an observation that it is a relaxation of the maximal independent set i.e. the set $P$ has an additional label configuration CC.
+Also, we make an observation that it is a relaxation of the maximal independent set i.e.\ the set $P$ has an additional label configuration CC.
 
 Next, in Table~\ref{tbl:results:asd3}, we list all the multigraphs in which we found the problems to be unsolvable.
 
