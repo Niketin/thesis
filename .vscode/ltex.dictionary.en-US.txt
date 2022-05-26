@@ -3,3 +3,13 @@ nonisomorphic
 Nonisomorphic
 unsolvability
 Kissat
+checkable
+geng
+multig
+genbg
+satisfiability
+Satisfiability
+satisfiable
+unsatisfiable
+Conjuctive
+conjuction
