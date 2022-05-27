@@ -188,15 +188,6 @@ If an LCL problem $\Pi$ is not solvable in a PN network $N$, then it is also not
     \begin{itemize}
         \item By the definition of $\phi$, it is surjective.
         \item For each connection in $N_2$, we have $k$ similar connections in $N_1$, therefore degrees of each node are preserved.
-        %% TODO remove these comments when this has been reviewed.
-        %\item For each non-multiple connection $p_1((v_x, i)) = (u_x, j)$, where $x=1, 2, ..., k$, we have $p_2((v, i)) = (u, j)$.
-        %From our definition of $\phi$ we can see that the mapping preserves port numbers and connections in non-multiple connections.
-        %\item For each multiple connection $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ we have
-        %\begin{align*}
-        %    p_2((\phi(v_{x}), i_a)) &= (\phi(u_{\operatorname{M}(x+a-1)}), j_a)\\
-        %    \Leftrightarrow p_2((v, i_a)) &= (u, j_a)
-        %\end{align*}
-        %Both $(v, i_a)$ and $(u, j_a)$ are in $P_2$ and $p_2((v, i_a)) = (u, j_a)$, therefore for each multiple connection, the port numbers and connections are preserved.
         \item For each connection $p_1((v_{x}, i_a)) = (u_{\operatorname{M}(x+a-1)}, j_a)$ we have
         \begin{align*}
            p_2((\phi(v_{x}), i_a)) &= (\phi(u_{\operatorname{M}(x+a-1)}), j_a)\\
@@ -271,20 +262,13 @@ We will prove this using graphs, and then from Lemma~\ref{lem:problem_unsolvabil
     We construct an infinite $(\Delta, \delta)$-biregular tree $G'=(V', E')$ by \emph{unfolding} graph $G$.
     Let us fix a node $v \in V$.
     A non-backtracking walk is a walk that does not immediately visit a previous node at any point.
-    %That is, an edge $\{u', v'\} \in G'$ \todo{Wait for better feedback on this}
-    %We consider all possible non-backtracking walks from node $v$.
-    %Two walks are adjacent, if one can be formed by adding a node to another.
-    %For example $v-a-b-c-a$ and $v-a-b-c-a-b$ are considered as adjacent walks.
     Each node in $G'$ represents a non-backtracking walk in $G$ starting at node $v$.
     There is an edge between two nodes $u'$ and $v'$ in $G'$, if the walk presented by $u'$ can be obtained by the walk represented by $v'$ and one additional edge in $G$.
-    %and adjacent non-backtracking walks are considered as adjacent nodes in $G'$.
     Graph $G$ has cycles, therefore there are infinite walks of infinite length.
     The walks are non-backtracking, therefore the constructed graph $G'$ must be $(\Delta, \delta)$-biregular.
     The graph $G'$ is a covering graph of $G$, because for each node $v' \in G'$, the 1-radius neighborhood of $v'$ is preserved.
     Using Lemma \ref{lem:lcl_unsolvability:from_multiple_to_lift}, we can conclude that the problem $\Pi$ must also be unsolvable in $G'$.
 \end{proof}
-
-%With Lemma \ref{lem:from_finite_to_infinite}, we can focus on finding finite connected $(\Delta, \delta)$-biregular graphs with cycles.
 
 Now from Lemmas \ref{lem:problem_unsolvability_in_graphs}, \ref{lem:lcl_unsolvability:from_multiple_to_simple}, and \ref{lem:from_finite_to_infinite}, we can say that if Algorithm~\ref{alg:counterexample_finder} outputs a graph, then the problem is unsolvable, and the output graph is a proof of it.
 

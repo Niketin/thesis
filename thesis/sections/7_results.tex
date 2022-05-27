@@ -10,13 +10,6 @@
   basewidth=0.5em
 }
 
-%\begin{figure}[H]
-% \centering
-% \includegraphics[]{example-image-duck}
-% \caption{\todo{Illustration of k-lift using Theorem \ref{lem:lcl_unsolvability:from_klift_to_simple}}}
-% \label{fig:duck2}
-%\end{figure}
-
 In this section, we will discuss the results from our implementation.
 We answer to Research question~\ref{research_question:3} in Section~\ref{sec:results:improving_bounds} by finding new non-constant lower bounds for LCL problems that have already been classified with constant lower bounds prior this work.
 In Section~\ref{sec:results:classifying_large_classes}, we answer to Research question~\ref{research_question:4} by finding new lower bounds for classes of LCL problems.
@@ -29,7 +22,6 @@ We want to give the measurements without pre-generated data unless we target som
 
 Earlier in Section~\ref{sec:lcl_problems:biregular}, we used the following notation to present the sets $A$ and $P$ of maximal independent set.
 \begin{align*}
-    %\Sigma &= \mathrm{\{I,O,P\}}, \\
     A &= \mathrm{\{\{I,I,I\},\{P,O,O\}\}}, \\
     P &= \mathrm{\{\{I,P\},\{I,O\},\{O,O\}\}}.
   \end{align*}
@@ -40,10 +32,6 @@ The problems are also normalized, as explained in Section~\ref{sec:implementatio
 Therefore, the problem is actually encoded as $A = \text{AAA BBC}$ and $P = \text{AB AC BB}$.
 
 
-%We will answer to Research questions 3 by using our implementation for various LCL problems and showing their
-%
-%and 4 by showing classifications
-%
 \subsection{Improving Lower Bounds of LCL Problems}\label{sec:results:improving_bounds}
 As we discussed in Section~\ref{sec:research_question}, we will be using a database~\cite{Tereshchenko2021,LclClassifierAalto,LclClassifierGithub} that consists of LCL problems and their current known lower and upper bounds.
 There are two LCL problem classes in the database that are for non-directed non-rooted trees---$(\Delta, \delta, \lambda) = (3,2,3)$ and $(\Delta, \delta, \lambda) = (3,2,2)$.
@@ -59,13 +47,6 @@ When we remove problems with non-constant deterministic lower bounds, we get 653
 Out of these problems, we need to remove problems with constant upper bound, as these problems already have a tight constant bound, i.e.\ $\Theta(1)$.
 After the removal, we have only 66 problems left.
 The problems can be fetched from the database to a file \codee{problems.txt} using the command \verb|bin fetch_problems 3 2 3 <database_address> > problems.txt|, assuming that there is a PostgreSQL database in the address \verb|<database_address>| with the data from the dump.
-
-% \begin{figure}[H]
-% \centering
-% \includegraphics[]{example-image-duck}
-% \caption{\todo{Maybe add a figure that explains the upper and lower bounds we want the problems to have. }}
-% \label{fig:duck2}
-% \end{figure}
 
 We execute our implementation using the command
 \begin{lstlisting}
@@ -139,7 +120,7 @@ The problems are listed in Table~\ref{tbl:results:asd2}.
     \label{tbl:results:asd2}
 \end{table}
 We make an observation that the last problem with a new lower bound in Table~\ref{tbl:results:asd2} has a matching upper bound.
-Therefore, this problem has now a tight bound of $\Theta(log^* n)$.
+Therefore, this problem has now a tight bound of $\Theta(\log^* n)$.
 Also, we make an observation that it is a relaxation of the maximal independent set i.e.\ the set $P$ has an additional label configuration CC.
 
 Next, in Table~\ref{tbl:results:asd3}, we list all the multigraphs in which we found the problems to be unsolvable.
