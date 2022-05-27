@@ -122,7 +122,6 @@ From the equations we know that
 \end{align*}
 
 For some fixed $\Delta$ and $\delta$, $n$ may not always be an integer at all integer values of $x$.
-%When we fix $\Delta$ and $\delta$, the possible numbers for $n$ are all integers $\frac{x(\Delta + \delta)}{\delta}$, where $x$ is any positive integer.
 However, we can ensure integer solutions by assigning $x=y\frac{\delta}{\gcd(\delta, \Delta)}$, where $y$ is any positive integer.
 Then we iterate through all $y$ up to some upper bound (see Table \ref{tbl:values_of_x}).
 We then compute all valid pairs of $(n_A, n_B)$ as shown in Table \ref{tbl:valid_pairs}.
@@ -216,7 +215,7 @@ The tool requires the sizes of parts $A$ and $B$ as an input, and we generate th
 By default, the tool outputs the graphs to standard output stream in a format called \emph{graph6}.
 A graph in \emph{graph6} format is a one line of ASCII characters.
 We additionally specify two ranges of degrees so that we get bipartite graphs, where the degrees of nodes range from $1$ to $\Delta$ and from $1$ to $\delta$ in parts $A$ and $B$, respectively.
-We also use a flag ``-c'' to generate only connected graphs.
+We also use a flag \codee{-c} to generate only connected graphs.
 The output from the graph is then fed into the second tool.
 
 The second tool, \emph{multig}, is used to generate small multigraphs with a given underlying graph.
@@ -316,15 +315,13 @@ This is illustrated in Figure~\ref{fig:implementation:2}.
 \label{fig:implementation:2}
 \end{figure}
 
-Now we discuss how we encode the SAT problem, given that we have an LCL problem $\Pi=(A, P, \Sigma)$ from class $(\Delta, \delta, \lambda)$, and a connected $(\Delta, \delta)$-biregular multigraph $G=(V,E)$, where the parts of vertices are $V_A$ and $V_P$.
-Each active node can have possibly any label configuration from $A$ (respectively passive nodes and $P$), and there are always as many ways to label a label configuration as there are permutations of the label configuration.
+Now we discuss how we encode an LCL problem $\Pi=(A, P, \Sigma)$ from class $(\Delta, \delta, \lambda)$, and a connected $(\Delta, \delta)$-biregular multigraph $G=(V,E)$, where $V$ is a union of two disjoint sets $V_A$ and $V_P$, into a CNF formula.
+Each active node can have possibly any label configuration from $A$ (respectively passive nodes and $P$), and there are always as many ways to arrange the labels of a label configuration as there are permutations of the label configuration.
 Let $\operatorname{Perm}(A)$ and $\operatorname{Perm}(P)$ be the sets of all permutations of label configurations in sets $A$ and $P$, respectively.
 
-We define variables $L_{A,u,v,l}$ for each incident edge $(u, v)$ of an active node $u$, for each possible label $l \in \Sigma$.
-Similarly, we define variables $L_{P,u,v,l}$ for each incident edge $(u, v)$ of a passive node $u$, for each possible label $l \in \Sigma$.
-We also define variables $R_{A, u, p}$ for each permutation of each label configuration in $A$, for each active node $u$.
-Similarly, we define variables $R_{P, u, p}$ for each permutation of each label configuration in $P$, for each passive node $u$.
-In all of these variables, $A$ and $P$ denote that the node $u$ is from $V_A$ and $V_P$, respectively.
+We define variables $L_{A,u,v,l}$ for each $(u, v)$ incident on an active node $u$ and for each possible label $l \in \Sigma$.
+We also define variables $R_{A, u, p}$ for each permutation of label configurations in $A$ and each active node $u$.
+Similarly, we define variables $L_{P,u,v,l}$ and $R_{P, u, p}$.
 
 \renewcommand{\labelenumi}{\arabic{enumi}.}
 \renewcommand{\labelenumii}{\arabic{enumi}\alph{enumii}.}
@@ -335,29 +332,27 @@ Each condition is applied twice, once for active nodes and once for passive node
   Each node has to agree with their adjacent node on the labels of each edge between them.
   \begin{enumerate}
   \item
-    For each $e=(u, v)\in E, u\in V_A$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{A,u,v,l_1}, L_{P,v,u,l_2}$ is true, i.e.\ clause $(\neg L_{A,u,v,l_1} \lor \neg L_{P,v,u,l_2})$.
+    For each $e=(u, v)\in E, u\in V_A$ and each label $(l_1, l_2) \in \Sigma^2, l_1 \neq l_2$, we require that at most one of the variables $L_{A,u,v,l_1}, L_{P,v,u,l_2}$ is true, i.e.\ clause $(\neg L_{A,u,v,l_1} \lor \neg L_{P,v,u,l_2})$.
     \label{enu:sat_conditions:1a}
   \item
-    For each $e=(u, v)\in E, u\in V_P$, for each label pair $(l_1, l_2), l_1, l_2 \in \Sigma, l_1 \neq l_2$, we require that at most one of the variables $L_{P,u,v,l_1}, L_{A,v,u,l_2}$ is true, i.e.\ clause $(\neg L_{P,u,v,l_1} \lor \neg L_{A,v,u,l_2})$
+    For each $e=(u, v)\in E, u\in V_P$ and each label $(l_1, l_2) \in \Sigma^2, l_1 \neq l_2$, we require that at most one of the variables $L_{P,u,v,l_1}, L_{A,v,u,l_2}$ is true, i.e.\ clause $(\neg L_{P,u,v,l_1} \lor \neg L_{A,v,u,l_2})$
     \label{enu:sat_conditions:1b}
   \end{enumerate}
 \item
   Each node can only be applied one permutation of label configurations.
   \begin{enumerate}
   \item
-    Let us fix an active node $u \in V_A$.
-    For each permutation $p \in \operatorname{Perm}(A)$, we require that only one $R_{A, u, p}$ is true, i.e.\ clause $(R_{A, u, p_1} \lor R_{A, u, p_2} \lor \dotsm \lor R_{A, u, p_{|\operatorname{Perm}(A)|}})$ for requiring at least one permutation,
+    For an active node $u \in V_A$ and each permutation $p \in \operatorname{Perm}(A)$, we require that only one $R_{A, u, p}$ is true, therefore we add clause $(R_{A, u, p_1} \lor R_{A, u, p_2} \lor \dotsm \lor R_{A, u, p_{|\operatorname{Perm}(A)|}})$ which ensures at least one permutation,
     and clauses
     $ (\neg R_{A, u, p_i} \lor \neg R_{A, u, p_j})$ where $i, j \in \{1, ..., |\operatorname{Perm}(A)|\}, i < j$,
-    for requiring at most one permutation.
+    which ensures at most one permutation.
     We repeat this for each active node $u \in V_A$.
     \label{enu:sat_conditions:2a}
   \item
-    Let us fix a passive node $u \in V_P$.
-    For each permutation $p \in \operatorname{Perm}(P)$, we require that only one $R_{P, u, p}$ is true, i.e.\ clause $(R_{P, u, p_1} \lor R_{P, u, p_2} \lor \dotsm \lor R_{P, u, p_{|\operatorname{Perm}(P)|}})$ for requiring at least one permutation,
+    For a passive node $u \in V_P$ and each permutation $p \in \operatorname{Perm}(P)$, we require that only one $R_{P, u, p}$ is true, therefore we add clause $(R_{P, u, p_1} \lor R_{P, u, p_2} \lor \dotsm \lor R_{P, u, p_{|\operatorname{Perm}(P)|}})$ which ensures at least one permutation,
     and clauses
     $ (\neg R_{P, u, p_i} \lor \neg R_{P, u, p_j})$ where $i, j \in \{1, ..., |\operatorname{Perm}(P)|\}, i < j$,
-    for requiring at most one permutation.
+    which ensures at most one permutation.
     We repeat this for each passive node $u \in V_P$.
     \label{enu:sat_conditions:2b}
   \end{enumerate}
@@ -365,40 +360,36 @@ Each condition is applied twice, once for active nodes and once for passive node
   A permutation of label configurations implies that a node labels its incident edges according to the permutation.
   \begin{enumerate}
   \item
-    Let us fix an active node $u \in V_A$.
-    For each permutation $p \in \operatorname{Perm}(A)$, for each label $l_i \in p, 1 \leq i \leq \Delta$, we require that $R_{A, u, p}$ implies $L_{A,u,v_i,l_i}$, where $v_i$ is the $i$-th adjacent passive node of active node $u$.
-    That is, we get a clause $(\neg R_{A, u, p} \lor L_{A,u,v_i,l_i})$.
+    For an active node $u \in V_A$, each permutation $p \in \operatorname{Perm}(A)$, and each label $l_i \in p, 1 \leq i \leq \Delta$, we require that $R_{A, u, p}$ implies $L_{A,u,v_i,l_i}$, where $v_i$ is the $i$-th adjacent passive node of active node $u$.
+    Therefore, we add clause $(\neg R_{A, u, p} \lor L_{A,u,v_i,l_i})$.
     We repeat this requirement for each active node $u \in V_A$.
     \label{enu:sat_conditions:3a}
   \item
-    Let us fix a passive node $u \in V_P$.
-    For each permutation $p \in \operatorname{Perm}(P)$, for each label $l_i \in p, 1 \leq i \leq \delta$, we require that $R_{P, u, p}$ implies $L_{P,u,v_i,l_i}$, where $v_i$ is the $i$-th adjacent active node of passive node $u$.
-    That is, we get a clause $(\neg R_{P, u, p} \lor L_{P,u,v_i,l_i})$.
+    For a passive node $u \in V_P$, each permutation $p \in \operatorname{Perm}(P)$, and each label $l_i \in p, 1 \leq i \leq \delta$, we require that $R_{P, u, p}$ implies $L_{P,u,v_i,l_i}$, where $v_i$ is the $i$-th adjacent active node of passive node $u$.
+    Therefore, we add clause $(\neg R_{P, u, p} \lor L_{P,u,v_i,l_i})$.
     We repeat this requirement for each passive node $u \in V_P$.
     \label{enu:sat_conditions:3b}
   \end{enumerate}
 \end{enumerate}
 
-Based on the above conditions and clauses, we encode the SAT by forming a conjunction of the clauses.
+Based on the above conditions and clauses, we encode a CNF by forming a conjunction of clauses.
 Formatting the problem as DIMACS CNF can be done with a simple mapping from the variables to unique positive integers, or negative integers in case of a negated variable.
 It is quite trivial, therefore we do not discuss more about it.
-After obtaining the SAT problem in DIMACS CNF, we feed the problem into a SAT solver, as showed in Figure~\ref{fig:implementation:1}.
+After obtaining the DIMACS CNF, we feed it into a SAT solver, as showed in Figure~\ref{fig:implementation:1}.
 In our implementation, we use the SAT solver called Kissat~\cite{BiereFazekasFleuryHeisinger-SAT-Competition-2020-solvers, Kissat}, which is the winner in the main track of the SAT Competition 2020~\cite{SatCompetition2020}.
 
 
 \subsection{Generating LCL Problems} \label{sec:implementation:generating_lcl_problems}
 
-When we generate LCL problems, we generate whole class of LCL problems.
-A class of LCL problems is a set of LCL problems where the problems share common attributes.
-The attributes are the values of a triple $(\Delta, \delta, \lambda)$, where $\Delta$ and $\delta$ are the sizes of label configurations in $A$ and $P$, respectively, and $\lambda$ is the size of $\Sigma$ i.e.\ the number of labels.
+We generate a class of LCL problems for a triple $(\Delta, \delta, \lambda)$, where $\Delta$ and $\delta$ are the sizes of label configurations in $A$ and $P$, respectively, and $\lambda$ is the size of $\Sigma$ i.e.\ the number of labels.
 
 The set of all possible label configurations is a $k$-combination with repetitions, where $k$ is the size of a label configuration.
-Let us call the function of $k$-combination with repetitions as $\operatorname{comb}(k, \Sigma)$.
+Let $\operatorname{comb}(k, \Sigma)$ be the function that represents $k$-combination with repetitions.
 For example, if $\Delta$ is 2, $\Sigma=\{\mathrm{A, B}\}$ and $\lambda$ is 2, then the set of all possible label configurations is
 $$ \operatorname{comb}(\Delta, \Sigma) = \{ \{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\} \}. $$
 
 The set of all possible sets of label configurations is a power set of the set of all possible label configurations, excluding an empty set.
-Let us call this power set without an empty sets as a function $\operatorname{pow}(d, S)$, where $d$ is the size of a label configuration, and $S$ is the set of all possible label configurations.
+Let us define this power set without an empty sets as a function $\operatorname{pow}(d, S)$, where $d$ is the size of a label configuration, and $S$ is the set of all possible label configurations.
 For example, the power set of the above example excluding an empty set is
 \begin{align*}
   \operatorname{pow}(\Delta, \operatorname{comb}(\Delta, \Sigma)) =  \{&\{\{\mathrm{A, A}\}\}, \\
@@ -410,14 +401,14 @@ For example, the power set of the above example excluding an empty set is
     &\{\{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\}\} \}.
 \end{align*}
 
-The set of all LCL problems of class $(\Delta, \delta, \lambda)$ is a Cartesian product
+The set of all LCL problems of class $(\Delta, \delta, \lambda)$ is defined as
 $$ \operatorname{comb}(\Delta, \Sigma) \times \operatorname{comb}(\delta, \Sigma),$$
 where $\Sigma$ is any set of labels of length $\lambda$.
-In our implementation, we use the upper-case alphabet as $\Sigma$.
+%In our implementation, we use the upper-case alphabet as $\Sigma$.
 The elements are pairs $(A, P)$, where $A$ is the set of all allowed label configurations for active nodes, and $P$ is the set of all allowed label configurations for passive nodes.
 
-Now that we know how to generate a class of LCL problems, we show the number of elements in some chosen classes in Table~\ref{tbl:lcl_problem_classes}.
-In the table, we also show the numbers of \emph{purged} and \emph{normalized} problems for each chosen class.
+Now that we know how to generate a class of LCL problems, we show the number of problems in classes in Table~\ref{tbl:lcl_problem_classes}.
+In the table, we also show the numbers of \emph{purged} and \emph{normalized} problems for each class.
 These are the optimizations that reduce the size of problems we have to process through in our implementation, and we discuss them next.
 
 \begin{table}[H]
@@ -454,7 +445,7 @@ These redundant label configurations are found by forming a list of labels that 
 Then we remove each label configuration from both sets, that have some other labels than what was in the list.
 
 For example, if $A=\{\{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\}\}$ and $P=\{\{\mathrm{A, A}\}, \{\mathrm{A, C}\}, \{\mathrm{C, C}\}\}$, then the labels in $A$ are $\{\mathrm{A, B}\}$ and labels in $P$ are $\{\mathrm{A, C}\}$.
-The labels that appear in both $A$ and $P$, i.e.\ $\{\mathrm{A, B}\} \cup \{\mathrm{A, C}\} $ is $\{\mathrm{A}\}$.
+The labels that appear in both $A$ and $P$, i.e.\ $\{\mathrm{A, B}\} \cap \{\mathrm{A, C}\} $ is $\{\mathrm{A}\}$.
 Thus, we remove all label configurations from both $A$ and $P$ that contain any other label than $\mathrm{A}$.
 In the end, we get $A=\{\{\mathrm{A, A}\}\}$ and $P=\{\{\mathrm{A, A}\}\}$.
 
@@ -484,14 +475,13 @@ The amount of problems after purging and normalizing can be seen in Table~\ref{t
 In this section, we will discuss some optimizations used in the implementation that we have not yet mentioned in previous sections.
 The optimizations we discuss here briefly, utilizes either parallelization or caching.
 
-When we generate graphs with \emph{genbg}, we actually do it in parallel using multiple threads.
-The tool can be given arguments \codee{r/m} so that it only generates subset \codee{r} from subsets between $0$ and \codee{m}$-1$.
-For example, to split it evenly between 4 threads, we give the first thread 0/4, the second thread 1/4, the third thread 2/4, and finally the fourth thread 3/4.
-We then pipe the results to \emph{multig} in each thread in parallel.
-This makes the time it takes to generate the graphs roughly $t$-times faster, where $t$ is the number of threads used, assuming that there are $t$ available cores in the system.
+When we generate graphs with \emph{genbg}, we actually do it in parallel.
+If we give \emph{genbg} the option \codee{r/m}, it generates the \codee{r}-th subset of \codee{m} roughly equal sized subsets.
+For some fixed $m$ we can generate each subset in parallel by giving each option \codee{0/m}, \codee{1/m}, \dots, \codee{m-1/m} to different threads.
+This makes it roughly $t$-times faster, where $t$ is the number of threads used, assuming that there are $t$ available cores in the system.
 
 When multigraphs are generated, we can optionally save them into a database.
-Already generated multigraphs can be fetched from the database when needed, nearly for free in terms of time.
+Then multigraphs can be fetched from the database when needed, nearly for free in terms of time.
 Similarly, LCL problems can also be saved into the database, and automatically fetched from there.
 
 In our implementation, finding counterexamples for multiple LCL problems is done in parallel, utilizing all logical cores of the system.
