@@ -4,43 +4,25 @@
 %% above.
 %%
 \begin{abstractpage}[english]
-%%%%Automatically Finding Non-constant Lower Bounds for Locally Checkable Labeling Problems in the LOCAL Model
-% The abstract explains your research topic, the methods you have used, and the results you obtained.
-%
-%
-% Explain topic!
-%Explain distr. comput.
-%Large problems often
 Distributed computing is any kind of computing that is performed on a spatially distributed system.
 It is often considered when high amounts of computation power is required.
-Distributed computing is used to solve large scale problems that would otherwise be impractical to solve in a centralized system.
+Distributed computing is used to solve large-scale problems that would otherwise be impractical to solve in a centralized system.
 
 In this thesis, I study the theoretical foundations of distributed computing.
-The models I am interested in are the Port-numbering (PN) model and the LOCAL model of distributed computing.
-% all computation is done in synchronous communication rounds.
-In these models, each node of a computer network executes an algorithm synchronously and can exchange messages with their neighboring nodes in each communication round.
+The models of distributed computing I am interested in are the port-numbering (PN) model and the LOCAL model.
+In these models, each node of a computer network executes a common algorithm synchronously and can exchange messages with their neighboring nodes in each communication round.
 Between these communication rounds, the nodes can perform computation in an instant.
-The complexity of the algorithm is measured as the number of communication rounds it takes, until each node of a network terminates.
-%outputs a part of the global solution.
+The complexity of the algorithm is measured as the number of communication rounds it takes until each node of a network terminates.
 Locally checkable labeling (LCL) problems are a family of graph problems where a global solution can be verified locally by the individual nodes.
 
-The automation of finding upper and lowed bounds for LCL problems in the LOCAL model is a recent approach in research of theoretical foundations of distributed computing.
-This thesis contributes to the field by automating the process of finding non-constant lower bounds for them.
-%The main objective of this work is to automate the process of finding lower bounds for LCL problems in the LOCAL model
-%How has it been researched
-%what are the results
+In the research of the foundations of distributed computing there is a recent trend to automate finding upper and lowed bounds for LCL problems in the LOCAL model.
+This thesis contributes to the field by automating the process of finding non-constant lower bounds for LCL problems in the LOCAL model.
 
-I present a novel algorithm that can detect if an LCL problem does not have a solution in finite connected $(\Delta, \delta)$-biregular multigraphs.
+I present a new algorithm that can detect if an LCL problem does not have a solution in finite connected $(\Delta, \delta)$-biregular multigraphs.
 Then I show that if the problem does not have a solution in the graph family, it is also unsolvable in the PN model.
-I also prove that if an LCL problem is unsolvable in the PN model, it cannot be solved in constant time in the LOCAL model.
-Thus, our algorithm can automatically prove that an LCL problem is unsolvable in constant time in the LOCAL model.
+I also prove that if an LCL problem is unsolvable in the PN model, then it cannot be solved in constant time in the LOCAL model.
+Thus, the algorithm can automatically prove that an LCL problem is unsolvable in constant time in the LOCAL model.
 In order to automatically find new lower bounds for LCL problems in the LOCAL model in practice, I present an implementation of the algorithm.
-With the implementation, I find 9 LCL problems with new lower bound and as a consequence, one of the problems is now classified with a tight bound of $\Theta(\log^* n)$.
-
-
-%I present a novel algorithm that can automatically find non-constant lower bounds for LCL problems in the LOCAL model.
-%I also present an implementation of the algorithm.
-%With the implementation, I find 9 LCL problems with new lower bound and as a consequence, one of the problems is now classified with a tight bound of $\Theta(\log^* n)$.
-%
+With the implementation, I find new lower bounds for 9 LCL problems and as a consequence, one of the problems is now classified with a tight bound of $\Theta(\log^* n)$.
 
 \end{abstractpage}
