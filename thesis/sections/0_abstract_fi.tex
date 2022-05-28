@@ -14,18 +14,22 @@
 %% Abstract text
 \begin{abstractpage}[finnish]
 Hajautettu laskenta on mitä tahansa laskentaa, jota suoritetaan tilallisesti hajautetussa järjestelmässä.
-Sen käyttöä harkitaan usein, kun vaaditaan suurta laskentatehoa.
-Hajautettua laskentaa hyödyntämällä voidaan ratkaista ison skaalan ongelmia, jotka olisivat muuten epäkäytännöllisiä ratkaista keskitetyssä järjestelmässä.
+Sitä käytetään usein tilanteissa, joissa vaaditaan suurta laskentatehoa.
+Hajautettua laskentaa hyödyntämällä voidaan ratkaista ison mittakaavan ongelmia, jotka olisivat muuten epäkäytännöllisiä ratkaista keskitetyssä järjestelmässä.
 
 Tässä työssä tutkitaan hajautetun laskennan teoreettista perustaa.
-Olen kiinnostunut hajautetun laskennan porttinumerointi- ja LOCAL-malleista.
-Näissä malleissa, jokainen tietokoneverkon solmu suorittaa algoritmia synkronisesti ja vaihtaa jokaisella viestintäkierroksella viestejä viereisten solmujen kanssa.
+Olen kiinnostunut hajautetun laskennan porttinumerointi- (PN) ja LOCAL-malleista.
+Näissä malleissa jokainen tietokoneverkon solmu suorittaa yhteistä algoritmia synkronisesti ja vaihtaa jokaisella viestintäkierroksella viestejä viereisten solmujen kanssa.
 Näiden viestintäkierroksien välillä solmut voivat laskea äärettömän nopeasti.
 Algoritmin nopeutta mitataan viestintäkierroksien määrällä, kunnes jokainen verkon solmu lopettaa algoritmin suorittamisen.
-\todo{edellinen lause kuulostaa oudolta}%TODO
-Paikallisesti tarkastettavat merkitsemisongelmat (LCL) ovat verkko-ongelmaperhe, jossa jokainen yksittäinen solmu voi paikallisesti tarkistaa globaalin ratkaisun.
+%\todo{edellinen lause kuulostaa oudolta}%TODO
+Paikallisesti tarkastettavat merkitsemisongelmat (LCL-ongelmat) ovat verkko-ongelmaperhe, jossa jokainen yksittäinen solmu voi paikallisesti tarkistaa globaalin ratkaisun.
 
-Esitän uuden algoritmin joka tunnistaa jos LCL-ongelmalle ei ole ratkaisua äärellisessä yhdistetyssä ()
-\todo{jatka}
+Esittelen uuden algoritmin, joka tunnistaa, jos LCL-ongelmalle ei ole ratkaisua äärellisissä yhtenäisissä $(\Delta, \delta)$-säännöllisissä kaksijakoisissa moniverkoissa.
+Tämän jälkeen näytän, että jos tällä ongelmalla ei ole ratkaisua kyseisessä verkkoperheessä, niin se ei ole ratkeava PN-mallissa.
+Näytän myös, että jos LCL-ongelma ei ole ratkeava PN-mallissa, niin sitä ei voi myöskään ratkaista vakioajassa LOCAL-mallissa.
+Tästä seuraa, että esittelemäni algoritmi voi todistaa automaattisesti, että LCL-ongelma ei ole vakioajassa ratkeava.
+Esittelen myös toteutuksen algoritmille, jotta voimme käytännössä löytää automaattisesti uusia alarajoja LCL-ongelmille LOCAL-mallissa.
+Löydän tällä toteutuksella uusia alarajoja 9:lle LCL-ongelmalle ja tämän seurauksena yhdellä näistä ongelmista on nyt tiukka raja $\Theta(\log^* n)$.
 \end{abstractpage}
 % LTeX: enabled=true
