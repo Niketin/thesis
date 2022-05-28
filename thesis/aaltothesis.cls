@@ -758,7 +758,7 @@
 \newcommand*{\pl@ce}{}% variable
 \newcommand*{\place}[1]{\renewcommand*{\pl@ce}{#1}}% User command
 %
-\newcommand*{\dateandplace}{\pl@ce{} \D@te{}}% Internal macro
+\newcommand*{\dateandplace}{\pl@ce{}, \D@te{}}% Internal macro
 %
 %\newcommand*{\university}[1]{\renewcommand*{\univ@rsity}{#1}}% User command
 %

@@ -111,9 +111,9 @@ The algorithm is written as follows.
             \State $\delta \gets \textsc{PassiveDegree}(\Pi)$ \label{alg:counterexample_finder:d_p}
             \For{$n\gets n_{low}, n_{high}$} \Comment{Iterate graph sizes from lowest to highest} \label{alg:counterexample_finder:n}
                 \State $G_n \gets \textsc{GenerateGraphs}(n, \Delta, \delta)$ \label{alg:counterexample_finder:Gn}
-                \ForEach{$g \in G_n$} \label{alg:counterexample_finder:g}
-                    \If {\Not $\textsc{SolutionExists}(\Pi, g)$} \label{alg:counterexample_finder:solution_exists}
-                        \State \Return $g$ \Comment{Return counterexample.}\label{alg:counterexample_finder:return_g}
+                \ForEach{$G \in G_n$} \label{alg:counterexample_finder:g}
+                    \If {\Not $\textsc{SolutionExists}(\Pi, G)$} \label{alg:counterexample_finder:solution_exists}
+                        \State \Return $G$ \Comment{Return counterexample.}\label{alg:counterexample_finder:return_g}
                     \EndIf
                 \EndFor
             \EndFor
@@ -128,11 +128,11 @@ We define $\Delta$ and $\delta$ to be the active and passive degree of the probl
 The variable for the current vertex count is called $n$ (row~\ref{alg:counterexample_finder:n}).
 For each $n$, we generate all possible $(\Delta, \delta)$-biregular multigraphs with $\textsc{GenerateGraphs}(n, \Delta, \delta)$, and save the multigraphs into variable $G_n$ (row~\ref{alg:counterexample_finder:Gn}).
 %The reason for generating only these types of multigraphs comes from the LCL formalism from Section \ref{sec:lcl_problems:biregular}.
-Now, for each multigraph $g \in G_n$ (row~\ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ has a solution using the function $\textsc{SolutionExists}(\Pi, g)$ (row~\ref{alg:counterexample_finder:solution_exists}).
+Now, for each multigraph $G \in G_n$ (row~\ref{alg:counterexample_finder:g}) we check if the given problem $\Pi$ has a solution using the function $\textsc{SolutionExists}(\Pi, G)$ (row~\ref{alg:counterexample_finder:solution_exists}).
 If a solution does not exist, we return the multigraph as a counterexample (row~\ref{alg:counterexample_finder:return_g}).
 In the case there are no counterexamples in multigraphs between $n_{low}$ and $n_{high}$ vertices, the algorithm returns nothing (row~\ref{alg:counterexample_finder:return_nothing}).
 
-Up to this moment, we have not discussed how the function \[ \textsc{GenerateGraphs}(n, \Delta, \delta) \] from row~\ref{alg:counterexample_finder:Gn} actually generates the multigraphs, nor have we discussed how the function \[ \textsc{SolutionExists}(\Pi, g) \] from row~\ref{alg:counterexample_finder:solution_exists} determines the existence of a solution.
+Up to this moment, we have not discussed how the function \[ \textsc{GenerateGraphs}(n, \Delta, \delta) \] from row~\ref{alg:counterexample_finder:Gn} actually generates the multigraphs, nor have we discussed how the function \[ \textsc{SolutionExists}(\Pi, G) \] from row~\ref{alg:counterexample_finder:solution_exists} determines the existence of a solution.
 These functions are implementation specific and in this section we assume that they exist as black boxes.
 We discuss our implementations of these functions later in Section~\ref{sec:implementation}.
 However, we can discuss why the algorithm generates multigraphs instead of simple graphs.
@@ -244,7 +244,7 @@ If an LCL problem $\Pi$ is not solvable in a PN network $N$, then it is also not
 \end{lemma}
 \begin{proof}
     Let us assume that an LCL problem $\Pi$ is not solvable in PN network $N_2$ with multiple connections.
-    Lemma \ref{lem:lcl_unsolvability:from_klift_to_simple} shows that there exists a k-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
+    Lemma \ref{lem:lcl_unsolvability:from_klift_to_simple} shows that there exists a $k$-lift $N_1$ of $N_2$ such that $N_1$ is a simple PN network.
     Lemma \ref{lem:lcl_unsolvability:from_multiple_to_lift} shows that the problem $\Pi$ is also not solvable in network $N_1$.
     Therefore, we deduce that the problem $\Pi$ is not solvable in simple PN network $N_1$ that is a lift of $N_2$.
 \end{proof}
@@ -315,7 +315,7 @@ The first model is called \emph{order-invariant} (OI) \cite{DBLP:journals/siamco
 The OI model can be thought as a LOCAL model with a restriction where each node can only compare the identifiers but not access their exact value.
 In the model, the output of an algorithm does not change even if identifiers of nodes are changed as long as their relative order is preserved.
 
-The second model called \emph{port numbering + orientation} (PO)~\cite{DBLP:conf/istcs/MayerNS95}.
+The second model is called \emph{port numbering + orientation} (PO)~\cite{DBLP:conf/istcs/MayerNS95}.
 In the PO model, ports are numbered like in the PN model, and additionally the edges have an orientation~\cite{DBLP:journals/dc/GoosHS17}.
 
 

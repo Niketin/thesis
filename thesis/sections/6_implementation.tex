@@ -6,9 +6,8 @@ In this section, we will explain all the modules that we use in the implementati
 The implementation itself is a computer program~\cite{NonconstantLclClassifier2022}, that attempts to automatically find a proof of unsolvability for an LCL problem in the PN model.
 Although we have used Rust programming language~\cite{RustLang} for the implementation, we keep the explanations independent of any programming language.
 
-%This includes the previously declared functions $\textsc{SolutionExists}(\Pi, g)$ and $\textsc{GenerateGraphs}(n, \Delta, \delta)$, which were given as black boxes.
 In Section~\ref{sec:implementation:generating_multigraphs}, we discuss how we generate multigraphs, and describe the function $\textsc{GenerateGraphs}(n, \Delta, \delta)$.
-In Section~\ref{sec:implementation:sat}, we discuss Boolean satisfiability problems (SAT), and in Section~\ref{sec:implementation:our_sat}, we discuss how we use SAT to implement the function $\textsc{SolutionExists}(\Pi, g)$.
+In Section~\ref{sec:implementation:sat}, we discuss Boolean satisfiability problems (SAT), and in Section~\ref{sec:implementation:our_sat}, we discuss how we use SAT to implement the function $\textsc{SolutionExists}(\Pi, G)$.
 As we are interested in classifying not just one LCL problem, but a class of problems, we need to know how to generate them.
 In Section~\ref{sec:implementation:generating_lcl_problems}, we discuss how we generate LCL problems.
 Lastly, we discuss some optimizations in our implementation in Section \ref{sec:implementation:optimizations}.
@@ -68,7 +67,7 @@ If we assume that $\Delta \geq \delta$, then we can see from Equation~\ref{eq:pa
 
 $$(1, n-1), (2, n-2), ..., (\left\lfloor\frac{n}{2}\right\rfloor, n - \left\lfloor\frac{n}{2}\right\rfloor).$$
 
-For example with $(3,2)$-biregular multigraphs, we can only have the pair $(4, 6)$, as shown in Table~\ref{tbl:possible_pairs}.
+For example with $(3,2)$-biregular multigraphs and $n=10$, we can only have the pair $(4, 6)$, as shown in Table~\ref{tbl:possible_pairs}.
 However, most of the time there are no valid pairs for chosen $n$, as we can see for $n=9$ in Table \ref{tbl:possible_pairs:no_pairs}.
 
 \begin{table}[H]
@@ -445,7 +444,7 @@ These redundant label configurations are found by forming a list of labels that 
 Then we remove each label configuration from both sets, that have some other labels than what was in the list.
 
 For example, if $A=\{\{\mathrm{A, A}\}, \{\mathrm{A, B}\}, \{\mathrm{B, B}\}\}$ and $P=\{\{\mathrm{A, A}\}, \{\mathrm{A, C}\}, \{\mathrm{C, C}\}\}$, then the labels in $A$ are $\{\mathrm{A, B}\}$ and labels in $P$ are $\{\mathrm{A, C}\}$.
-The labels that appear in both $A$ and $P$, i.e.\ $\{\mathrm{A, B}\} \cap \{\mathrm{A, C}\} $ is $\{\mathrm{A}\}$.
+The set of labels that appear in both $A$ and $P$, i.e.\ $\{\mathrm{A, B}\} \cap \{\mathrm{A, C}\} $ is $\{\mathrm{A}\}$.
 Thus, we remove all label configurations from both $A$ and $P$ that contain any other label than $\mathrm{A}$.
 In the end, we get $A=\{\{\mathrm{A, A}\}\}$ and $P=\{\{\mathrm{A, A}\}\}$.
 
@@ -458,7 +457,7 @@ That is, the total order of problems $\Pi_1=(A_1, P_1, \Sigma_1), \Pi_2=(A_2, P_
 The result of normalization is an LCL problem in its \emph{canonical form}.
 After normalizing any two isomorphic LCL problems, their appearance is identical.
 
-For example, the problems
+For example, the isomorphic problems
 $$\Pi_1=(\{\{\mathrm{B, B}\}\}, \{\{\mathrm{A, C}\}, \{\mathrm{C,C\}}\}, \Sigma),$$
 $$\Pi_2=(\{\{\mathrm{D, D}\}\}, \{\{\mathrm{A,A\}},\{\mathrm{E, A}\}\}, \Sigma),$$ after normalization look like
 $$\Pi_1'=(\{\{\mathrm{A, A}\}\}, \{\{\mathrm{B, B}\},\{\mathrm{B, C}\}\}, \Sigma),$$
@@ -477,7 +476,7 @@ The optimizations we discuss here briefly, utilizes either parallelization or ca
 
 When we generate graphs with \emph{genbg}, we actually do it in parallel.
 If we give \emph{genbg} the option \codee{r/m}, it generates the \codee{r}-th subset of \codee{m} roughly equal sized subsets.
-For some fixed $m$ we can generate each subset in parallel by giving each option \codee{0/m}, \codee{1/m}, \dots, \codee{m-1/m} to different threads.
+For some fixed \codee{m} we can generate each subset in parallel by giving each option \codee{0/m}, \codee{1/m}, \dots, \codee{m-1/m} to different threads.
 This makes it roughly $t$-times faster, where $t$ is the number of threads used, assuming that there are $t$ available cores in the system.
 
 When multigraphs are generated, we can optionally save them into a database.

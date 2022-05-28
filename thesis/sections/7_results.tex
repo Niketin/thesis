@@ -17,7 +17,7 @@ We use the implementation~\cite[commit \codee{c244e8e683}]{NonconstantLclClassif
 When we say \codee{bin}, we refer to the compiled binary of the implementation.
 Throughout this section, we assume that the results are obtained in a modern computer with AMD Ryzen 9 3900X 12-core 24-thread CPU, and 32 GB of RAM.
 
-We do not use the caching feature of our implementation, as fetching already generated problem classes and multigraphs from the disk is substantially faster than generating them.
+We do not use the caching feature of our implementation unless otherwise mentioned, as fetching already generated problem classes and multigraphs from the disk is substantially faster than generating them.
 We want to give the measurements without pre-generated data unless we target some specific problems, like in Section~\ref{sec:results:improving_bounds}.
 
 Earlier in Section~\ref{sec:lcl_problems:biregular}, we used the following notation to present the sets $A$ and $P$ of maximal independent set.
@@ -33,7 +33,7 @@ Therefore, the problem is actually encoded as $A = \text{AAA BBC}$ and $P = \tex
 
 
 \subsection{Improving Lower Bounds of LCL Problems}\label{sec:results:improving_bounds}
-As we discussed in Section~\ref{sec:research_question}, we will be using a database~\cite{Tereshchenko2021,LclClassifierAalto,LclClassifierGithub} that consists of LCL problems and their current known lower and upper bounds.
+As we discussed in Section~\ref{sec:research_question}, we use a database~\cite{Tereshchenko2021,LclClassifierAalto,LclClassifierGithub} that consists of LCL problems and their current known lower and upper bounds.
 There are two LCL problem classes in the database that are for non-directed non-rooted trees---$(\Delta, \delta, \lambda) = (3,2,3)$ and $(\Delta, \delta, \lambda) = (3,2,2)$.
 All 38 problems of the class $(3,2,2)$ are already classified with tight deterministic bounds.
 This is not the case in class $(3,2,3)$, therefore we try to find new deterministic lower bounds for the problems using our implementation.
@@ -52,8 +52,8 @@ We execute our implementation using the command
 \begin{lstlisting}
 bin find <$\text{n}_{\text{low}}$> <$\text{n}_{\text{high}}$> --stats from_stdin < problems.txt
 \end{lstlisting}
-where $n_\text{low}$ and $n_\text{high}$ are substituted with smallest and highest number of vertices we want for the graphs, respectively.
-The option \lstinline{--stats} gives us the execution times from generating graphs, and encoding/solving SAT problems.
+where $n_\text{low}$ and $n_\text{high}$ are substituted with the smallest and highest number of vertices we want for the graphs, respectively.
+The option \lstinline{--stats} gives us the execution times from generating graphs, and the execution times from encoding and solving SAT problems.
 We run the command as follows in Table~\ref{tbl:results:asd1}.
 
 \begin{table}[H]
@@ -85,7 +85,7 @@ We run the command as follows in Table~\ref{tbl:results:asd1}.
 \end{table}
 
 The executions from Table~\ref{tbl:results:asd1} were all executed with an identical input problem set, therefore some problems can be as a result in multiple executions.
-When we consider only the smallest graph, where the problem was found to be unsolvable, there are only 9 distinct problems left.
+When we consider only the smallest graph where a problem was found to be unsolvable, there are only 9 distinct problems left.
 The problems are listed in Table~\ref{tbl:results:asd2}.
 
 \begin{table}[H]
@@ -137,14 +137,14 @@ Next, in Table~\ref{tbl:results:asd3}, we list all the multigraphs in which we f
         %&&&&& \multicolumn{2}{c}{Trees} \\
         %Classifier & Complete & Labels & Paths & Cycles &Rooted & Unrooted \\\midrule
         AAA AAB BBC BCC     & AB CC       & 1 &   &          &     &     &    \\
-        AAA BBC             & AB AC BB CC &   &   & $9$      &     &     &    \\
-        AAA AAB ABC BCC     & AC BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
         AAA AAB ABC BCC     & AC BB       &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA AAB ABC BCC     & AC BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
         AAA AAB ABC BCC CCC & AC BB       &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
         AAA AAB ABC CCC     & AC BB       &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
         AAA AAB BCC         & AC BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
         AAA ABC BBC         & AB BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
         AAA BBC             & AB BB CC    &   & 1 & $5,9,12$ & $X$ & $Y$ & $Z$\\
+        AAA BBC             & AB AC BB CC &   &   & $9$      &     &     &    \\
         %\vdots & \vdots &\vdots&\vdots&\vdots&\vdots&\vdots\\
         \bottomrule
     \end{tabular}
