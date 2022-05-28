@@ -511,7 +511,7 @@ See Figures \ref{fig:formal_pn1:a} and \ref{fig:formal_pn1:b} for examples of va
 
 \begin{figure}[H]
   \subcaptionbox{A PN network of two nodes, $a$ and $b$.
-    Both $a$ and $b$ have degree of 2, therefore 2 ports.
+    Both $a$ and $b$ have a degree of 2, therefore 2 ports.
     Ports are $(a, 1), (a, 2), (b, 1)$ and $(b, 2)$.
     The connections are
       $p((a, 1)) = (b, 1)$,
@@ -559,7 +559,6 @@ For example the network is simple in Figure \ref{fig:formal_pn2:a}.
 \begin{figure}[H]
   \subcaptionbox{
     A simple PN network.
-    The underlying graph is also simple.
     \label{fig:formal_pn2:a}
   }%
     [.3\linewidth] {
@@ -642,7 +641,7 @@ For example:
 \begin{description}
   \item[Vertex cover] of a graph $G$ is a subset $V' \subseteq V$ of nodes which together \emph{cover} all edges of the graph, that is, at least one endpoint from each edge must be in the subset $V'$.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a vertex cover of the underlying graph $G$ of $N$.
-  \item[Independent set] of a graph $G$ is a subset $V' \subseteq V$ of nodes where no two nodes are adjacent. That is, for each $u, v, \in V' s.t. u \neq v$, an edge $(u, v)$ is not in $E$.
+  \item[Independent set] of a graph $G$ is a subset $V' \subseteq V$ of nodes where no two nodes are adjacent. That is, for each $u, v, \in V'$ such that $u \neq v$, an edge $(u, v)$ is not in $E$.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes an independent set of nodes of the underlying graph $G$ of $N$.
   \item[Maximal independent set] of a graph $G$ is an independent subset $V' \subseteq V$ of nodes such that there is no additional vertex $w \in V \backslash V'$ that can be included in $V'$ such that it stays as an independent set.
   A node labeling $f$ is a solution $f \in \Pi(N)$ if $f$ encodes a maximal independent set of nodes of the underlying graph $G$ of $N$.
@@ -683,7 +682,7 @@ In the problem $k$-coloring, we are looking for $k$ subsets of vertices $X_1, X_
     \includegraphics[width=0.30\textwidth]{diagrams/formalizing_pn_network_8.pdf}
   }
   \caption{Example solutions to different graph problems.
-  In Figures \ref{fig:distributed_graph_problems1:a} and \ref{fig:distributed_graph_problems1:b}, the blue nodes form a node labeling that denote a solution.
+  In Figures \ref{fig:distributed_graph_problems1:a} and \ref{fig:distributed_graph_problems1:b}, the blue nodes form a node labeling that denotes a solution.
   There are two additional labels in Figure \ref{fig:distributed_graph_problems1:c}, yellow and green, in order there to be 3 labels for 3 colors.
   }
   \label{fig:distributed_graph_problems1}
@@ -750,7 +749,7 @@ The state vectors $x_1, x_2, \dotsc$ are defined recursively in the following pa
 We assume that we have defined $x_{t-1}$, and we show how we define $x_{t}$ using the assumption of $x_{t-1}$.
 Let function $m_t\colon P \rightarrow \algmsg_A$ map a port to a message at time $t$.
 Let port $(v, j) \in P$, port $(u, i) = p((v, j))$, and degree $\deg_N(v) = d'$.
-Let $m_t((u, i))$ be $j$th element of the vector $\algsend_{A, d'}(x_{t-1}(v))$.
+Let $m_t((u, i))$ be $j$-th element of the vector $\algsend_{A, d'}(x_{t-1}(v))$.
 Here the element $m_t((u, i))$ is a message sent by node $v$ through communication port $(v, j)$.
 It is also the message received by node $u$ from port $(u, i)$.
 
@@ -792,7 +791,7 @@ There exists a limitation to what problems can be solved in a deterministic PN m
 The limitation comes from an underlying graph of a PN network being symmetric~%
 \mcite{DBLP:conf/focs/Linial87, DBLP:journals/siamcomp/Linial92}.
 
-In this section we discuss a topological concept that can help us to formalize symmetries in a PN network.
+In this section, we discuss a topological concept that can help us to formalize symmetries in a PN network.
 The concept is called \emph{covering map}%
 \footnote{Note that this is not related to the vertex cover problem even though they share the word ``cover''.}.
 Later in this work, we use the concept in proving Lemmas \ref{lem:lcl_unsolvability:from_multiple_to_lift} and \ref{lem:lcl_unsolvability:from_klift_to_simple}.
@@ -805,13 +804,6 @@ A graph $H$ is a \emph{covering} of a graph $G$ if there is a way to label the n
 In this definition, covering map is the function that maps the nodes from $H$ to $G$.
 If $H$ is a covering of a connected graph $G$, then an intuition is that $H$ consists of multiple copies of $G$ ``glued'' together in a clever way.
 
-
-% First we define function $\xi_G(v)$ to be the set of all neighbors of vertex $v$ in graph $G$.
-% If graphs $G=(V, E)$ and $G'=(V', E')$ are from the same graph family $\mathcal{F}$, we say that $G$ is a \emph{covering} of $G'$ via a map $\psi$ if and only if all of the following hold:
-% \begin{enumerate}
-%   \item $\psi=\psi: V \rightarrow V'$ such that for all vertices $v \in V$, the neighbour nodes $\xi_G(v)$ and $\xi_{G'}(\psi(v))$ are equal.
-%   \item asd
-% \end{enumerate}
 In order for us to use covering maps with PN networks, we need to additionally consider the port numbers of nodes so that they are also preserver by the covering map.
 
 We define now the covering map for PN networks similarly it is defined in the textbook \cite{HirvonenSuomelaDistAlg2020}.
@@ -821,14 +813,14 @@ We define now the covering map for PN networks similarly it is defined in the te
   The function $\phi$ is a covering map from $N$ to $N'$ if all the following hold:
   \begin{enumerate}
     \item $\phi$ is a surjection i.e.\ for every $v' \in V'$ there exists at least one $v \in V$ such that $\phi(v) = v'$.
-    \item $\phi$ preserves the degrees of a node i.e.\ $\deg_N(v) = \deg_{N'}(\phi(v))$, for all $v \in V$.
+    \item $\phi$ preserves the degrees of nodes i.e.\ $\deg_N(v) = \deg_{N'}(\phi(v))$, for all $v \in V$.
     \item $\phi$ preserves port numbers and connections i.e.\ if $p((u, i)) = (v, j)$ then $p'((\phi(u), i)) = (\phi(v), j)$.
   \end{enumerate}
 \end{definition}
 
 \begin{figure}[H]
   \subcaptionbox{
-    A PN network N.
+    A PN network $N$.
     \label{fig:covering_map1:a}
   }%
     [.5\linewidth] {
@@ -836,7 +828,7 @@ We define now the covering map for PN networks similarly it is defined in the te
     \includegraphics[scale=0.55]{diagrams/covering_map_1.pdf}
   }%
   \subcaptionbox{
-    A PN network N'.
+    A PN network $N'$.
     \label{fig:covering_map1:b}
   }%
     [.5\linewidth] {
@@ -850,7 +842,7 @@ We define now the covering map for PN networks similarly it is defined in the te
 
 \begin{figure}[H]
   \subcaptionbox{
-    A PN network N.
+    A PN network $N$.
     \label{fig:covering_map2:a}
   }%
     [.6\linewidth] {
@@ -858,7 +850,7 @@ We define now the covering map for PN networks similarly it is defined in the te
     \includegraphics[scale=0.55]{diagrams/covering_map_3.pdf}
   }%
   \subcaptionbox{
-    A PN network N'.
+    A PN network $N'$.
     \label{fig:covering_map2:b}
   }%
     [.4\linewidth] {
@@ -916,7 +908,7 @@ A \emph{$k$-lift} is a lift where the covering network $N$ is $k$ times the size
 In the Figure \ref{fig:covering_map3} we can see that the network $N_1$ is a 2-lift of the network $N_0$ and the network $N_2$ is a 3-lift of the network $N_0$.
 The network $N_0$ has a loop $p(p((a, 2))) = p((a, 3)) = (a, 2)$.
 The networks $N_1$ and $N_2$ do not have loops, but instead they connect to other symmetrical equivalent parts of their networks (denoted by subscripts \(1, 2, 3\)), i.e.\ in the network $N_1$ we have connections $p(p((a_2, 2))) = p((a_1, 3)) = (a_2, 2)$ and $p(p((a_2, 3))) = p((a_1, 2)) = (a_2, 3)$.
-This symmetricity implies that each node ends up in an identical state with its symmetrical equivalent after each communication round, assuming the input problem $\Pi$ does not break the symmetry.
+This symmetricity implies that each node ends up in an identical state with its symmetrical equivalent after each communication round, assuming the input problem $\Pi'$ does not break the symmetry.
 For example, when node $a_2$ from network $N_1$ uses its port 2, it cannot determine whether it is communicating with node $a_1$ or with itself, as $a_1$ and $a_2$ are always in identical states.
 
 \subsection{LOCAL Model} \label{sec:local_model}
@@ -968,13 +960,13 @@ therefore we set the input labels $\Sigmain = \{1\}$ for each problem.
 Each problem has radius 1.
 Listing the locally consistent labelings of each problem would result in substantially large sets of graphs, hence we give only a brief description of the elements.
 \begin{description}
-  \item[$k$-coloring] The set of output labels $\Sigmaout$ contains all $k$ colors, e.g. $1, 2, \dotsc, k$.
+  \item[$k$-coloring.] The set of output labels $\Sigmaout$ contains all $k$ colors, e.g. $1, 2, \dotsc, k$.
   The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible vertex coloring combinations with $k$-colors.
-  \item[Maximal independent set]
+  \item[Maximal independent set.]
   The set of output labels $\Sigmaout$ contains labels 0 and 1.
   The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of output labels such that if and only if the node $s$ (the center node) is $1$, then all adjacent nodes are labelled with $0$.
   Label 0 denotes that the vertex is not in the maximal independent set, and label 1 denotes that it is in the set.
-  \item[Minimal vertex cover]
+  \item[Minimal vertex cover.]
   The set of output labels $\Sigmaout$ contains labels 0 and 1.
   The set $C$ contains all the possible 1-ball graphs of a given graph family with all possible combinations of output labels such that if and only if the node $s$ (the center node) is $0$, then all adjacent nodes are labelled with $1$.
   Label 0 denotes that the vertex is not in the minimal vertex cover, and label 1 denotes that it is in the set.
@@ -1011,11 +1003,9 @@ We require from a solution that:
   \item every label configuration of a hyperedge is contained in $P$.
 \end{enumerate}
 
-Alternatively to $\Delta$-regular $\delta$-uniform hypertrees, we can think of the hyperedges as a separate nodes \cite{DBLP:conf/podc/Olivetti20}.
+Alternatively to $\Delta$-regular $\delta$-uniform hypertrees, we can think of the hyperedges as separate nodes \cite{DBLP:conf/podc/Olivetti20}.
 This way the problems are defined for infinite $(\Delta, \delta)$-biregular trees.
 We say that the original nodes of the graph are called \emph{active nodes}, and the newly introduced nodes, formerly hyperedges, are called \emph{passive nodes}.
-%This naming convention can be seen in the sets $A$ and $P$.
-%In  which can be called as the sets of active constraints and passive constraints, respectively.
 In this setting the passive nodes do not output anything.
 Only the active nodes output their labels.
 
@@ -1037,22 +1027,22 @@ For an example, see Figure~\ref{fig:biregular_graph1}.
   \subcaptionbox{
     An infinite $(3,2)$-biregular tree.
     Orange nodes are active nodes, and smaller blue nodes are passive nodes.
-    The labels seen in the graph are part of a solution to maximal independent set problem.
-    \label{fig:biregular_graph1:a}
+    The labels seen in the graph are part of a solution to 3-coloring problem.
+    \label{fig:biregular_graph2:a}
   }%
     [0.60\linewidth] {
     \centering
-    \includegraphics[scale=0.45]{diagrams/biregular_graph_LCL_MIS.pdf}
+    \includegraphics[scale=0.45]{diagrams/biregular_graph_LCL_3Coloring.pdf}
   }
   \hfill
   \subcaptionbox{
-    Same graph as in \ref{fig:biregular_graph1:a}, but the passive nodes are seen as 2-uniform hyperedges, or just as edges, and the nodes are now colored.
-    %The nodes with label 1 map to nodes in \ref{fig:biregular_graph2:a} with node label $\{1,1,1\}$ and nodes with label 0 map to nodes in \ref{fig:biregular_graph2:a} with node label $\{P,0,0\}$.
-    \label{fig:biregular_graph1:b}
+    A visualization of the coloring in graph \ref{fig:biregular_graph2:a}.
+    The graphs are identical, but the passive nodes are seen as 2-uniform hyperedges, or just as edges.
+    \label{fig:biregular_graph2:b}
   }%
     [.35\linewidth] {
     \centering
-    \includegraphics[scale=0.40]{diagrams/biregular_graph_LCL_MIS2.pdf}
+    \includegraphics[scale=0.40]{diagrams/biregular_graph_LCL_3Coloring_2.pdf}
   }
   \caption{
     3-coloring in infinite $(3,2)$-biregular tree.
@@ -1075,21 +1065,20 @@ For an example, see Figure~\ref{fig:biregular_graph2}.
     An infinite $(3,2)$-biregular tree.
     Orange nodes are active nodes, and smaller blue nodes are passive nodes.
     The labels seen in the graph are part of a solution to maximal independent set problem.
-    \label{fig:biregular_graph2:a}
+    \label{fig:biregular_graph1:a}
   }%
     [0.60\linewidth] {
     \centering
-    \includegraphics[scale=0.45]{diagrams/biregular_graph_LCL_3Coloring.pdf}
+    \includegraphics[scale=0.45]{diagrams/biregular_graph_LCL_MIS.pdf}
   }
   \hfill
   \subcaptionbox{
-    A visualization of the coloring in graph \ref{fig:biregular_graph2:a}.
-    The graphs are identical, but the passive nodes are seen as 2-uniform hyperedges, or just as edges.
-    \label{fig:biregular_graph2:b}
+    Same graph as in \ref{fig:biregular_graph1:a}, but the passive nodes are seen as 2-uniform hyperedges, or just as edges, and the nodes are now colored.
+    \label{fig:biregular_graph1:b}
   }%
     [.35\linewidth] {
     \centering
-    \includegraphics[scale=0.40]{diagrams/biregular_graph_LCL_3Coloring_2.pdf}
+    \includegraphics[scale=0.40]{diagrams/biregular_graph_LCL_MIS2.pdf}
   }
   \caption{
     Maximal independent set in infinite $(3,2)$-biregular tree.
