@@ -21,8 +21,11 @@ Tässä työssä tutkitaan hajautetun laskennan teoreettista perustaa.
 Olen kiinnostunut hajautetun laskennan porttinumerointimallista eli PN-mallista sekä LOCAL-mallista.
 Näissä malleissa jokainen tietokoneverkon solmu suorittaa samaa algoritmia synkronisesti ja vaihtaa jokaisella viestintäkierroksella viestejä viereisten solmujen kanssa.
 Näiden viestintäkierroksien välillä solmut voivat laskea äärettömän nopeasti.
-Algoritmin nopeus on se kierrosten määrä, jolla jokainen verkon solmu viimeistään lopettaa algoritmin suorittamisen.
+Algoritmin nopeus on se kierrosten määrä, jonka jälkeen jokainen verkon solmu viimeistään lopettaa algoritmin suorittamisen.
 Paikallisesti tarkastettavat merkitsemisongelmat (LCL-ongelmat) ovat verkko-ongelmaperhe, jossa jokainen yksittäinen solmu voi paikallisesti tarkistaa globaalin ratkaisun.
+
+Hajautetun laskennan teoreettisen perustan tutkimuksissa on viime aikoina näkynyt kehityssuunta, jossa automatisoidaan LCL-ongelmien ylä- ja alarajojen löytäminen LOCAL-mallissa.
+Tämän työ edistää kyseistä tutkimusalaa automatisoimalla LCL-ongelmien ei-vakioaikaisten alarajojen löytämisen LOCAL-mallissa.
 
 Esittelen uuden algoritmin, joka tunnistaa, jos annetulle LCL-ongelmalle ei ole ratkaisua äärellisissä yhtenäisissä $(\Delta, \delta)$-säännöllisissä kaksijakoisissa moniverkoissa.
 Tämän jälkeen näytän, että jos tällä ongelmalla ei ole ratkaisua kyseisessä verkkoperheessä, niin se ei ole ratkeava PN-mallissa.
