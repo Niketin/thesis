@@ -185,7 +185,7 @@
 
 %% The date for the bachelor's thesis is the day it is presented
 %%
-\date{May 30, 2022} % TODO change when date known
+\date{May 30, 2022}
 %%
 
 %% Thesis supervisor
@@ -225,16 +225,24 @@
 %% as the abstract page.
 %%
 \thesisabstract{
-Your abstract in English. Keep the abstract short. The abstract explains your
-research topic, the methods you have used, and the results you obtained. In the
-PDF/A format of this thesis, in addition to the abstract page, the abstract text is
-written into the PDF file's metadata. Write here the text that goes into the
-metadata. The metadata cannot contain special characters, line break or paragraph
-break characters, so these must not be used here. If your abstract does not contain
-special characters and it does not require paragraphs, you may take advantage of
-the abstracttext macro (see the comment below). Otherwise, the metadata abstract
-text must be identical to the text on the abstract page.
-}%TODO Add the English abstract also here, after finishing it!!!
+Distributed computing is any kind of computing that is performed on a spatially distributed system.
+It is often considered when high amounts of computation power is required.
+Distributed computing is used to solve large-scale problems that would otherwise be impractical to solve in a centralized system.
+In this thesis, I study the theoretical foundations of distributed computing.
+The models of distributed computing I am interested in are the port-numbering (PN) model and the LOCAL model.
+In these models, each node of a computer network executes a common algorithm synchronously and can exchange messages with their neighboring nodes in each communication round.
+Between these communication rounds, the nodes can perform computation in an instant.
+The complexity of the algorithm is measured as the number of communication rounds it takes until each node of a network terminates.
+Locally checkable labeling (LCL) problems are a family of graph problems where a global solution can be verified locally by the individual nodes.
+In the research of the foundations of distributed computing there is a recent trend to automate finding upper and lower bounds for LCL problems in the LOCAL model.
+This thesis contributes to the field by automating the process of finding non-constant lower bounds for LCL problems in the LOCAL model.
+I present a new algorithm that can detect if an LCL problem does not have a solution in finite connected (Delta, delta)-biregular multigraphs.
+Then I show that if the problem does not have a solution in the graph family, it is also unsolvable in the PN model.
+I also prove that if an LCL problem is unsolvable in the PN model, then it cannot be solved in constant time in the LOCAL model.
+Thus, the algorithm can automatically prove that an LCL problem is unsolvable in constant time in the LOCAL model.
+In order to automatically find new lower bounds for LCL problems in the LOCAL model in practice, I present an implementation of the algorithm.
+With the implementation, I find new lower bounds for nine LCL problems and as a consequence, one of the problems is now classified with a tight bound of Theta(log* n).
+}
 
 %% Copyright text. Copyright of a work is with the creator/author of the work
 %% regardless of whether the copyright mark is explicitly in the work or not.
@@ -352,7 +360,6 @@ text must be identical to the text on the abstract page.
 \usepackage{subcaption}
 \usepackage{csquotes} % Without this, the compiler gives a warning.
 \usepackage{float}
-\hbadness 1400 %TODO Remove when finishing the thesis.
 \emergencystretch=1em % Fixes DOI link not being overfull
 
 \usepackage{amsthm}
@@ -369,7 +376,7 @@ text must be identical to the text on the abstract page.
 \usepackage{algpseudocode}
 
 \usepackage{csquotes}
-%\overfullrule=1cm %TODO try this when finalizing the thesis and fix overfull stuff
+%\overfullrule=1cm %try this when finalizing the thesis and fix overfull stuff
 \algnewcommand\algorithmicforeach{\textbf{for each}}
 \algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
 \algnewcommand\Not{\textbf{not} }
