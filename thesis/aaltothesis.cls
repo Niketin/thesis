@@ -156,7 +156,7 @@
   \iftoggle{UTF}{\hypersetup{pdfencoding=unicode}}{}%
   \hypersetup{pdfpagemode=UseNone, bookmarksnumbered=true}%
   \iftoggle{ONLINE}{%
-  	\hypersetup{colorlinks=true, urlcolor=blue, linkcolor=blue, citecolor=blue}%
+  	\hypersetup{colorlinks=true, urlcolor=, linkcolor=, citecolor=}%
   }{}%
 }{%
   \AtEndPreamble{%
@@ -171,7 +171,7 @@
   }{}%
   \hypersetup{pdfpagemode=UseNone, bookmarksnumbered=true}%
   \iftoggle{ONLINE}{%
-  	\hypersetup{colorlinks=true, urlcolor=blue, linkcolor=blue, citecolor=blue}%
+  	\hypersetup{colorlinks=true, urlcolor=, linkcolor=, citecolor=}%
   }{%
 	\hypersetup{colorlinks=false}
   }%
